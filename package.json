@@ -6,15 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stylelint": "stylelint 'app/**/*.css'"
   },
   "dependencies": {
+    "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "stylelint": "^16.2.1"
   },
   "devDependencies": {
     "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "14.1.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "stylelint-config-css-modules": "^4.3.0",
+    "stylelint-config-standard": "^33.0.0"
   }
 }
