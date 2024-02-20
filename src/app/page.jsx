@@ -1,5 +1,6 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
@@ -15,7 +16,8 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
+            By
+            {' '}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -40,17 +42,17 @@ export default function Home() {
       </div>
 
       <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+        <Link
+          href="/dashboard"
           className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <h2>
-            Docs <span>-&gt;</span>
+            Dashboard
+            {' '}
+            <span>-&gt;</span>
           </h2>
           <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        </Link>
 
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
@@ -59,7 +61,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Learn <span>-&gt;</span>
+            Learn
+            {' '}
+            <span>-&gt;</span>
           </h2>
           <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
         </a>
@@ -71,7 +75,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Templates <span>-&gt;</span>
+            Templates
+            {' '}
+            <span>-&gt;</span>
           </h2>
           <p>Explore starter templates for Next.js.</p>
         </a>
@@ -83,7 +89,9 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Deploy <span>-&gt;</span>
+            Deploy
+            {' '}
+            <span>-&gt;</span>
           </h2>
           <p>
             Instantly deploy your Next.js site to a shareable URL with Vercel.
