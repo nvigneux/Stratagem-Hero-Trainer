@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // Components
-import SideNav from '../ui/atoms/SideNav/SideNav';
-import SideNavLayout from '../ui/templates/SideNavLayout/SideNavLayout';
+import SideNav from '../ui/components/atoms/SideNav/SideNav';
+import SideNavLayout from '../ui/components/templates/SideNavLayout/SideNavLayout';
 
 export default function Layout({ children }) {
   return (
