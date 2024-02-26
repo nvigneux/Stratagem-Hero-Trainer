@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 'use client';
 
 import PropTypes from 'prop-types';
@@ -69,7 +71,7 @@ function PaginationNumber({
   page,
   href,
   isActive,
-  position,
+  position = 'single',
 }) {
   return isActive || position === 'middle' ? (
     <div>{page}</div>
@@ -87,14 +89,10 @@ PaginationNumber.propTypes = {
   position: PropTypes.oneOf(['first', 'last', 'middle', 'single']),
 };
 
-PaginationNumber.defaultProps = {
-  position: 'middle',
-};
-
 function PaginationArrow({
   href,
   direction,
-  isDisabled,
+  isDisabled = false,
 }) {
   const icon = direction === 'left' ? (
     '<'
@@ -114,9 +112,5 @@ function PaginationArrow({
 PaginationArrow.propTypes = {
   href: PropTypes.string.isRequired,
   direction: PropTypes.oneOf(['left', 'right']).isRequired,
-  isDisabled: PropTypes.bool,
-};
-
-PaginationArrow.defaultProps = {
-  isDisabled: false,
+  isDisabled: PropTypes.bool.isRequired,
 };
