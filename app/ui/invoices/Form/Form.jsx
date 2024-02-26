@@ -1,10 +1,17 @@
+'use client';
+
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { useFormState } from 'react-dom';
+
+// Lib
 import { createInvoice } from '../../../lib/actions';
 
 export default function Form({ customers }) {
+  const initialState = { message: null, errors: {} };
+  const [state, dispatch] = useFormState(createInvoice, initialState);
   return (
-    <form action={createInvoice}>
+    <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -16,6 +23,7 @@ export default function Form({ customers }) {
                 name="customerId"
                 className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 defaultValue=""
+                aria-describedby="customer-error"
               >
                 <option value="" disabled>
                   Select a customer
@@ -28,6 +36,13 @@ export default function Form({ customers }) {
               </select>
             </div>
           </label>
+          <div id="customer-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.customerId && state.errors.customerId.map((error) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
+          </div>
         </div>
 
         {/* Invoice Amount */}
@@ -42,7 +57,7 @@ export default function Form({ customers }) {
                   type="number"
                   step="0.01"
                   placeholder="Enter USD amount"
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  required
                 />
               </div>
             </div>

@@ -167,6 +167,8 @@ export async function fetchInvoicesPages(query, sizePage) {
 }
 
 export async function fetchInvoiceById(id) {
+  noStore();
+
   try {
     const data = await sql`
       SELECT

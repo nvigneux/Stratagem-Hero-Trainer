@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { notFound } from 'next/navigation';
 
 // Lib
 import { fetchCustomers, fetchInvoiceById } from '../../../../lib/data';
@@ -12,6 +13,11 @@ export default async function Page({ params }) {
     fetchInvoiceById(id),
     fetchCustomers(),
   ]);
+
+  console.log(invoice);
+  if (!invoice) {
+    notFound();
+  }
 
   return (
     <main>
