@@ -253,3 +253,65 @@ export async function getUser(email) {
     throw new Error('Failed to fetch user.');
   }
 }
+
+/**
+ * Fetches the stratagems from the database.
+ * @returns {Promise<Array>} The stratagems.
+ */
+export async function fetchStratagems() {
+  try {
+    const data = await sql`
+    SELECT 
+    stratagems.id,
+    stratagems.code,
+    stratagems.name,
+    stratagems.image_url,
+    JSON_BUILD_OBJECT('id', categories.id, 'name', categories.name) AS category
+    FROM 
+        stratagems
+    INNER JOIN 
+        categories ON stratagems.category_id = categories.id;
+    `;
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch stratagems.');
+  }
+}
+
+/**
+ * Fetches a stratagem by its ID.
+ * @param {number} id The stratagem ID.
+ * @returns {Promise<Object>} The stratagem.
+ */
+export async function fetchStratagemById(id) {
+  try {
+    const data = await sql`
+      SELECT * FROM stratagems WHERE id = ${id}
+    `;
+
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch stratagem.');
+  }
+}
+
+/**
+ * Fetches the stratagems by category from the database.
+ * @param {number} categoryId The category ID.
+ * @returns {Promise<Array>} The stratagems.
+ */
+export async function fetchStratagemByCategory(categoryId) {
+  try {
+    const data = await sql`
+      SELECT * FROM stratagems WHERE category_id = ${categoryId}
+    `;
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch stratagem.');
+  }
+}

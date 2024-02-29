@@ -1,0 +1,40 @@
+.container {
+  --width-side: 500px;
+
+  display: grid;
+  grid-template-columns: var(--width-side) 1fr;
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.side {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 10px;
+  grid-column: 1;
+  background: red;
+  padding: 10px;
+  overflow-y: scroll;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  width: var(--width-side);
+}
+
+.main {
+  display: flex;
+  flex-flow: column wrap;
+  grid-column: 2;
+  background: blue;
+  padding: 10px;
+  min-height: 100vh;
+}
+
+.main .cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.active {
+  background: green;
+}

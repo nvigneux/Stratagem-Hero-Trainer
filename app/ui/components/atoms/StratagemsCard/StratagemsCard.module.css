@@ -1,0 +1,26 @@
+.wrapper{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card{
+  display: flex;
+  flex-flow: column wrap;
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.name{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.code{
+  display: flex;
+  flex-flow: row wrap;
+  gap: 5px;
+  list-style: none;
+}
