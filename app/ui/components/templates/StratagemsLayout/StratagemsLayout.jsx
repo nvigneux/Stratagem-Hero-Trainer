@@ -197,11 +197,6 @@ StratagemsLayout.propTypes = {
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
-  sortedStratagems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  })).isRequired,
   stratagemsByCategories: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
