@@ -1,13 +1,7 @@
-import { useMemo, useReducer } from 'react';
+import { useReducer, useState } from 'react';
 
-function useStratagemsSeries({ stratagems, checkboxes, maxLength = 999 }) {
-  // use reducer to handle the state of the series
-  const initialState = useMemo(
-    () => [...stratagems]
-      .filter((stratagem) => checkboxes[stratagem.name]),
-    [stratagems, checkboxes],
-  );
-
+function useStratagemsSeries({ initialState, maxLength = 999 }) {
+  const [serieIndex, setSerieIndex] = useState(0);
   const [series, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
@@ -38,6 +32,8 @@ function useStratagemsSeries({ stratagems, checkboxes, maxLength = 999 }) {
     series,
     resetSeries,
     handleAddToSeries,
+    serieIndex,
+    setSerieIndex,
   };
 }
 

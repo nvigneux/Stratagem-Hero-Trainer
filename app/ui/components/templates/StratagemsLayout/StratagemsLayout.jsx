@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useMemo } from 'react';
 
 // Styles
 import styles from './StratagemsLayout.module.css';
@@ -15,43 +15,49 @@ import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 
-function StratagemsLayout({ stratagems, sortedStratagems }) {
+function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
   } = useCheckboxes(
     { initialState: stratagems, key: 'name', defaultValue: true },
   );
 
-  const { series, handleAddToSeries, resetSeries } = useStratagemsSeries({
-    stratagems: sortedStratagems, checkboxes, maxLength: 5,
+  const filteredStratagemsChecked = useMemo(
+    () => [...stratagems].filter((stratagem) => checkboxes[stratagem.name]),
+    [stratagems, checkboxes],
+  );
+
+  const {
+    series, handleAddToSeries, resetSeries, serieIndex, setSerieIndex,
+  } = useStratagemsSeries({
+    initialState: filteredStratagemsChecked, maxLength: 5,
   });
 
-  const [serieActiveIndex, setSerieActiveIndex] = useState(0);
-
-  const stratagemsByCategories = stratagems.reduce((acc, stratagem) => {
-    const categoryName = stratagem.category.name;
-    if (!acc[categoryName]) { acc[categoryName] = []; }
-    acc[categoryName] = acc[categoryName].concat(stratagem);
-    return acc;
-  }, {});
-
-  // Reset the active serie index when the series changes
+  /**
+   * Handle the change of a single checkbox
+   * @param {string} name
+   */
   const handleChangeCheckbox = (name) => {
     handleChange(name);
-    setSerieActiveIndex(0);
+    setSerieIndex(0);
     resetSeries();
   };
 
   // Reset the series when the all checkboxes change
   const handleChangeAllCheckbox = () => {
     handleChangeAll();
-    setSerieActiveIndex(0);
+    setSerieIndex(0);
     resetSeries();
   };
 
+  /**
+   * Handle the change of all checkboxes in a category
+   * @param {string} category
+   * @param {boolean} value
+   */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    setSerieActiveIndex(0);
+    setSerieIndex(0);
     resetSeries();
   };
 
@@ -60,19 +66,23 @@ function StratagemsLayout({ stratagems, sortedStratagems }) {
    * @param {string} direction
    */
   const checkActiveSerieCode = (direction) => {
-    const serieDirection = series[0].code[serieActiveIndex];
+    const serieDirection = series[0].code[serieIndex];
     if (direction === serieDirection) { // direction is correct
-      setSerieActiveIndex((prev) => prev + 1);
+      setSerieIndex((prev) => prev + 1);
     } else {
-      setSerieActiveIndex(0);
+      if (direction === series[0].code[0]) {
+        setSerieIndex(1); // if the direction is the first one, reset the active index to 1
+        return;
+      }
+      setSerieIndex(0);
       return;
     }
 
-    if (serieActiveIndex === series[0].code.length - 1) {
+    if (serieIndex === series[0].code.length - 1) {
       // wait for the last code to be shown
       setTimeout(() => {
         handleAddToSeries();
-        setSerieActiveIndex(0);
+        setSerieIndex(0);
       }, 200);
     }
   };
@@ -167,7 +177,7 @@ function StratagemsLayout({ stratagems, sortedStratagems }) {
                   <div
                   // eslint-disable-next-line react/no-array-index-key
                     key={`${series[0].name}-${item}-${index}`}
-                    className={index + 1 <= serieActiveIndex ? styles.active : ''}
+                    className={index + 1 <= serieIndex ? styles.active : ''}
                   >
                     {`${index} ${item}`}
                   </div>
@@ -192,6 +202,11 @@ StratagemsLayout.propTypes = {
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
+  stratagemsByCategories: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    code: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }))).isRequired,
 };
 
 export default StratagemsLayout;
