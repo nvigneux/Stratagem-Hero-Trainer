@@ -24,15 +24,19 @@
 .main {
   display: flex;
   flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
   grid-column: 2;
   background: blue;
   padding: 10px;
   min-height: 100vh;
+  gap: 10px;
 }
 
 .main .cards {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .active {

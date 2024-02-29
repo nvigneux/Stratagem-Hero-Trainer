@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import styles from './StratagemsLayout.module.css';
 
 // Components
+import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import StratagemsCard from '../../atoms/StratagemsCard/StratagemsCard';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 
@@ -118,25 +119,26 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   return (
     <main className={styles.container}>
       <div className={styles.side}>
-        <StratagemsCard.Wrapper>
-          <>
-            <Checkbox id="all" checked={checkboxesAreChecked} onChange={handleChangeAllCheckbox} />
-            {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
-              const categoryChecked = stratagemsByCategory.every(
-                (stratagem) => checkboxes[stratagem.name],
-              );
+        <StratagemsCategories>
+          <Checkbox id="all" checked={checkboxesAreChecked} onChange={handleChangeAllCheckbox} />
+          {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
+            const categoryChecked = stratagemsByCategory.every(
+              (stratagem) => checkboxes[stratagem.name],
+            );
 
-              return (
-                <div key={category}>
-                  {category}
-                  <Checkbox
-                    id={category}
-                    checked={categoryChecked}
-                    onChange={() => handleChangeCategoriesCheckbox(category, !categoryChecked)}
-                  />
-                  {stratagemsByCategory.map((stratagem) => (
+            return (
+              <StratagemsCategories.Category key={category}>
+                {category}
+                <Checkbox
+                  id={category}
+                  checked={categoryChecked}
+                  onChange={() => handleChangeCategoriesCheckbox(category, !categoryChecked)}
+                />
+                {console.log(stratagemsByCategory)}
+                <StratagemsCategories.Cards stratagems={stratagemsByCategory}>
+                  {(stratagem) => (
                     <StratagemsCard
-                      key={stratagem.id}
+                      key={stratagem.name}
                       name={stratagem.name}
                       code={stratagem.code}
                     >
@@ -146,12 +148,12 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
                         onChange={() => handleChangeCheckbox(stratagem.name)}
                       />
                     </StratagemsCard>
-                  ))}
-                </div>
-              );
-            })}
-          </>
-        </StratagemsCard.Wrapper>
+                  )}
+                </StratagemsCategories.Cards>
+              </StratagemsCategories.Category>
+            );
+          })}
+        </StratagemsCategories>
       </div>
 
       <div className={styles.main}>
