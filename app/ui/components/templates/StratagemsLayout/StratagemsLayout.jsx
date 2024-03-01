@@ -10,11 +10,13 @@ import styles from './StratagemsLayout.module.css';
 import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import StratagemsCard from '../../atoms/StratagemsCard/StratagemsCard';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
+import Arrow from '../../atoms/Arrow/Arrow';
 
 // Hooks
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
+import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   const {
@@ -29,7 +31,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   );
 
   const {
-    series, handleAddToSeries, resetSeries, serieIndex, setSerieIndex,
+    series, handleAddToSeries, resetSeries, serieIndex, setSerieIndex, serieError, setSerieError,
   } = useStratagemsSeries({
     initialState: filteredStratagemsChecked, maxLength: 5,
   });
@@ -71,11 +73,12 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
     if (direction === serieDirection) { // direction is correct
       setSerieIndex((prev) => prev + 1);
     } else {
+      setSerieError(true);
       if (direction === series[0].code[0]) {
         setSerieIndex(1); // if the direction is the first one, reset the active index to 1
         return;
       }
-      setSerieIndex(0);
+      setSerieIndex(0); // direction error reset the active index
       return;
     }
 
@@ -84,7 +87,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       setTimeout(() => {
         handleAddToSeries();
         setSerieIndex(0);
-      }, 200);
+      }, 175);
     }
   };
 
@@ -120,39 +123,50 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
     <main className={styles.container}>
       <div className={styles.side}>
         <StratagemsCategories>
-          <Checkbox id="all" checked={checkboxesAreChecked} onChange={handleChangeAllCheckbox} />
-          {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
-            const categoryChecked = stratagemsByCategory.every(
-              (stratagem) => checkboxes[stratagem.name],
-            );
+          <Checkbox
+            id="all"
+            checked={checkboxesAreChecked}
+            onChange={handleChangeAllCheckbox}
+            label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}
+            className={styles.checkboxAll}
+          />
+          <div className={styles.sideContainer}>
+            <div className={styles.sideDecoration} />
+            {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
+              const categoryChecked = stratagemsByCategory.every(
+                (stratagem) => checkboxes[stratagem.name],
+              );
+              return (
+                <StratagemsCategories.Category key={category}>
 
-            return (
-              <StratagemsCategories.Category key={category}>
-                {category}
-                <Checkbox
-                  id={category}
-                  checked={categoryChecked}
-                  onChange={() => handleChangeCategoriesCheckbox(category, !categoryChecked)}
-                />
-                {console.log(stratagemsByCategory)}
-                <StratagemsCategories.Cards stratagems={stratagemsByCategory}>
-                  {(stratagem) => (
-                    <StratagemsCard
-                      key={stratagem.name}
-                      name={stratagem.name}
-                      code={stratagem.code}
-                    >
+                  <StratagemsCategories.Head category={category}>
+                    <Checkbox
+                      id={category}
+                      checked={categoryChecked}
+                      onChange={() => handleChangeCategoriesCheckbox(category, !categoryChecked)}
+                    />
+                  </StratagemsCategories.Head>
+
+                  <StratagemsCategories.Cards stratagems={stratagemsByCategory}>
+                    {(stratagem) => (
                       <Checkbox
+                        key={stratagem.name}
                         id={stratagem.name}
                         checked={checkboxes[stratagem.name]}
                         onChange={() => handleChangeCheckbox(stratagem.name)}
-                      />
-                    </StratagemsCard>
-                  )}
-                </StratagemsCategories.Cards>
-              </StratagemsCategories.Category>
-            );
-          })}
+                      >
+                        <StratagemsCard
+                          name={stratagem.name}
+                          code={stratagem.code}
+                          active={checkboxes[stratagem.name]}
+                        />
+                      </Checkbox>
+                    )}
+                  </StratagemsCategories.Cards>
+                </StratagemsCategories.Category>
+              );
+            })}
+          </div>
         </StratagemsCategories>
       </div>
 
@@ -168,26 +182,22 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
           )) : null}
         </div>
 
-        <div>
-          {series?.length ? (
-            <>
-              <div>
-                {series[0].name}
-              </div>
-              <div>
-                {series[0].code.map((item, index) => (
-                  <div
-                  // eslint-disable-next-line react/no-array-index-key
-                    key={`${series[0].name}-${item}-${index}`}
-                    className={index + 1 <= serieIndex ? styles.active : ''}
-                  >
-                    {`${index} ${item}`}
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : null}
-        </div>
+        {series?.length ? (
+          <>
+            <StratagemsName name={series[0].name} />
+            <Arrow.List>
+              {series[0].code.map((direction, index) => (
+                <Arrow
+                    // eslint-disable-next-line react/no-array-index-key
+                  key={`${series[0].name}-${direction}-${index}`}
+                  direction={direction}
+                  active={index + 1 <= serieIndex}
+                  error={serieError}
+                />
+              ))}
+            </Arrow.List>
+          </>
+        ) : null}
       </div>
     </main>
   );

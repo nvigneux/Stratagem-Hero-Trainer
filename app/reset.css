@@ -1,0 +1,102 @@
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-fs-sinclair);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--beige);
+}
+
+body {
+  background-color: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  text-size-adjust: none;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  word-break: break-word;
+  font: var(--font-p1-desktop-default);
+}
+
+*:-webkit-direct-focus {
+  outline: none;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table th {
+  font-weight: 400;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--black);
+}
+
+button {
+  display: block;
+  background-color: transparent;
+  color: var(--black);
+  padding: 0;
+  border: none;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid var(--grey);
+}
+
+hr.thick {
+  border-bottom-width: 2px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  background-clip: text;
+  -webkit-text-fill-color: var(--black);
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: none !important;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  background: none;
+}
+
+@media (width <= 1024px) {
+  * {
+    font: var(--font-p1-mobile-default);
+  }
+}

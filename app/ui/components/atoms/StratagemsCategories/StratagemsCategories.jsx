@@ -12,7 +12,7 @@ StratagemsCategories.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-StratagemsCategories.Category = function StratagemsCategoryCategory({ children }) {
+StratagemsCategories.Category = function StratagemsCategoriesCategory({ children }) {
   return (
     <div className={styles.category}>
       {children}
@@ -23,7 +23,22 @@ StratagemsCategories.Category.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-StratagemsCategories.Cards = function StratagemsCategoryCards({ children, stratagems }) {
+StratagemsCategories.Head = function StratagemsCategoriesHead({ category, children }) {
+  return (
+    <div className={styles.head}>
+      <h3 className={styles.title}>{category}</h3>
+      <div className={styles.action}>
+        {children}
+      </div>
+    </div>
+  );
+};
+StratagemsCategories.Head.propTypes = {
+  category: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
+StratagemsCategories.Cards = function StratagemsCategoriesCards({ children, stratagems }) {
   return (
     <div className={styles.cards}>
       {stratagems.map((stratagem, index) => (
