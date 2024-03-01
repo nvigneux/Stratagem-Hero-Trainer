@@ -1,0 +1,58 @@
+.icon {
+  --size-icon: 40px;
+  --color-icon: #fff;
+
+  height: var(--size-icon);
+  width: var(--size-icon);
+  color: var(--color-icon);
+
+  /* transition: color 0.1s ease-in-out; */
+}
+
+.right {
+  transform: rotate(90deg);
+}
+
+.left {
+  transform: rotate(-90deg);
+}
+
+.up {
+  transform: rotate(0deg);
+}
+
+.down {
+  transform: rotate(180deg);
+}
+
+.active {
+  --color-icon: var(--yellow);
+}
+
+.error {
+  animation: blink-error 0.3s;
+}
+
+/* LIST */
+
+.list {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.75rem;
+  list-style: none;
+}
+
+/* ANIMATION */
+@keyframes blink-error {
+  0% {
+    color: var(--white);
+  }
+
+  75% {
+    color: var(--red);
+  }
+  
+  100% {
+    color: var(--red);
+  }
+}
