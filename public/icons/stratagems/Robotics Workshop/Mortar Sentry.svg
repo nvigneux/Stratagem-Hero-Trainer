@@ -1,0 +1,23 @@
+<svg id="HD2-MS" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 126 126">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #679552;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="HD2-MS-2" data-name="HD2-MS">
+    <path class="cls-1" d="M90,33s-6.007-8.3-18-15h43V33H90Zm2,24V71H35.57C36.082,67.606,40,52,40,52L37.135,18H53S92,17.968,92,57ZM85,76V92H41V76H85Zm8,20,13,16H18L31,96H93Z"/>
+    <path id="Shape_9_copy" data-name="Shape 9 copy" class="cls-2" d="M44,71v7l6,6v17H21L32,86l6-6V69s-1.909-4.332-3.968-9.549L43,46H29.454c-0.095-.4-0.179-0.79-0.245-1.149l1.8-9.888C33.659,27.37,38,18,38,18h6s9,19.421,9,25S44,71,44,71Z"/>
+    <path class="cls-3" d="M40,69V80l6,6V97H36V18h4s9,19.421,9,25S40,69,40,69Z"/>
+    <path id="Shape_9_copy_2" data-name="Shape 9 copy 2" class="cls-3" d="M33,69V80l-6,6V97H37V18H33s-9,19.421-9,25S33,69,33,69Z"/>
+  </g>
+</svg>
