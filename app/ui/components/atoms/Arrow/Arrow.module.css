@@ -40,6 +40,7 @@
   flex-flow: row nowrap;
   gap: 0.75rem;
   list-style: none;
+  padding: 2rem 0;
 }
 
 /* ANIMATION */
@@ -51,7 +52,7 @@
   75% {
     color: var(--red);
   }
-  
+
   100% {
     color: var(--red);
   }

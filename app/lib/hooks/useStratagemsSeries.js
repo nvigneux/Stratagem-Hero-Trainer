@@ -1,8 +1,26 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 
 function useStratagemsSeries({ initialState, maxLength = 999 }) {
-  const [serieIndex, setSerieIndex] = useState(0);
-  const [serieError, setSerieError] = useState(false);
+  const initialStateSerie = {
+    index: 0,
+    error: false,
+    success: false,
+  };
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'index':
+        return { ...state, index: action.payload };
+      case 'error':
+        return { ...state, error: action.payload };
+      case 'success':
+        return { ...state, success: action.payload };
+      default:
+        return state;
+    }
+  }
+  const [stateSerie, dispatchStateSerie] = useReducer(reducer, initialStateSerie);
+  const { error, success } = stateSerie;
+
   const [series, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
@@ -22,6 +40,7 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
   );
 
   const handleAddToSeries = () => {
+    dispatchStateSerie({ type: 'success', payload: true });
     dispatch({ type: 'add' });
   };
 
@@ -30,21 +49,27 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
   };
 
   useEffect(() => {
-    if (serieError) {
+    if (error) {
       setTimeout(() => {
-        setSerieError(false);
+        dispatchStateSerie({ type: 'error', payload: false });
       }, 250);
     }
-  }, [serieError]);
+  }, [error]);
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        dispatchStateSerie({ type: 'success', payload: false });
+      }, 250);
+    }
+  }, [success]);
 
   return {
     series,
     resetSeries,
     handleAddToSeries,
-    serieIndex,
-    setSerieIndex,
-    serieError,
-    setSerieError,
+    stateSerie,
+    dispatchStateSerie,
   };
 }
 

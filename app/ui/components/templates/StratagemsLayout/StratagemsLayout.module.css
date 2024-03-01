@@ -104,15 +104,8 @@
   grid-column: 2;
   background: #12141a;
   color: #fff;
-  padding: 10px;
+  padding: 1rem;
   min-height: 100vh;
-  gap: 1rem;
-}
-
-.main .cards {
-  display: grid;
-  grid-template-columns: repeat(5, 80px);
-  gap: 1rem;
 }
 
 .active {

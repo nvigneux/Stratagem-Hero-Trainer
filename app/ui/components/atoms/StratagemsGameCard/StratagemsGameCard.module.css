@@ -1,0 +1,55 @@
+.container {
+  --size-card: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-card);
+  height: var(--size-card);
+}
+
+.icon {
+  --size-icon: 55px;
+
+  height: var(--size-icon);
+  width: var(--size-icon);
+}
+
+.active {
+  --size-card: 120px;
+  --border-size: 3px;
+
+  position: relative;
+  top: var(--border-size);
+  border: var(--border-size) solid var(--yellow);
+}
+
+.active .icon {
+  --size-icon: 95px;
+}
+
+.list {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.success .icon{
+  animation: blink-success 0.5s;
+}
+
+/* ANIMATION */
+@keyframes blink-success {
+  0% {
+    opacity: 0.5;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}

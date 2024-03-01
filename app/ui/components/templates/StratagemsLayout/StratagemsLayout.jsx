@@ -7,8 +7,10 @@ import { useMemo } from 'react';
 import styles from './StratagemsLayout.module.css';
 
 // Components
-import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import StratagemsCard from '../../atoms/StratagemsCard/StratagemsCard';
+import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
+import StratagemsGameCard from '../../atoms/StratagemsGameCard/StratagemsGameCard';
+import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import Arrow from '../../atoms/Arrow/Arrow';
 
@@ -16,7 +18,6 @@ import Arrow from '../../atoms/Arrow/Arrow';
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
-import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   const {
@@ -31,9 +32,9 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   );
 
   const {
-    series, handleAddToSeries, resetSeries, serieIndex, setSerieIndex, serieError, setSerieError,
+    series, handleAddToSeries, resetSeries, stateSerie, dispatchStateSerie,
   } = useStratagemsSeries({
-    initialState: filteredStratagemsChecked, maxLength: 5,
+    initialState: filteredStratagemsChecked, maxLength: 6,
   });
 
   /**
@@ -42,14 +43,14 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCheckbox = (name) => {
     handleChange(name);
-    setSerieIndex(0);
+    dispatchStateSerie({ type: 'index', payload: 0 });
     resetSeries();
   };
 
   // Reset the series when the all checkboxes change
   const handleChangeAllCheckbox = () => {
     handleChangeAll();
-    setSerieIndex(0);
+    dispatchStateSerie({ type: 'index', payload: 0 });
     resetSeries();
   };
 
@@ -60,7 +61,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    setSerieIndex(0);
+    dispatchStateSerie({ type: 'index', payload: 0 });
     resetSeries();
   };
 
@@ -69,24 +70,26 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    * @param {string} direction
    */
   const checkActiveSerieCode = (direction) => {
-    const serieDirection = series[0].code[serieIndex];
+    const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) { // direction is correct
-      setSerieIndex((prev) => prev + 1);
+      dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
     } else {
-      setSerieError(true);
+      dispatchStateSerie({ type: 'error', payload: true });
       if (direction === series[0].code[0]) {
-        setSerieIndex(1); // if the direction is the first one, reset the active index to 1
+        // if the direction is the first one, reset the active index to 1
+        dispatchStateSerie({ type: 'index', payload: 1 });
         return;
       }
-      setSerieIndex(0); // direction error reset the active index
+      // direction error reset the active index
+      dispatchStateSerie({ type: 'index', payload: 0 });
       return;
     }
 
-    if (serieIndex === series[0].code.length - 1) {
+    if (stateSerie.index === series[0].code.length - 1) {
       // wait for the last code to be shown
       setTimeout(() => {
         handleAddToSeries();
-        setSerieIndex(0);
+        dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
     }
   };
@@ -171,16 +174,17 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       </div>
 
       <div className={styles.main}>
-        <div className={styles.cards}>
+        <StratagemsGameCard.List>
           {series?.length ? series.map((stratagem, index) => (
-            <StratagemsCard
+            <StratagemsGameCard
             // eslint-disable-next-line react/no-array-index-key
               key={`${stratagem.id}-${index}`}
               name={stratagem.name}
-              code={stratagem.code}
+              active={index === 0}
+              success={stateSerie.success}
             />
           )) : null}
-        </div>
+        </StratagemsGameCard.List>
 
         {series?.length ? (
           <>
@@ -191,8 +195,8 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
                     // eslint-disable-next-line react/no-array-index-key
                   key={`${series[0].name}-${direction}-${index}`}
                   direction={direction}
-                  active={index + 1 <= serieIndex}
-                  error={serieError}
+                  active={index + 1 <= stateSerie.index}
+                  error={stateSerie.error}
                 />
               ))}
             </Arrow.List>
