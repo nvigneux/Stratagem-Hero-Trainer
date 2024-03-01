@@ -1,8 +1,25 @@
 import PropTypes from 'prop-types';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
+
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const fsSinclair = localFont({
+  src: [
+    {
+      path: '../public/fonts/FS Sinclair Regular.woff2',
+      weight: '400',
+    },
+    {
+      path: '../public/fonts/FS Sinclair Medium.woff2',
+      weight: '500',
+    },
+    {
+      path: '../public/fonts/FS Sinclair Bold.woff2',
+      weight: '700',
+    },
+  ],
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +29,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={fsSinclair.className}>{children}</body>
     </html>
   );
 }
