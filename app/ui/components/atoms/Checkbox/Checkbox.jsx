@@ -9,20 +9,29 @@ import PropTypes from 'prop-types';
 import cn from '../../../../lib/cn';
 
 // Styles
-import style from './Checkbox.module.css';
+import styles from './Checkbox.module.css';
 
 const Checkbox = forwardRef(({
   className,
   label,
   size,
   checked,
+  children,
   ...props
 }, ref) => (
-  <label htmlFor={props.id} className={cn([style['checkbox-container'], style[size], 'ui-checkbox', className])}>
-    <input ref={ref} type="checkbox" className={style['checkbox-input']} checked={checked} {...props} />
-    <span className={cn([style['checkbox-checkmark'], 'ui-checkbox-checkmark'])} />
-    {label}
-  </label>
+  !children ? (
+    <label htmlFor={props.id} className={cn([styles['checkbox-container'], styles[size], 'ui-checkbox', className])}>
+      {label ? <span className={styles.label}>{label}</span> : null}
+      <input ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+      <span className={cn([styles['checkbox-checkmark'], 'ui-checkbox-checkmark'])} />
+    </label>
+  )
+    : (
+      <label htmlFor={props.id} className={cn([styles['label-children'], className])}>
+        <input ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+        {children}
+      </label>
+    )
 ));
 
 Checkbox.propTypes = {
@@ -31,6 +40,7 @@ Checkbox.propTypes = {
   label: PropTypes.string,
   checked: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'large']),
+  children: PropTypes.node,
 };
 
 Checkbox.defaultProps = {
@@ -38,6 +48,7 @@ Checkbox.defaultProps = {
   label: null,
   size: 'large',
   checked: null,
+  children: null,
 };
 
 export default Checkbox;

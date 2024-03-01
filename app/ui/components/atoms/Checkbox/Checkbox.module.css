@@ -2,7 +2,8 @@
   --checkbox-large-size: 24px;
   --checkbox-small-size: 16px;
 
-  display: inline-block;
+  display: flex;
+  align-items: center;
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -12,14 +13,13 @@
   position: absolute;
   opacity: 0;
   cursor: pointer;
+  left: 0;
+  right: 0;
 }
 
 .checkbox-checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
   background-color: transparent;
-  border: 1px solid yellow;
+  border: 2px solid var(--grey);
   transition: 0.2s ease-in-out;
   transition-property: background-color;
 }
@@ -31,12 +31,6 @@
 .large .checkbox-checkmark {
   height: var(--checkbox-large-size);
   width: var(--checkbox-large-size);
-  border-radius: 5px;
-}
-
-.checkbox-container.large {
-  padding-left: calc(var(--checkbox-large-size) + 4px);
-  font: var(--font-p1-default);
 }
 
 .small.checkbox-container {
@@ -46,20 +40,21 @@
 .small .checkbox-checkmark {
   height: var(--checkbox-small-size);
   width: var(--checkbox-small-size);
-  border-radius: 4px;
 }
 
-.checkbox-container.small {
-  padding-left: calc(var(--checkbox-small-size) + 4px);
-  font: var(--font-p2-default);
+.label {
+  font-size: 1rem;
+  font-weight: 500;
+  padding-right: 0.75rem;
+  text-transform: uppercase;
 }
 
-.checkbox-checkmark svg{
+.checkbox-checkmark svg {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--neutral-00);
+  color: var(--white);
 }
 
 .small .checkbox-checkmark svg {
@@ -67,7 +62,7 @@
 }
 
 .checkbox-container input:checked ~ .checkbox-checkmark {
-  background-color: yellow;
+  background-color: transparent;
 }
 
 .checkbox-container input:checked ~ .checkbox-checkmark::after {
@@ -77,8 +72,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-image: url('data:image/svg+xml;utf8,<svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.4123 0.389189C14.8954 -0.12973 14.12 -0.12973 13.6031 0.389189L6.63846 7.38649L2.69692 3.42973C2.18 2.91081 1.40462 2.91081 0.887692 3.42973C0.370769 3.94865 0.370769 4.72703 0.887692 5.24595L5.73385 10.1108C5.99231 10.3703 6.25077 10.5 6.63846 10.5C7.02615 10.5 7.28462 10.3703 7.54308 10.1108L15.4123 2.20541C15.9292 1.68649 15.9292 0.908108 15.4123 0.389189Z" fill="%23FFFFFF"/></svg>');
-  background-size:contain;
+  background-image: url('data:image/svg+xml;utf8,<svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.4123 0.389189C14.8954 -0.12973 14.12 -0.12973 13.6031 0.389189L6.63846 7.38649L2.69692 3.42973C2.18 2.91081 1.40462 2.91081 0.887692 3.42973C0.370769 3.94865 0.370769 4.72703 0.887692 5.24595L5.73385 10.1108C5.99231 10.3703 6.25077 10.5 6.63846 10.5C7.02615 10.5 7.28462 10.3703 7.54308 10.1108L15.4123 2.20541C15.9292 1.68649 15.9292 0.908108 15.4123 0.389189Z" fill="white"/></svg>');
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -91,3 +86,11 @@
   height: 10px;
 }
 
+.label-children {
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.label-children:hover {
+  opacity: 0.9;
+}
