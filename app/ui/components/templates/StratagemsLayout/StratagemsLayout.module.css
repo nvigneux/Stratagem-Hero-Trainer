@@ -114,7 +114,7 @@
 }
 
 .main::before {
-  --size-logo : 70vh;
+  --size-logo: 70vh;
 
   position: absolute;
   content: url("/logo_super_earth.svg");
@@ -134,4 +134,24 @@
 .checkboxAll {
   padding: 2rem 1rem 0;
   align-self: flex-end;
+}
+
+.roundScoreContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 3rem;
+  user-select: none;
+}
+
+.activeStratagemsInfo {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  user-select: none;
 }

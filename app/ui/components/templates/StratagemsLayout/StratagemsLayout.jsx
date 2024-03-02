@@ -20,6 +20,8 @@ import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
+import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
+import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 
 const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
@@ -190,11 +192,15 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       </div>
 
       <div className={styles.main}>
-        <div>
-          {`${stateSerie.round}, ${stateSerie.score} ${stateSerie.bonusRound} ${stateSerie.bonusRestingTime} ${stateSerie.bonusPerfectRound}`}
-        </div>
-        <div>
-          {`${stateSerie.nbError}, ${stateSerie.nbSuccess}`}
+        <div className={styles.roundScoreContainer}>
+          <RoundInfo roundNb={stateSerie.round} />
+          <ScoreInfo score={stateSerie.score} />
+          {/* <div>
+            {`${stateSerie.bonusRound} ${stateSerie.bonusRestingTime} ${stateSerie.bonusPerfectRound}`}
+          </div>
+          <div>
+            {`${stateSerie.nbError}, ${stateSerie.nbSuccess}`}
+          </div> */}
         </div>
 
         <StratagemsGameCard.List>
@@ -213,7 +219,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
         </StratagemsGameCard.List>
 
         {series?.length ? (
-          <>
+          <div className={styles.activeStratagemsInfo}>
             <StratagemsName name={series[0].name} />
             <Arrow.List>
               {series[0].code.map((direction, index) => (
@@ -226,7 +232,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
                 />
               ))}
             </Arrow.List>
-          </>
+          </div>
         ) : <StratagemsName name="Traitor detected !" />}
 
         {series?.length ? (
