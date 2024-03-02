@@ -1,4 +1,4 @@
-const categories = [
+const CATEGORIES = [
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
     name: 'Patriotic Administration Center',
@@ -62,12 +62,12 @@ const PATRIOTIC_ADMINISTRATION_CENTER = [
   },
   {
     name: 'Autocannon',
-    code: ['down', 'right', 'left', 'down', 'down', 'up', 'up', 'right'],
+    code: ['down', 'left', 'down', 'up', 'up', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Railgun',
-    code: ['down', 'right', 'left', 'down', 'down', 'up', 'left', 'down', 'right'],
+    code: ['down', 'right', 'down', 'up', 'left', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   },
   {
@@ -90,12 +90,12 @@ const ORBITAL_CANNONS = [
   },
   {
     name: 'Orbital 120MM HE Barrage',
-    code: ['right', 'down', 'down', 'left', 'down', 'right', 'down', 'down'],
+    code: ['right', 'right', 'down', 'left', 'right', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Orbital 380MM HE Barrage',
-    code: ['right', 'down', 'down', 'up', 'up', 'left', 'down', 'down', 'down'],
+    code: ['right', 'down', 'up', 'up', 'left', 'down', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
   },
   {
@@ -105,12 +105,12 @@ const ORBITAL_CANNONS = [
   },
   {
     name: 'Orbital Laser',
-    code: ['right', 'up', 'left', 'up', 'right', 'left'],
+    code: ['right', 'down', 'up', 'right', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Orbital Railcannon Strike',
-    code: ['right', 'down', 'up', 'down', 'left'],
+    code: ['right', 'up', 'down', 'down', 'right'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
   },
 ];
@@ -128,7 +128,7 @@ const HANGER = [
   },
   {
     name: 'Eagle Cluster Bomb',
-    code: ['up', 'right', 'down', 'down', 'right', 'down'],
+    code: ['up', 'right', 'down', 'down', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
   {
@@ -148,12 +148,12 @@ const HANGER = [
   },
   {
     name: 'Eagle 110MM Rocket Pods',
-    code: ['up', 'down', 'up', 'left'],
+    code: ['up', 'right', 'up', 'left'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Eagle 500KG Bomb',
-    code: ['up', 'left', 'down', 'down', 'down'],
+    code: ['up', 'right', 'down', 'down', 'down'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
 ];
@@ -181,12 +181,12 @@ const BRIDGE = [
   },
   {
     name: 'HMG Emplacement',
-    code: ['up', 'down', 'left', 'right', 'right', 'left'],
+    code: ['down', 'up', 'left', 'right', 'right', 'left'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
   {
     name: 'Shield Generator Relay',
-    code: ['down', 'up', 'left', 'right', 'left', 'down'],
+    code: ['down', 'down', 'left', 'right', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
   {
@@ -199,7 +199,7 @@ const BRIDGE = [
 const ENGINEERING_BAY = [
   {
     name: 'Anti-Personnel Minefield',
-    code: ['down', 'left', 'down', 'up', 'right'],
+    code: ['down', 'left', 'up', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
   {
@@ -209,7 +209,7 @@ const ENGINEERING_BAY = [
   },
   {
     name: 'Grenade Launcher',
-    code: ['down', 'left', 'down', 'up', 'left', 'down', 'down'],
+    code: ['down', 'left', 'up', 'left', 'down'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
   {
@@ -224,22 +224,22 @@ const ENGINEERING_BAY = [
   },
   {
     name: '“Guard Dog” Rover',
-    code: ['down', 'left', 'down', 'up', 'left', 'down', 'down'],
+    code: ['down', 'up', 'left', 'up', 'right', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Ballistic Shield Backpack',
-    code: ['down', 'left', 'up', 'up', 'right'],
+    code: ['down', 'left', 'down', 'down', 'up', 'left'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Arc Thrower',
-    code: ['down', 'right', 'up', 'left', 'down'],
+    code: ['down', 'right', 'down', 'up', 'left', 'left'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
   {
     name: 'Shield Generator Pack',
-    code: ['down', 'up', 'left', 'down', 'right', 'right'],
+    code: ['down', 'up', 'left', 'right', 'left', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
 ];
@@ -247,12 +247,12 @@ const ENGINEERING_BAY = [
 const ROBOTICS_WORKSHOP = [
   {
     name: 'Machine Gun Sentry',
-    code: ['down', 'up', 'right', 'down', 'right', 'down', 'up'],
+    code: ['down', 'up', 'right', 'right', 'up'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
   {
     name: 'Gatling Sentry',
-    code: ['down', 'up', 'right', 'left', 'down'],
+    code: ['down', 'up', 'right', 'left'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
   {
@@ -262,7 +262,7 @@ const ROBOTICS_WORKSHOP = [
   },
   {
     name: '“Guard Dog”',
-    code: ['down', 'up', 'left', 'down', 'up', 'right', 'down'],
+    code: ['down', 'up', 'left', 'up', 'right', 'down'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
   {
@@ -277,7 +277,7 @@ const ROBOTICS_WORKSHOP = [
   },
   {
     name: 'EMS Mortar Sentry',
-    code: ['down', 'down', 'up', 'up', 'left'],
+    code: ['down', 'up', 'right', 'down', 'right'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
 ];
@@ -299,11 +299,6 @@ const GENERAL_STRATEGEMS = [
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
   {
-    name: 'Upload Data',
-    code: ['left', 'right', 'up', 'up', 'up'],
-    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-  },
-  {
     name: 'Hellbomb',
     code: ['down', 'up', 'left', 'down', 'up', 'right', 'down', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
@@ -315,7 +310,7 @@ const GENERAL_STRATEGEMS = [
   },
 ];
 
-const stratagems = [
+const STRATAGEMS = [
   ...PATRIOTIC_ADMINISTRATION_CENTER,
   ...ORBITAL_CANNONS,
   ...HANGER,
@@ -326,6 +321,6 @@ const stratagems = [
 ];
 
 module.exports = {
-  categories,
-  stratagems,
+  CATEGORIES,
+  STRATAGEMS,
 };

@@ -1,8 +1,8 @@
 const { db } = require('@vercel/postgres');
 
 const {
-  categories,
-  stratagems,
+  CATEGORIES,
+  STRATAGEMS,
 } = require('../app/lib/placeholder-data-helldivers.js');
 
 async function seedStratagemsCategories(client) {
@@ -17,7 +17,7 @@ async function seedStratagemsCategories(client) {
 
     // Insert data into the "categories" table
     const insertedCategories = await Promise.all(
-      categories.map(
+      CATEGORIES.map(
         (categorie) => client.sql`
             INSERT INTO categories (id, name)
             VALUES (${categorie.id}, ${categorie.name})
@@ -57,7 +57,7 @@ async function seedStatagems(client) {
 
     // Insert data into the "stratagems" table
     const insertedStratagems = await Promise.all(
-      stratagems.map(
+      STRATAGEMS.map(
         (stratagem) => client.sql`
           INSERT INTO stratagems (name, code, category_id, image_url)
           VALUES (${stratagem.name}, ${JSON.stringify(stratagem.code)}, ${stratagem.category_id}, ${stratagem.image_url})
