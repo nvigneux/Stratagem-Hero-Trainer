@@ -13,11 +13,16 @@ import StratagemsGameCard from '../../atoms/StratagemsGameCard/StratagemsGameCar
 import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import Arrow from '../../atoms/Arrow/Arrow';
+import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 
 // Hooks
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
+import useTimer from '../../../../lib/hooks/useTimer';
+
+const TIMER_DURATION = 10;
+const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   const {
@@ -32,10 +37,14 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   );
 
   const {
-    series, handleAddToSeries, resetSeries, stateSerie, dispatchStateSerie,
+    series, resetSeries, handleSuccessStratagem, stateSerie, dispatchStateSerie,
   } = useStratagemsSeries({
     initialState: filteredStratagemsChecked, maxLength: 6,
   });
+
+  const {
+    progress, isRunning, startTimer, resetTimer, addTime,
+  } = useTimer(TIMER_DURATION, TIMER_DURATION, resetSeries);
 
   /**
    * Handle the change of a single checkbox
@@ -43,15 +52,17 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCheckbox = (name) => {
     handleChange(name);
-    dispatchStateSerie({ type: 'index', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore', payload: 0 });
     resetSeries();
+    resetTimer();
   };
 
   // Reset the series when the all checkboxes change
   const handleChangeAllCheckbox = () => {
     handleChangeAll();
-    dispatchStateSerie({ type: 'index', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore', payload: 0 });
     resetSeries();
+    resetTimer();
   };
 
   /**
@@ -61,8 +72,9 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    dispatchStateSerie({ type: 'index', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore', payload: 0 });
     resetSeries();
+    resetTimer();
   };
 
   /**
@@ -72,23 +84,26 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   const checkActiveSerieCode = (direction) => {
     const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) { // direction is correct
+      if (!isRunning) startTimer();
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
     } else {
       dispatchStateSerie({ type: 'error', payload: true });
       if (direction === series[0].code[0]) {
-        // if the direction is the first one, reset the active index to 1
-        dispatchStateSerie({ type: 'index', payload: 1 });
+        dispatchStateSerie({ type: 'index', payload: 1 }); // if the direction is the first one, reset the active index to 1
         return;
       }
-      // direction error reset the active index
-      dispatchStateSerie({ type: 'index', payload: 0 });
+      dispatchStateSerie({ type: 'index', payload: 0 }); // direction error reset the active index
       return;
     }
 
     if (stateSerie.index === series[0].code.length - 1) {
-      // wait for the last code to be shown
-      setTimeout(() => {
-        handleAddToSeries();
+      setTimeout(() => { // wait for the last code arrow to be seen correctly
+        if (series.length === 1) {
+          resetTimer();
+        } else {
+          addTime(TIME_BONUS);
+        }
+        handleSuccessStratagem(progress);
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
     }
@@ -174,16 +189,26 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       </div>
 
       <div className={styles.main}>
+        <div>
+          {`${stateSerie.round}, ${stateSerie.score} ${stateSerie.bonusRound} ${stateSerie.bonusRestingTime} ${stateSerie.bonusPerfectRound}`}
+        </div>
+        <div>
+          {`${stateSerie.nbError}, ${stateSerie.nbSuccess}`}
+        </div>
+
         <StratagemsGameCard.List>
-          {series?.length ? series.map((stratagem, index) => (
-            <StratagemsGameCard
-            // eslint-disable-next-line react/no-array-index-key
-              key={`${stratagem.id}-${index}`}
-              name={stratagem.name}
-              active={index === 0}
-              success={stateSerie.success}
-            />
-          )) : null}
+          {series?.length ? series.map((stratagem, index) => {
+            if (index >= 6) return null;
+            return (
+              <StratagemsGameCard
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${stratagem.id}-${index}`}
+                name={stratagem.name}
+                active={index === 0}
+                success={stateSerie.success}
+              />
+            );
+          }) : <div />}
         </StratagemsGameCard.List>
 
         {series?.length ? (
@@ -201,7 +226,9 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
               ))}
             </Arrow.List>
           </>
-        ) : null}
+        ) : <StratagemsName name="Traitor detected !" />}
+
+        <StratagemsTimer progress={progress} total={TIMER_DURATION} />
       </div>
     </main>
   );

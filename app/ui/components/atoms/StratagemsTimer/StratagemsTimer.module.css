@@ -1,0 +1,21 @@
+.timer {
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  background: var(--grey);
+  color: var(--black);
+  width: 100%;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.inner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow);
+  height: 100%;
+  position: absolute;
+  left: 0;
+}

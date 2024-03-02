@@ -33,6 +33,7 @@
   flex-flow: row nowrap;
   align-items: center;
   gap: 1rem;
+  width: 600px;
 }
 
 .success .icon{
