@@ -1,32 +1,37 @@
 .icon {
   --size-icon: 40px;
   --color-icon: #fff;
+  --rotation: 0deg;
 
   height: var(--size-icon);
   width: var(--size-icon);
   color: var(--color-icon);
+  transform: rotate(var(--rotation));
+
 
   /* transition: color 0.1s ease-in-out; */
 }
 
 .right {
-  transform: rotate(90deg);
+  --rotation: 90deg;
 }
 
 .left {
-  transform: rotate(-90deg);
+  --rotation: -90deg;
 }
 
 .up {
-  transform: rotate(0deg);
+  --rotation: 0deg;
 }
 
 .down {
-  transform: rotate(180deg);
+  --rotation: 180deg;
 }
 
 .active {
   --color-icon: var(--yellow);
+
+  animation: size-success 0.2s;
 }
 
 .error {
@@ -55,5 +60,19 @@
 
   100% {
     color: var(--red);
+  }
+}
+
+@keyframes size-success {
+  0% {
+    transform: scale(1) rotate(var(--rotation));
+  }
+
+  50% {
+    transform: scale(1.1) rotate(var(--rotation));
+  }
+
+  100% {
+    transform: scale(1) rotate(var(--rotation));
   }
 }
