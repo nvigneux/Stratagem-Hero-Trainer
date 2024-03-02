@@ -265,7 +265,6 @@ export async function fetchStratagems() {
     stratagems.id,
     stratagems.code,
     stratagems.name,
-    stratagems.image_url,
     JSON_BUILD_OBJECT('id', categories.id, 'name', categories.name) AS category
     FROM 
         stratagems
@@ -273,7 +272,10 @@ export async function fetchStratagems() {
         categories ON stratagems.category_id = categories.id;
     `;
 
-    return data.rows;
+    return data.rows.map((stratagem) => ({
+      ...stratagem,
+      code: JSON.parse(stratagem.code),
+    }));
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch stratagems.');

@@ -8,6 +8,8 @@ export default async function Page() {
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
 
+  console.log(stratagems);
+
   /**
    * Groups the stratagems by their category.
    */
