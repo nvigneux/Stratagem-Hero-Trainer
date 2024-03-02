@@ -5,6 +5,7 @@
 }
 
 .button {
+  --button-size: 75px;
   --bg-color: #f1f1f1;
   --box-color: #e2e2e2;
   --color: #525252;
@@ -13,8 +14,8 @@
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
-  width: 75px;
-  height: 75px;
+  width: var(--button-size);
+  height: 65px;
   border-radius: 8px;
   border: none;
   box-shadow: 0 5px 0 0 var(--box-color);
@@ -73,4 +74,10 @@
 
 .key-right {
   grid-column: 3 / span 1;
+}
+
+@media (width <= 340px) {
+  .button {
+    --button-size: 60px;
+  }
 }

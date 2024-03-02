@@ -106,7 +106,7 @@
   grid-column: 2;
   background: #12141a;
   color: #fff;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem;
   min-height: 100dvh;
   position: relative;
   min-width: var(--width-side);
