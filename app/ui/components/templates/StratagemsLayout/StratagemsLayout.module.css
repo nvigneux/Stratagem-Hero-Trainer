@@ -106,6 +106,25 @@
   color: #fff;
   padding: 1rem;
   min-height: 100vh;
+  position: relative;
+}
+
+.main > * {
+  z-index: 1;
+}
+
+.main::before {
+  --size-logo : 70vh;
+
+  position: absolute;
+  content: url("/logo_super_earth.svg");
+  width: var(--size-logo);
+  height: var(--size-logo);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.02;
+  z-index: 0;
+  color: var(--white);
 }
 
 .active {
