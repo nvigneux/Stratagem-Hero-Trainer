@@ -6,20 +6,23 @@ import styles from './StratagemsKeyboardMobile.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 
+// Components
+import { Picto } from '../Picto/Picto';
+
 function StratagemsKeyboardMobile() {
   return (
     <div className={styles.keyboardContainer}>
       <StratagemsKeyboardMobile.Button keyName="up" keydownEvent={{ code: 'ArrowUp' }}>
-        Up
+        <Picto icon="arrow" className={cn([styles.icon, styles.up])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button keyName="left" keydownEvent={{ code: 'ArrowLeft' }}>
-        Left
+        <Picto icon="arrow" className={cn([styles.icon, styles.left])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button keyName="down" keydownEvent={{ code: 'ArrowDown' }}>
-        Down
+        <Picto icon="arrow" className={cn([styles.icon, styles.down])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button keyName="right" keydownEvent={{ code: 'ArrowRight' }}>
-        Right
+        <Picto icon="arrow" className={cn([styles.icon, styles.right])} />
       </StratagemsKeyboardMobile.Button>
     </div>
   );
