@@ -32,7 +32,7 @@ const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
-  const [openStratagems, setOpenStratagems] = useState(false);
+  const [openStratagems, setOpenStratagems] = useState(true);
 
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,

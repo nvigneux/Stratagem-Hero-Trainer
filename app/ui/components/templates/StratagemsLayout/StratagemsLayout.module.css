@@ -3,9 +3,9 @@
 
   display: grid;
   grid-template-columns: var(--width-side) calc(100% - var(--width-side));
-  overflow: hidden;
   max-height: 100dvh;
   transition: grid-template-columns 0.5s;
+  overflow: hidden auto;
 }
 
 .side {
@@ -23,14 +23,17 @@
   transition: width 0.5s;
 }
 
+.container::-webkit-scrollbar,
 .side::-webkit-scrollbar {
   width: 8px;
 }
 
+.container::-webkit-scrollbar-track,
 .side::-webkit-scrollbar-track {
   background-color: #262626;
 }
 
+.container::-webkit-scrollbar-thumb,
 .side::-webkit-scrollbar-thumb {
   background-color: var(--taupe);
   border-top: 2px solid var(--yellow);
