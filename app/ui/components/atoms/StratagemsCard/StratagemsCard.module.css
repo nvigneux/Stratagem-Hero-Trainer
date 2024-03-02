@@ -21,7 +21,7 @@
 
 .card.active{
   --background: #4e4d43;
-  --border: #fff;
+  --border: var(--white);
   --shadow: #3e3b20;
 }
 

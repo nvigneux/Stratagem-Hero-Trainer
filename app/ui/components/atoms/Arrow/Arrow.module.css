@@ -1,6 +1,6 @@
 .icon {
   --size-icon: 40px;
-  --color-icon: #fff;
+  --color-icon: var(--white);
   --rotation: 0deg;
 
   height: var(--size-icon);

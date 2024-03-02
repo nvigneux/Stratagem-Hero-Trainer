@@ -13,7 +13,7 @@
   flex-flow: column wrap;
   grid-column: 1;
   background: #1c1c1c;
-  color: #fff;
+  color: var(--white);
   overflow: hidden scroll;
   height: 100%;
   position: fixed;
@@ -107,8 +107,8 @@
   align-items: center;
   justify-content: center;
   grid-column: 2;
-  background: #12141a;
-  color: #fff;
+  background: var(--blue-night);
+  color: var(--white);
   padding: 3rem 1rem 1rem;
   min-height: 100dvh;
   position: relative;
@@ -121,7 +121,7 @@
 
 .main::before {
   position: absolute;
-  content: url("/logo_super_earth.svg");
+  content: url("/assets/logo_super_earth.svg");
   max-width: 780px;
   width: 50vw;
   top: 50%;
@@ -129,10 +129,6 @@
   opacity: 0.02;
   z-index: 0;
   color: var(--white);
-}
-
-.active {
-  background: green;
 }
 
 .checkboxAll {

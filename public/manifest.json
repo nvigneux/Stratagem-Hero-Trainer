@@ -1,0 +1,22 @@
+{
+  "name": "Stratagems Hero Trainer - Helldivers™ 2",
+  "short_name": "Stratagems Hero Trainer",
+  "description": "Turning average Joes into Stratagem Superstars, Because even Bugs Fear a Well-Placed Stratagem !",
+  "icons": [
+    {
+      "src": "/assets/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#fe0",
+  "background_color": "#12141a",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

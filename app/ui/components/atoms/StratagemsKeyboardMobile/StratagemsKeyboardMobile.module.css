@@ -21,7 +21,7 @@
   box-shadow: 0 5px 0 0 var(--box-color);
   background: var(--bg-color);
   color: var(--color);
-  border-bottom: 4px solid #12141a;
+  border-bottom: 4px solid var(--blue-night);
 }
 
 .button:active {
