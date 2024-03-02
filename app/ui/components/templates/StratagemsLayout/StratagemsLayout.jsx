@@ -109,12 +109,12 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
     }
 
     if (stateSerie.index === series[0].code.length - 1) {
+      if (series.length === 1) {
+        resetTimer();
+      } else {
+        addTime(TIME_BONUS);
+      }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
-        if (series.length === 1) {
-          resetTimer();
-        } else {
-          addTime(TIME_BONUS);
-        }
         handleSuccessStratagem(progress);
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
