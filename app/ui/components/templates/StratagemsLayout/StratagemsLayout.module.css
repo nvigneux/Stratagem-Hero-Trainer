@@ -157,16 +157,30 @@
   user-select: none;
 }
 
-.opened{
+.opened {
   --width-side: 407px;
 }
 
-.closed{
+.closed {
   --width-side: 0px;
 }
 
+.mobileFocus {
+  display: none;
+}
+
 @media (width <= 768px) {
+  .mobileFocus {
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   .opened {
     --width-side: 322px;
+  }
+
+  .main::before {
+    width: 80vw;
   }
 }

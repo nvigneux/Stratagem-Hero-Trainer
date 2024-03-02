@@ -14,15 +14,18 @@ import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCat
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import Arrow from '../../atoms/Arrow/Arrow';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
+import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
+import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
+import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
+import StratagemsMobileFocus from '../../atoms/StratagemsMobileFocus/StratagemsMobileFocus';
 
 // Hooks
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
-import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
-import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
-import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
+
+// Lib
 import cn from '../../../../lib/cn';
 
 const TIMER_DURATION = 10;
@@ -121,6 +124,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
+    alert(event.code);
     switch (event.code) {
       case 'ArrowUp':
       case 'KeyW':
@@ -246,6 +250,10 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
         {series?.length ? (
           <StratagemsTimer progress={progress} total={TIMER_DURATION} />
         ) : null}
+
+        <div className={cn([styles.mobile, styles.mobileFocus])}>
+          <StratagemsMobileFocus />
+        </div>
       </div>
     </main>
   );
