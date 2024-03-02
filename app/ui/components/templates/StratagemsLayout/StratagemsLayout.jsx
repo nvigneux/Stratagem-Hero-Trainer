@@ -251,9 +251,11 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
           <StratagemsTimer progress={progress} total={TIMER_DURATION} />
         ) : null}
 
-        <div className={styles.mobileKeyboard}>
-          <StratagemsKeyboardMobile />
-        </div>
+        {series?.length ? (
+          <div className={styles.mobileKeyboard}>
+            <StratagemsKeyboardMobile />
+          </div>
+        ) : null}
       </div>
     </main>
   );
