@@ -2,6 +2,7 @@
 
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
+import { isDesktop, isMobile } from 'react-device-detect';
 
 // Styles
 import styles from './StratagemsLayout.module.css';
@@ -32,7 +33,8 @@ const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
-  const [openStratagems, setOpenStratagems] = useState(true);
+  const [openStratagems, setOpenStratagems] = useState(isDesktop || false);
+  console.log(isDesktop, isMobile);
 
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
