@@ -28,10 +28,9 @@ export const availablePictos = {
   'Shield Generator Pack': dynamic(() => import('../../../../../public/icons/stratagems/Engineering Bay/Shield Generator Pack.svg')),
 
   // General Stratagems
-  'Super Earth Flag': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/Resupply.svg')),
+  'Resupply': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/Resupply.svg')),
   'Reinforce': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/Reinforce.svg')),
   'SOS Beacon': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/SOS Beacon.svg')),
-  'Upload Data': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/Upload Data.svg')),
   'Hellbomb': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/Hellbomb.svg')),
   'SEAF Artillery': dynamic(() => import('../../../../../public/icons/stratagems/General Stratagems/SEAF Artillery.svg')),
 
@@ -56,7 +55,7 @@ export const availablePictos = {
 
   // Patriotic Administration Center
   'Machine Gun': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Machine Gun.svg')),
-  'Anti-Material Rifle': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Anti-Materiel Rifle.svg')),
+  'Anti-Materiel Rifle': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Anti-Materiel Rifle.svg')),
   'Stalwart': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Stalwart.svg')),
   'Expendable Anti-Tank': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Expendable Anti-Tank.svg')),
   'Recoilless Rifle': dynamic(() => import('../../../../../public/icons/stratagems/Patriotic Administration Center/Recoilless Rifle.svg')),
