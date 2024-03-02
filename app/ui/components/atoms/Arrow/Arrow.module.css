@@ -48,6 +48,16 @@
   padding: 2rem 0;
 }
 
+@media (width <= 768px) {
+  .icon{
+    --size-icon: 30px;
+  }
+
+  .list {
+    gap: 0.5rem;
+  }
+}
+
 /* ANIMATION */
 @keyframes blink-error {
   0% {

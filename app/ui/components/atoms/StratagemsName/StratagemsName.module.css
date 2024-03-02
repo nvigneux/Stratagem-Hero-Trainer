@@ -14,4 +14,13 @@
   text-transform: uppercase;
   color: var(--black);
   user-select: none;
+  min-width: 275px;
+  text-align: center;
+}
+
+
+@media (width <= 768px) {
+  .name {
+    font-size: 1.25rem;
+  }
 }

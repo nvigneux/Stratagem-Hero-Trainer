@@ -1,3 +1,7 @@
+.container {
+  position: relative;
+}
+
 .label {
   font-size: 2rem;
   font-weight: 500;
@@ -12,4 +16,56 @@
   color: var(--yellow);
   line-height: 1;
   text-align: right;
+}
+
+.scoreDetails {
+  position: absolute;
+  min-width: 180px;
+  transform: translateY(-0%);
+  right: -0.5rem;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  color: var(--white);
+  font-size: 1rem;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.1s ease, transform 0.3s ease 0.15s;
+}
+
+.bonus{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.bonusValue{
+  min-width: 30px;
+  text-align: right;
+  color: var(--yellow);
+}
+
+.displayBonus{
+  transform: translateY(-110%);
+  opacity: 1;
+  transition: opacity 0.3s ease 0.15s, transform 0.3s ease;
+}
+
+@media (width <= 768px) {
+  .label {
+    font-size: 1.5rem;
+  }
+
+  .score {
+    font-size: 2.5rem;
+  }
+
+  .scoreDetails {
+    min-width: 150px;
+    right: -0.25rem;
+    font-size: 0.75rem;
+  }
 }

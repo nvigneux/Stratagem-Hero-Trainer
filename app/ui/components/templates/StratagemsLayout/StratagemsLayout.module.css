@@ -2,9 +2,10 @@
   --width-side: 407px;
 
   display: grid;
-  grid-template-columns: var(--width-side) 1fr;
+  grid-template-columns: var(--width-side) calc(100% - var(--width-side));
   overflow: hidden;
   max-height: 100vh;
+  transition: grid-template-columns 0.5s;
 }
 
 .side {
@@ -19,6 +20,7 @@
   left: 0;
   width: var(--width-side);
   scrollbar-gutter: stable;
+  transition: width 0.5s;
 }
 
 .side::-webkit-scrollbar {
@@ -107,6 +109,7 @@
   padding: 1rem;
   min-height: 100vh;
   position: relative;
+  min-width: var(--width-side);
 }
 
 .main > * {
@@ -114,12 +117,10 @@
 }
 
 .main::before {
-  --size-logo: 70vh;
-
   position: absolute;
   content: url("/logo_super_earth.svg");
-  width: var(--size-logo);
-  height: var(--size-logo);
+  max-width: 780px;
+  width: 50vw;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0.02;
@@ -148,10 +149,24 @@
 
 .activeStratagemsInfo {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
   width: 100%;
   margin-bottom: 2rem;
   user-select: none;
+}
+
+.opened{
+  --width-side: 407px;
+}
+
+.closed{
+  --width-side: 0px;
+}
+
+@media (width <= 768px) {
+  .opened {
+    --width-side: 322px;
+  }
 }

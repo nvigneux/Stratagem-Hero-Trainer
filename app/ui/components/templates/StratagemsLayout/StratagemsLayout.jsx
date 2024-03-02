@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 // Styles
 import styles from './StratagemsLayout.module.css';
@@ -22,11 +22,15 @@ import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
+import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
+import cn from '../../../../lib/cn';
 
 const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
+  const [openStratagems, setOpenStratagems] = useState(true);
+
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
   } = useCheckboxes(
@@ -141,7 +145,11 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   useEventListener('keydown', keydownDirectionHandler);
 
   return (
-    <main className={styles.container}>
+    <main className={cn([styles.container, openStratagems ? styles.opened : styles.closed])}>
+      <ButtonSideStratagems
+        onClick={() => setOpenStratagems(!openStratagems)}
+        isOpened={openStratagems}
+      />
       <div className={styles.side}>
         <StratagemsCategories>
           <Checkbox
@@ -194,13 +202,13 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       <div className={styles.main}>
         <div className={styles.roundScoreContainer}>
           <RoundInfo roundNb={stateSerie.round} />
-          <ScoreInfo score={stateSerie.score} />
-          {/* <div>
-            {`${stateSerie.bonusRound} ${stateSerie.bonusRestingTime} ${stateSerie.bonusPerfectRound}`}
-          </div>
-          <div>
-            {`${stateSerie.nbError}, ${stateSerie.nbSuccess}`}
-          </div> */}
+          <ScoreInfo
+            score={stateSerie.score}
+            bonusRound={stateSerie.bonusRound}
+            bonusRestingTime={stateSerie.bonusRestingTime}
+            bonusPerfectRound={stateSerie.bonusPerfectRound}
+            displayBonus={!isRunning && stateSerie.score > 0}
+          />
         </div>
 
         <StratagemsGameCard.List>

@@ -34,3 +34,9 @@
   grid-template-columns: repeat(4, 80px);
   gap: 5px;
 }
+
+@media (width <= 768px) {
+  .cards {
+    grid-template-columns: repeat(3, 80px);
+  }
+}

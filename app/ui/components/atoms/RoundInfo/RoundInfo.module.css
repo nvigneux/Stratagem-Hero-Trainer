@@ -10,3 +10,13 @@
   color: var(--yellow);
   line-height: 1;
 }
+
+@media (width <= 768px) {
+  .label {
+    font-size: 1.25rem;
+  }
+
+  .round {
+    font-size: 2rem;
+  }
+}
