@@ -17,7 +17,7 @@ import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
-import StratagemsMobileFocus from '../../atoms/StratagemsMobileFocus/StratagemsMobileFocus';
+import StratagemsKeyboardMobile from '../../atoms/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
 
 // Hooks
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
@@ -32,7 +32,7 @@ const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
-  const [openStratagems, setOpenStratagems] = useState(true);
+  const [openStratagems, setOpenStratagems] = useState(false);
 
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
@@ -61,7 +61,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCheckbox = (name) => {
     handleChange(name);
-    dispatchStateSerie({ type: 'resetScore', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore' });
     resetSeries();
     resetTimer();
   };
@@ -69,7 +69,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   // Reset the series when the all checkboxes change
   const handleChangeAllCheckbox = () => {
     handleChangeAll();
-    dispatchStateSerie({ type: 'resetScore', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore' });
     resetSeries();
     resetTimer();
   };
@@ -81,7 +81,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    dispatchStateSerie({ type: 'resetScore', payload: 0 });
+    dispatchStateSerie({ type: 'resetScore' });
     resetSeries();
     resetTimer();
   };
@@ -124,7 +124,6 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
-    alert(event.code);
     switch (event.code) {
       case 'ArrowUp':
       case 'KeyW':
@@ -211,6 +210,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
             bonusRound={stateSerie.bonusRound}
             bonusRestingTime={stateSerie.bonusRestingTime}
             bonusPerfectRound={stateSerie.bonusPerfectRound}
+            bestScore={stateSerie.bestScore}
             displayBonus={!isRunning && stateSerie.score > 0}
           />
         </div>
@@ -251,8 +251,8 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
           <StratagemsTimer progress={progress} total={TIMER_DURATION} />
         ) : null}
 
-        <div className={cn([styles.mobile, styles.mobileFocus])}>
-          <StratagemsMobileFocus />
+        <div className={styles.mobileKeyboard}>
+          <StratagemsKeyboardMobile />
         </div>
       </div>
     </main>

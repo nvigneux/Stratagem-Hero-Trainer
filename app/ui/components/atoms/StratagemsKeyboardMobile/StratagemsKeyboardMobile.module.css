@@ -1,0 +1,30 @@
+.keyboardContainer{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.button {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+}
+
+.key-up {
+  grid-column: 2 / span 1;
+}
+
+.key-down {
+  grid-column: 2 / span 1;
+}
+
+.key-left {
+  grid-column: 1 / span 1;
+}
+
+.key-right {
+  grid-column: 3 / span 1;
+}

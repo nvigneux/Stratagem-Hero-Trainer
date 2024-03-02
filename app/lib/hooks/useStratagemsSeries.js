@@ -11,6 +11,7 @@ const initialStateSerie = {
   bonusRound: 0,
   bonusPerfectRound: 0,
   bonusRestingTime: 0,
+  bestScore: 0,
 };
 
 /**
@@ -39,7 +40,10 @@ function reducerStateSerie(state, action) {
     case 'score':
       return { ...state, ...action.payload };
     case 'resetScore':
-      return { ...initialStateSerie };
+      return {
+        ...initialStateSerie,
+        bestScore: state.score > state.bestScore ? state.score : state.bestScore,
+      };
     case 'resetEvent':
       return {
         ...state, error: false, success: false, nbError: 0, nbSuccess: 0,
@@ -124,6 +128,7 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
           bonusRound,
           bonusPerfectRound,
           bonusRestingTime,
+          bestScore: score > stateSerie.bestScore ? score : stateSerie.bestScore,
         },
       });
 

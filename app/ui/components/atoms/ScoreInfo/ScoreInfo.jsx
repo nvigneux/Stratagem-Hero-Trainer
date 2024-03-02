@@ -7,7 +7,7 @@ import styles from './ScoreInfo.module.css';
 import cn from '../../../../lib/cn';
 
 function ScoreInfo({
-  score, bonusRound, bonusRestingTime, bonusPerfectRound, displayBonus,
+  score, bonusRound, bonusRestingTime, bonusPerfectRound, bestScore, displayBonus,
 }) {
   return (
     <div className={styles.container}>
@@ -27,6 +27,12 @@ function ScoreInfo({
       </div>
       <div className={styles.score}>{score}</div>
       <div className={styles.label}>Score</div>
+      {bestScore > 0 ? (
+        <div className={styles.bestScore}>
+          <span>{'Best : '}</span>
+          <span className={styles.bestScoreNb}>{bestScore}</span>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -36,6 +42,7 @@ ScoreInfo.propTypes = {
   bonusRound: PropTypes.number.isRequired,
   bonusRestingTime: PropTypes.number.isRequired,
   bonusPerfectRound: PropTypes.number.isRequired,
+  bestScore: PropTypes.number.isRequired,
   displayBonus: PropTypes.bool.isRequired,
 };
 

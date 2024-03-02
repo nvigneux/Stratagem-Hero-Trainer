@@ -50,6 +50,10 @@
   background-color: var(--taupe);
 }
 
+.list > * {
+  flex: 0 0 auto;
+}
+
 .success .icon{
   animation: blink-success 0.5s;
 }
@@ -66,5 +70,23 @@
 
   100% {
     opacity: 0.5;
+  }
+}
+
+@media (width <= 768px) {
+  .icon {
+    --size-icon: 45px;
+  }
+
+  .active{
+    --size-card: 100px;  
+  }
+
+  .active .icon {
+    --size-icon: 70px;
+  }
+
+  .list {
+    gap: 0.5rem;
   }
 }

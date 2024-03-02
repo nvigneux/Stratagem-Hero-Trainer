@@ -2,7 +2,7 @@
   position: fixed;
   height: 2rem;
   width: 2rem;
-  left: 1rem;
+  left: 1.15rem;
   top: 1rem;
   z-index: 1;
   border: none;
@@ -11,16 +11,7 @@
   background: transparent;
 }
 
-.burger {
-  position: relative;
-  z-index: 4;
-  height: 32px;
-  width: 32px;
-  min-width: 32px;
-  cursor: pointer;
-}
-
-.burger svg {
+.button svg {
   width: 100%;
   height: 100%;
 }

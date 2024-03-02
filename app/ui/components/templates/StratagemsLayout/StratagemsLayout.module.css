@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: var(--width-side) calc(100% - var(--width-side));
   overflow: hidden;
-  max-height: 100vh;
+  max-height: 100dvh;
   transition: grid-template-columns 0.5s;
 }
 
@@ -107,7 +107,7 @@
   background: #12141a;
   color: #fff;
   padding: 1rem;
-  min-height: 100vh;
+  min-height: 100dvh;
   position: relative;
   min-width: var(--width-side);
 }
@@ -145,6 +145,7 @@
   width: 100%;
   margin-bottom: 3rem;
   user-select: none;
+  z-index: 2;
 }
 
 .activeStratagemsInfo {
@@ -165,13 +166,15 @@
   --width-side: 0px;
 }
 
-.mobileFocus {
+.mobileKeyboard {
   display: none;
 }
 
 @media (width <= 768px) {
-  .mobileFocus {
+  .mobileKeyboard {
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     margin-top: 1rem;
   }
@@ -182,5 +185,13 @@
 
   .main::before {
     width: 80vw;
+  }
+
+  .roundScoreContainer {
+    margin-bottom: 1rem;
+  }
+
+  .activeStratagemsInfo {
+    margin-bottom: 0;
   }
 }
