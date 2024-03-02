@@ -88,10 +88,11 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
     } else {
       dispatchStateSerie({ type: 'error', payload: true });
-      if (direction === series[0].code[0]) {
-        dispatchStateSerie({ type: 'index', payload: 1 }); // if the direction is the first one, reset the active index to 1
-        return;
-      }
+      // if (direction === series[0].code[0]) {
+      // // if the direction is the first one, reset the active index to 1
+      //   dispatchStateSerie({ type: 'index', payload: 1 });
+      //   return;
+      // }
       dispatchStateSerie({ type: 'index', payload: 0 }); // direction error reset the active index
       return;
     }
@@ -228,7 +229,9 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
           </>
         ) : <StratagemsName name="Traitor detected !" />}
 
-        <StratagemsTimer progress={progress} total={TIMER_DURATION} />
+        {series?.length ? (
+          <StratagemsTimer progress={progress} total={TIMER_DURATION} />
+        ) : null}
       </div>
     </main>
   );

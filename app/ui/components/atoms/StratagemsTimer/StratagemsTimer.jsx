@@ -9,7 +9,6 @@ function StratagemsTimer({
 }) {
   return (
     <div className={styles.timer}>
-      {`${progress} / ${total}`}
       <div className={styles.inner} style={{ width: `${(progress / total) * 100}%` }} />
     </div>
   );

@@ -64,13 +64,26 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
   const [stateSerie, dispatchStateSerie] = useReducer(reducerStateSerie, initialStateSerie);
   const { error, success } = stateSerie;
 
+  /**
+   * Reset the stratagems array with random stratagems from the initial state
+   */
+  const resetStratagemsArray = () => {
+    if (!initialState.length) return [];
+    const length = maxLength + stateSerie.round - 1;
+    return Array.from({ length }, () => [...initialState][Math.floor(
+      Math.random() * initialState.length,
+    )]);
+  };
+
   const [series, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
         case 'remove':
           return state.filter((stratagem) => stratagem.id !== action.stratagem.id);
+        case 'removeFirst':
+          return state.slice(1);
         case 'reset':
-          return initialState.slice(0, maxLength + stateSerie.round - 1);
+          return resetStratagemsArray();
         default:
           return state;
       }
@@ -85,7 +98,7 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
    */
   const handleSuccessStratagem = (restingTime) => {
     const pointToAdd = series[0].code.length * 5;
-    dispatch({ type: 'remove', stratagem: series[0] });
+    dispatch({ type: 'removeFirst', stratagem: series[0] });
     dispatchStateSerie({ type: 'success', payload: true });
     dispatchStateSerie({
       type: 'score',
@@ -97,7 +110,7 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
       },
     });
 
-    if (series.length === 1) { // if the series is empty, reset the series and increase the round
+    if (series.length === 1) { // if the series is 1, reset the series and increase the round
       const bonusRound = 25 * stateSerie.round + 50;
       const bonusPerfectRound = stateSerie.nbError === 0 ? 100 : 0;
       const bonusRestingTime = Math.floor(restingTime * 10);
