@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Styles
 import styles from './StratagemsLayout.module.css';
@@ -32,7 +32,12 @@ const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsLayout({ stratagems, stratagemsByCategories }) {
-  const [openStratagems, setOpenStratagems] = useState(true);
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+  const [openStratagems, setOpenStratagems] = useState(false);
+
+  useEffect(() => {
+    if (isDesktop) setOpenStratagems(true);
+  }, [isDesktop]);
 
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
