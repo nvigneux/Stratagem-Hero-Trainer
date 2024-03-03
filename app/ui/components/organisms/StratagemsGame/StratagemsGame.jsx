@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from 'react';
 
 // Styles
-import styles from './StratagemsLayout.module.css';
+import styles from './StratagemsGame.module.css';
 
 // Components
-import StratagemsCard from '../../atoms/StratagemsCard/StratagemsCard';
+import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
-import StratagemsGameCard from '../../atoms/StratagemsGameCard/StratagemsGameCard';
+import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
 import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
-import Checkbox from '../../atoms/Checkbox/Checkbox';
-import Arrow from '../../atoms/Arrow/Arrow';
+import StratagemsKeyboardMobile from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
+import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
-import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
-import StratagemsKeyboardMobile from '../../atoms/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
+import Arrow from '../../molecules/Arrow/Arrow';
+import Checkbox from '../../atoms/Checkbox/Checkbox';
 
 // Hooks
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
@@ -31,7 +31,7 @@ import cn from '../../../../lib/cn';
 const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
-function StratagemsLayout({ stratagems, stratagemsByCategories }) {
+function StratagemsGame({ stratagems, stratagemsByCategories }) {
   const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
   const [openStratagems, setOpenStratagems] = useState(false);
 
@@ -266,7 +266,7 @@ function StratagemsLayout({ stratagems, stratagemsByCategories }) {
   );
 }
 
-StratagemsLayout.propTypes = {
+StratagemsGame.propTypes = {
   stratagems: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -279,4 +279,4 @@ StratagemsLayout.propTypes = {
   }))).isRequired,
 };
 
-export default StratagemsLayout;
+export default StratagemsGame;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './StratagemsGameCard.module.css';
 
 // Components
-import { Picto } from '../Picto/Picto';
+import { Picto } from '../../atoms/Picto/Picto';
 
 // Lib
 import cn from '../../../../lib/cn';

@@ -7,7 +7,7 @@ import styles from './StratagemsKeyboardMobile.module.css';
 import cn from '../../../../lib/cn';
 
 // Components
-import { Picto } from '../Picto/Picto';
+import { Picto } from '../../atoms/Picto/Picto';
 
 function StratagemsKeyboardMobile() {
   return (

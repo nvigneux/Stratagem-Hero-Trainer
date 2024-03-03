@@ -2,7 +2,7 @@
 import { fetchStratagems } from '../lib/data';
 
 // Components
-import StratagemsLayout from '../ui/components/templates/StratagemsLayout/StratagemsLayout';
+import StratagemsLayout from '../ui/components/organisms/StratagemsGame/StratagemsGame';
 
 export default async function Page() {
   const stratagems = await fetchStratagems();

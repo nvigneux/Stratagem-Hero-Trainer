@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // Components
-import { Picto } from '../Picto/Picto';
+import { Picto } from '../../atoms/Picto/Picto';
 
 // Lib
 import cn from '../../../../lib/cn';
