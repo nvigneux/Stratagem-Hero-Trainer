@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import localFont from 'next/font/local';
+import { Analytics } from '@vercel/analytics/react';
 
 import './globals.css';
 
@@ -29,7 +30,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={fsSinclair.className}>{children}</body>
+      <body className={fsSinclair.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
