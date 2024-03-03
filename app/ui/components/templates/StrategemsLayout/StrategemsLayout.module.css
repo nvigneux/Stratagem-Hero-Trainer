@@ -145,7 +145,6 @@
   --width-side: 0px;
 }
 
-
 @media (width <= 768px) {
   .opened {
     --width-side: 322px;

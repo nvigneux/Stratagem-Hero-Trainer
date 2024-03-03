@@ -9,7 +9,7 @@ import { COOKIE_LOADOUT } from '../lib/constants';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
-import StratagemsGameSheel from '../ui/components/organisms/StratagemsGameSheel/StratagemsGameSheel';
+import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
 
 export default async function Page() {
   const loadoutStored = getCookie(COOKIE_LOADOUT, { cookies }) || 0;
@@ -32,7 +32,7 @@ export default async function Page() {
       stratagemsByCategories={stratagemsByCategories}
       loadoutStored={loadoutStored}
     >
-      <StratagemsGameSheel
+      <StratagemsGame
         stratagems={stratagems}
       />
     </StratagemsLayout>

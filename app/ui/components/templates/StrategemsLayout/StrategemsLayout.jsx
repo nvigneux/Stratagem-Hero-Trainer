@@ -15,6 +15,8 @@ import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStr
 import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
+
+// Provider
 import { StratagemsProvider } from './StrategemsProvider';
 
 function StrategemsLayout({ stratagems, stratagemsByCategories, children }) {
@@ -31,28 +33,17 @@ function StrategemsLayout({ stratagems, stratagemsByCategories, children }) {
     { initialState: stratagems, key: 'name', defaultValue: true },
   );
 
-  // const filteredStratagemsChecked = useMemo(
-  //   () => [...stratagems].filter((stratagem) => checkboxes[stratagem.name]),
-  //   [stratagems, checkboxes],
-  // );
-
   /**
    * Handle the change of a single checkbox
    * @param {string} name
    */
   const handleChangeCheckbox = (name) => {
     handleChange(name);
-    // dispatchStateSerie({ type: 'resetScore' });
-    // resetSeries();
-    // resetTimer();
   };
 
   // Reset the series when the all checkboxes change
   const handleChangeAllCheckbox = () => {
     handleChangeAll();
-    // dispatchStateSerie({ type: 'resetScore' });
-    // resetSeries();
-    // resetTimer();
   };
 
   /**
@@ -62,9 +53,6 @@ function StrategemsLayout({ stratagems, stratagemsByCategories, children }) {
      */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    // dispatchStateSerie({ type: 'resetScore' });
-    // resetSeries();
-    // resetTimer();
   };
 
   return (

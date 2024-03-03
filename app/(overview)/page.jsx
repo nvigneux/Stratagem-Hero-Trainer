@@ -8,6 +8,7 @@ import { fetchStratagems } from '../lib/data';
 import { COOKIE_BEST_SCORE } from '../lib/constants';
 
 // Components
+import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
 import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
 
 export default async function Page() {
@@ -26,10 +27,14 @@ export default async function Page() {
   }, {});
 
   return (
-    <StratagemsGame
+    <StratagemsLayout
       stratagems={randomisedStratagems}
       stratagemsByCategories={stratagemsByCategories}
-      bestScoreStored={+bestScoreStored}
-    />
+    >
+      <StratagemsGame
+        stratagems={stratagems}
+        bestScoreStored={+bestScoreStored}
+      />
+    </StratagemsLayout>
   );
 }

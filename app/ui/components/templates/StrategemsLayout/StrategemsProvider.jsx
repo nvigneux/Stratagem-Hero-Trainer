@@ -9,11 +9,11 @@ import {
 } from 'react';
 
 const StratagemsContext = createContext({
-  checkedStratagems: [],
+  checkedStratagems: {},
 });
 
 export function StratagemsProvider({
-  checkedStratagems = [],
+  checkedStratagems = {},
   children = null,
 }) {
   const contextValue = useMemo(() => ({ checkedStratagems }), [checkedStratagems]);
@@ -28,6 +28,8 @@ export function StratagemsProvider({
 export const useStratagems = () => useContext(StratagemsContext);
 
 StratagemsProvider.propTypes = {
-  checkedStratagems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  checkedStratagems: PropTypes.shape({
+    [PropTypes.string]: PropTypes.bool,
+  }).isRequired,
   children: PropTypes.node.isRequired,
 };
