@@ -23,7 +23,7 @@ const fsSinclair = localFont({
 });
 
 export const metadata = {
-  title: 'Stratagem Hero Trainer - Helldivers™ 2',
+  title: 'Stratagem Hero Trainer - Helldivers',
   description: 'Turning Average Joes into Stratagem Superstars, Because Even Bugs Fear a Well-Placed Stratagem !',
 };
 
