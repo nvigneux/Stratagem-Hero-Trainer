@@ -3,10 +3,15 @@
   --white: #fff;
   --grey: #636363;
   --yellow: #fe0;
+  --yellow-bg: #3a3a3a;
   --taupe: #756f4a;
-  --red: #de7b6c;
   --green: #679552;
+  --green-bg: #2e3a2f;
   --blue-night: #12141a;
+  --red: #de7b6c;
+  --red-bg: #34282b;
+  --blue: #55b4cc;
+  --blue-bg: #263b50;
 
   /* SPACING */
   --spacing-12: 0.75rem;

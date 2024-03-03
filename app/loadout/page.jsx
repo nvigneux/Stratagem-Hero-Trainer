@@ -9,10 +9,11 @@ import { COOKIE_LOADOUT } from '../lib/constants';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
-import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
+import StratagemsLoadout from '../ui/components/organisms/StratagemsLoadout/StratagemsLoadout';
 
 export default async function Page() {
   const loadoutStored = getCookie(COOKIE_LOADOUT, { cookies }) || 0;
+
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
 
@@ -30,10 +31,11 @@ export default async function Page() {
     <StratagemsLayout
       stratagems={randomisedStratagems}
       stratagemsByCategories={stratagemsByCategories}
-      loadoutStored={loadoutStored}
+      defaultCheckValue={false}
     >
-      <StratagemsGame
+      <StratagemsLoadout
         stratagems={stratagems}
+        loadoutStored={loadoutStored}
       />
     </StratagemsLayout>
   );

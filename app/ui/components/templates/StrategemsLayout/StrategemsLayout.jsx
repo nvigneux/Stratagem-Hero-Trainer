@@ -19,7 +19,12 @@ import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
 // Provider
 import { StratagemsProvider } from './StrategemsProvider';
 
-function StrategemsLayout({ stratagems, stratagemsByCategories, children }) {
+function StrategemsLayout({
+  stratagems,
+  stratagemsByCategories,
+  defaultCheckValue = true,
+  children,
+}) {
   const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
   const [openStratagems, setOpenStratagems] = useState(false);
 
@@ -30,7 +35,7 @@ function StrategemsLayout({ stratagems, stratagemsByCategories, children }) {
   const {
     checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
   } = useCheckboxes(
-    { initialState: stratagems, key: 'name', defaultValue: true },
+    { initialState: stratagems, key: 'name', defaultValue: defaultCheckValue },
   );
 
   /**
@@ -132,6 +137,7 @@ StrategemsLayout.propTypes = {
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   }))).isRequired,
+  defaultCheckValue: PropTypes.bool.isRequired,
 };
 
 export default StrategemsLayout;
