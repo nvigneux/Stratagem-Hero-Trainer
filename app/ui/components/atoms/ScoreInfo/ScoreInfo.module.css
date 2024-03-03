@@ -49,8 +49,10 @@
 }
 
 .displayBonus {
-  transform: translateY(-110%);
+  transform: translateY(-115%);
   opacity: 1;
+  background: rgba(18 20 26 / 90%);
+  border: 1px solid var(--grey);
   transition: opacity 0.3s ease 0.15s, transform 0.3s ease;
 }
 
@@ -88,8 +90,6 @@
 
   .displayBonus {
     transform: translateY(100%);
-    background: rgba(18 20 26 / 90%);
-    border: 1px solid var(--grey);
   }
 
   .bestScore {
