@@ -1,13 +1,20 @@
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
+
 // Data
 import { fetchStratagems } from '../lib/data';
 
+// Lib
+import { COOKIE_BEST_SCORE } from '../lib/constants';
+
 // Components
-import StratagemsLayout from '../ui/components/organisms/StratagemsGame/StratagemsGame';
+import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
 
 export default async function Page() {
+  const bestScoreStored = getCookie(COOKIE_BEST_SCORE, { cookies }) || 0;
+
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
-
   /**
    * Groups the stratagems by their category.
    */
@@ -19,9 +26,10 @@ export default async function Page() {
   }, {});
 
   return (
-    <StratagemsLayout
+    <StratagemsGame
       stratagems={randomisedStratagems}
       stratagemsByCategories={stratagemsByCategories}
+      bestScoreStored={+bestScoreStored}
     />
   );
 }

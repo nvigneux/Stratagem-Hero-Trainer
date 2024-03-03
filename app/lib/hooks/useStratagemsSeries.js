@@ -1,5 +1,8 @@
 import { useEffect, useReducer } from 'react';
 
+// Actions
+import { setCookieBestScore } from '../actions';
+
 const initialStateSerie = {
   index: 0,
   error: false,
@@ -64,8 +67,11 @@ function reducerStateSerie(state, action) {
  * @property {function} dispatchStateSerie
  * @property {Object} stateSerie
  */
-function useStratagemsSeries({ initialState, maxLength = 999 }) {
-  const [stateSerie, dispatchStateSerie] = useReducer(reducerStateSerie, initialStateSerie);
+function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 0 }) {
+  const [stateSerie, dispatchStateSerie] = useReducer(
+    reducerStateSerie,
+    { ...initialStateSerie, bestScore: bestScoreStored },
+  );
   const { error, success } = stateSerie;
 
   /**
@@ -120,6 +126,7 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
       const bonusRestingTime = Math.floor(restingTime * 10);
 
       const score = stateSerie.score + bonusRound + bonusPerfectRound + bonusRestingTime;
+      const bestScore = score > stateSerie.bestScore ? score : stateSerie.bestScore;
 
       dispatchStateSerie({
         type: 'score',
@@ -128,9 +135,13 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
           bonusRound,
           bonusPerfectRound,
           bonusRestingTime,
-          bestScore: score > stateSerie.bestScore ? score : stateSerie.bestScore,
+          bestScore,
         },
       });
+
+      if (score > stateSerie.bestScore) { // store the best score in the cookie
+        setCookieBestScore(bestScore);
+      }
 
       dispatch({ type: 'reset' });
       dispatchStateSerie({ type: 'resetEvent' });
@@ -142,6 +153,10 @@ function useStratagemsSeries({ initialState, maxLength = 999 }) {
    * Reset the series
    */
   const resetSeries = () => {
+    if (stateSerie.score > stateSerie.bestScore) { // store the best score in the cookie
+      setCookieBestScore(stateSerie.score);
+    }
+
     dispatch({ type: 'reset' });
     dispatchStateSerie({ type: 'resetScore' });
   };

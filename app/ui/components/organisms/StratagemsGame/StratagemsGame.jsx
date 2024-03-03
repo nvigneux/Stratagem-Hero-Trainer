@@ -31,7 +31,7 @@ import cn from '../../../../lib/cn';
 const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
-function StratagemsGame({ stratagems, stratagemsByCategories }) {
+function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored }) {
   const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
   const [openStratagems, setOpenStratagems] = useState(false);
 
@@ -53,7 +53,7 @@ function StratagemsGame({ stratagems, stratagemsByCategories }) {
   const {
     series, resetSeries, handleSuccessStratagem, stateSerie, dispatchStateSerie,
   } = useStratagemsSeries({
-    initialState: filteredStratagemsChecked, maxLength: 6,
+    initialState: filteredStratagemsChecked, maxLength: 6, bestScoreStored,
   });
 
   const {
@@ -277,6 +277,7 @@ StratagemsGame.propTypes = {
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   }))).isRequired,
+  bestScoreStored: PropTypes.number.isRequired,
 };
 
 export default StratagemsGame;

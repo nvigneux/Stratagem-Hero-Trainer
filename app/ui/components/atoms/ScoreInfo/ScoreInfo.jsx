@@ -29,7 +29,7 @@ function ScoreInfo({
       <div className={styles.label}>Score</div>
       {bestScore > 0 ? (
         <div className={styles.bestScore}>
-          <span>{'Best : '}</span>
+          <span>{'Record : '}</span>
           <span className={styles.bestScoreNb}>{bestScore}</span>
         </div>
       ) : null}

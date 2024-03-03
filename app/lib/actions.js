@@ -6,6 +6,11 @@ import z from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
+import { setCookie } from 'cookies-next';
+
+// Constants
+import { COOKIE_BEST_SCORE } from './constants';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -104,4 +109,8 @@ export async function deleteInvoice(id) {
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Invoice.' };
   }
+}
+
+export async function setCookieBestScore(bestScore) {
+  setCookie(COOKIE_BEST_SCORE, `${bestScore}`, { cookies });
 }
