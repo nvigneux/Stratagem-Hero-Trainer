@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 // Styles
 import styles from './StratagemsGame.module.css';
@@ -44,12 +44,18 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
     progress, isRunning, startTimer, resetTimer, addTime,
   } = useTimer(TIMER_DURATION, TIMER_DURATION, resetSeries);
 
+  const refCheckStratagems = useRef(null);
   useEffect(() => {
+    const checkedStratagemsString = JSON.stringify(checkedStratagems);
+    if (!refCheckStratagems.current) {
+      refCheckStratagems.current = checkedStratagemsString;
+      return;
+    }
     dispatchStateSerie({ type: 'resetScore' });
     resetSeries();
     resetTimer();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkedStratagems]);
+  }, [checkedStratagems, refCheckStratagems.current]);
 
   /**
    * Check if the active serie code is correct
