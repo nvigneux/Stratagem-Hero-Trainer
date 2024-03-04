@@ -27,7 +27,15 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 function StratagemsGame({ stratagems, bestScoreStored }) {
   const { checkedStratagems = {} } = useStratagems();
 
-  const { timerDuration, timeBonus, setTimerDuration } = useStratagemsGameSettings();
+  const {
+    timerDuration,
+    timeBonus,
+    setTimerDuration,
+    keyBindings,
+    tempKeyBindings,
+    setTempKeyBinding,
+    applyTempKeyBindings,
+  } = useStratagemsGameSettings();
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -80,7 +88,8 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
         addTime(timeBonus + 0.01 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
-        handleSuccessStratagem(progress);
+        const percentOfProgress = Math.round((progress / timerDuration) * 100);
+        handleSuccessStratagem(percentOfProgress);
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
     }
@@ -91,21 +100,22 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
+    if (event.target.tagName === 'INPUT') return;
     switch (event.code) {
       case 'ArrowUp':
-      case 'KeyW':
+      case keyBindings.up:
         checkActiveSerieCode('up');
         break;
       case 'ArrowDown':
-      case 'KeyS':
+      case keyBindings.down:
         checkActiveSerieCode('down');
         break;
       case 'ArrowLeft':
-      case 'KeyA':
+      case keyBindings.left:
         checkActiveSerieCode('left');
         break;
       case 'ArrowRight':
-      case 'KeyD':
+      case keyBindings.right:
         checkActiveSerieCode('right');
         break;
       default:
@@ -117,10 +127,16 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
     setTimerDuration(+timerDurationValue);
+    resetSeries();
+  };
+
+  const handleKeyBindings = () => {
+    applyTempKeyBindings();
+    resetSeries();
   };
 
   return (
-    <>
+    <div className={styles.main}>
       <div>
         <form
           className={styles.timerDurationForm}
@@ -133,7 +149,9 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
               name="timerDuration"
               type="number"
               min={1}
+              step={1}
               defaultValue={timerDuration}
+              required
             />
           </label>
           <button
@@ -141,6 +159,61 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
           >
             Change
           </button>
+        </form>
+      </div>
+
+      <div className={styles.keyBindings}>
+        <h2>Key bindings</h2>
+        <form action={handleKeyBindings}>
+          <label htmlFor="up">
+            {`${keyBindings.up}`}
+            <input
+              id="up"
+              name="up"
+              type="text"
+              value={tempKeyBindings.up}
+              onKeyDown={(event) => setTempKeyBinding('up', event.code)}
+              onChange={() => {}}
+              required
+            />
+          </label>
+          <label htmlFor="right">
+            {`${keyBindings.right}`}
+            <input
+              id="right"
+              name="right"
+              type="text"
+              value={tempKeyBindings.right}
+              onKeyDown={(event) => setTempKeyBinding('right', event.code)}
+              onChange={() => {}}
+              required
+            />
+          </label>
+          <label htmlFor="down">
+            {`${keyBindings.down}`}
+            <input
+              id="down"
+              name="down"
+              type="text"
+              value={tempKeyBindings.down}
+              onKeyDown={(event) => setTempKeyBinding('down', event.code)}
+              onChange={() => {}}
+              required
+            />
+          </label>
+          <label htmlFor="left">
+            {`${keyBindings.left}`}
+            <input
+              id="left"
+              name="left"
+              type="text"
+              value={tempKeyBindings.left}
+              onKeyDown={(event) => setTempKeyBinding('left', event.code)}
+              onChange={() => {}}
+              required
+            />
+          </label>
+          <button type="submit">Change</button>
         </form>
       </div>
 
@@ -198,7 +271,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
           <StratagemsKeyboardMobile />
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 

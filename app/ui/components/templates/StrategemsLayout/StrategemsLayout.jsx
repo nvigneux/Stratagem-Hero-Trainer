@@ -25,7 +25,7 @@ function StrategemsLayout({
   defaultCheckValue = true,
   children,
 }) {
-  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
   const [openStratagems, setOpenStratagems] = useState(false);
 
   useEffect(() => {
