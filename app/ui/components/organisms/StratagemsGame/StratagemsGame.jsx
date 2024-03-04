@@ -13,7 +13,7 @@ import StratagemsKeyboardMobile from '../../molecules/StratagemsKeyboardMobile/S
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
-import Arrow from '../../molecules/Arrow/Arrow';
+import Arrow from '../../atoms/Arrow/Arrow';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';

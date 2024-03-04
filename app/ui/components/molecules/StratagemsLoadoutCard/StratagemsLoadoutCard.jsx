@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 // Components
-import { Picto } from '../Picto/Picto';
-import Arrow from '../../molecules/Arrow/Arrow';
+import { Picto } from '../../atoms/Picto/Picto';
+import Arrow from '../../atoms/Arrow/Arrow';
 
 // Styles
 import styles from './StratagemsLoadoutCard.module.css';
@@ -19,8 +19,9 @@ function StratagemsLoadoutCard({ stratagem }) {
       <div className={styles.info}>
         <div className={styles.name}>{stratagem.name}</div>
         <div className={styles.code}>
-          {stratagem.code.map((item) => (
-            <Arrow direction={item} size="small" />
+          {stratagem.code.map((item, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Arrow key={`${item}-${index}`} direction={item} size="small" active={false} error={false} />
           ))}
         </div>
       </div>
