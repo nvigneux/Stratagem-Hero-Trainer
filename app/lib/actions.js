@@ -112,5 +112,5 @@ export async function deleteInvoice(id) {
 }
 
 export async function setCookieBestScore(bestScore) {
-  setCookie(COOKIE_BEST_SCORE, `${bestScore}`, { cookies });
+  setCookie(COOKIE_BEST_SCORE, `${bestScore}`, { cookies, maxAge: 60 * 60 * 24 * 365 });
 }
