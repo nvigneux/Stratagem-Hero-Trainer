@@ -47,15 +47,23 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
   const refCheckStratagems = useRef(null);
   useEffect(() => {
     const checkedStratagemsString = JSON.stringify(checkedStratagems);
+    console.log(
+      refCheckStratagems.current === checkedStratagemsString,
+      refCheckStratagems.current,
+      checkedStratagemsString,
+    );
     if (!refCheckStratagems.current) {
       refCheckStratagems.current = checkedStratagemsString;
       return;
     }
-    dispatchStateSerie({ type: 'resetScore' });
-    resetSeries();
-    resetTimer();
+    if (refCheckStratagems.current !== checkedStratagemsString) {
+      console.log('reset');
+      dispatchStateSerie({ type: 'resetScore' });
+      resetSeries();
+      resetTimer();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checkedStratagems, refCheckStratagems.current]);
+  }, [checkedStratagems]);
 
   /**
    * Check if the active serie code is correct
