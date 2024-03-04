@@ -73,6 +73,10 @@ const useTimer = (initialProgress, total, handleIsOver) => {
     dispatch({ type: 'RESTART' });
   };
 
+  useEffect(() => {
+    dispatch({ type: 'RESET', payload: initialProgress });
+  }, [initialProgress]);
+
   return {
     progress: state.progress,
     isRunning: state.isRunning,

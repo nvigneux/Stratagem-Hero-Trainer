@@ -9,6 +9,7 @@ function StratagemsTimer({
 }) {
   return (
     <div className={styles.timer}>
+      <span className={styles.value}>{progress.toFixed(2)}</span>
       <div className={styles.inner} style={{ width: `${(progress / total) * 100}%` }} />
     </div>
   );

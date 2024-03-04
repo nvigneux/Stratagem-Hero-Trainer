@@ -19,15 +19,15 @@ import Arrow from '../../atoms/Arrow/Arrow';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
+import useStratagemsGameSettings from './useStratagemsGameSettings';
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
 
-const TIMER_DURATION = 12;
-const TIME_BONUS = 1;
-
 function StratagemsGame({ stratagems, bestScoreStored }) {
   const { checkedStratagems = {} } = useStratagems();
+
+  const { timerDuration, timeBonus, setTimerDuration } = useStratagemsGameSettings();
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -42,7 +42,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
 
   const {
     progress, isRunning, startTimer, resetTimer, addTime,
-  } = useTimer(TIMER_DURATION, TIMER_DURATION, resetSeries);
+  } = useTimer(timerDuration, timerDuration, resetSeries);
 
   const refCheckStratagems = useRef(null);
   useEffect(() => {
@@ -77,7 +77,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       if (series.length === 1) {
         resetTimer();
       } else {
-        addTime(TIME_BONUS + 0.01 * stateSerie.round);
+        addTime(timeBonus + 0.01 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
         handleSuccessStratagem(progress);
@@ -114,8 +114,36 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
   }
   useEventListener('keydown', keydownDirectionHandler);
 
+  const handleSubmitTimerDuration = (formData) => {
+    const timerDurationValue = formData.get('timerDuration');
+    setTimerDuration(+timerDurationValue);
+  };
+
   return (
     <>
+      <div>
+        <form
+          className={styles.timerDurationForm}
+          action={handleSubmitTimerDuration}
+        >
+          <label htmlFor="timerDuration">
+            Timer duration
+            <input
+              id="timerDuration"
+              name="timerDuration"
+              type="number"
+              min={1}
+              defaultValue={timerDuration}
+            />
+          </label>
+          <button
+            type="submit"
+          >
+            Change
+          </button>
+        </form>
+      </div>
+
       <div className={styles.roundScoreContainer}>
         <RoundInfo roundNb={stateSerie.round} />
         <ScoreInfo
@@ -162,7 +190,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       ) : <StratagemsName name="Traitor detected !" />}
 
       {series?.length ? (
-        <StratagemsTimer progress={progress} total={TIMER_DURATION} />
+        <StratagemsTimer progress={progress} total={timerDuration} />
       ) : null}
 
       {series?.length ? (

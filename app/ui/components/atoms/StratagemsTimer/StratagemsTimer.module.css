@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.inner{
+.inner {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,4 +18,16 @@
   height: 100%;
   position: absolute;
   left: 0;
+}
+
+.value {
+  position: absolute;
+  z-index: 1;
+  font-size: 0.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--black);
+  user-select: none;
+  min-width: 275px;
+  text-align: center;
 }
