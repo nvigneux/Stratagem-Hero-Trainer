@@ -1,5 +1,12 @@
-.icon {
+.large {
   --size-icon: 40px;
+}
+
+.small {
+  --size-icon: 20px;
+}
+
+.icon {
   --color-icon: var(--white);
   --rotation: 0deg;
 
@@ -7,9 +14,6 @@
   width: var(--size-icon);
   color: var(--color-icon);
   transform: rotate(var(--rotation));
-
-
-  /* transition: color 0.1s ease-in-out; */
 }
 
 .right {
@@ -49,8 +53,12 @@
 }
 
 @media (width <= 1024px) {
-  .icon{
+  .large {
     --size-icon: 30px;
+  }
+
+  .small {
+    --size-icon: 17px;
   }
 
   .list {

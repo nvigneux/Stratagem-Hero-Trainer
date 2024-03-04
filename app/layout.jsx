@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import localFont from 'next/font/local';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 
 import './globals.css';
 
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={fsSinclair.className}>
         {children}
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   );

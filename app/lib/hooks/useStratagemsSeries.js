@@ -31,6 +31,7 @@ function reducerStateSerie(state, action) {
         ...state,
         error: action.payload,
         nbError: action.payload ? state.nbError + 1 : state.nbError,
+        index: 0,
       };
     case 'success':
       return {
