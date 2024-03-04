@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Styles
 import styles from './StratagemsLoadout.module.css';
@@ -15,16 +15,24 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 function StratagemsLoadout({ stratagems }) {
   const { checkedStratagems = {} } = useStratagems();
+  const [stratagemsArray, setStratagemsArray] = useState([]);
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
     [stratagems, checkedStratagems],
   );
 
+  useEffect(() => {
+    const checkedStratagemsData = stratagems.filter(
+      (stratagem) => checkedStratagems[stratagem.name],
+    );
+    setStratagemsArray((prev) => [...checkedStratagemsData, ...prev]);
+  }, [checkedStratagems]);
+
   return (
     <div className={styles.container}>
-      {filteredStratagemsChecked?.length ? (
-        <StratagemsLoadoutList stratagems={filteredStratagemsChecked} />
+      {stratagemsArray?.length ? (
+        <StratagemsLoadoutList stratagems={stratagemsArray} />
       ) : (
         <StratagemsName name="Select some stratagems !" />
       )}

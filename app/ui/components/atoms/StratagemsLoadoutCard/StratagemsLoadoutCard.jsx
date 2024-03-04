@@ -44,7 +44,6 @@ export default StratagemsLoadoutCard;
 
 StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({ type, children }) {
   const kebabType = type.replace(/ /g, '-').toLowerCase();
-  console.log(kebabType);
   return (
     <div className={cn([styles.icon, styles[kebabType]])}>{children}</div>
   );
