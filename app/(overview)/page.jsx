@@ -28,11 +28,11 @@ export default async function Page() {
 
   return (
     <StratagemsLayout
-      stratagems={randomisedStratagems}
+      stratagems={stratagems}
       stratagemsByCategories={stratagemsByCategories}
     >
       <StratagemsGame
-        stratagems={stratagems}
+        stratagems={randomisedStratagems}
         bestScoreStored={+bestScoreStored}
       />
     </StratagemsLayout>

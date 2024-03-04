@@ -146,6 +146,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
                 direction={direction}
                 active={index + 1 <= stateSerie.index}
                 error={stateSerie.error}
+                size="large"
               />
             ))}
           </Arrow.List>
