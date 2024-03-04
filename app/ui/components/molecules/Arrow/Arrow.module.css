@@ -48,7 +48,7 @@
   padding: 2rem 0;
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .icon{
     --size-icon: 30px;
   }

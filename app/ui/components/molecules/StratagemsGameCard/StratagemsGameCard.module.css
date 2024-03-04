@@ -73,7 +73,7 @@
   }
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .icon {
     --size-icon: 45px;
   }

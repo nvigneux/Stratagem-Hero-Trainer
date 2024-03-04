@@ -32,7 +32,7 @@ const TIMER_DURATION = 10;
 const TIME_BONUS = 1;
 
 function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored }) {
-  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
   const [openStratagems, setOpenStratagems] = useState(false);
 
   useEffect(() => {

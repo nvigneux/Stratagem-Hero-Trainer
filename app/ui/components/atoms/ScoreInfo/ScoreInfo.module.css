@@ -72,7 +72,7 @@
   color: var(--yellow);
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .label {
     font-size: 1.5rem;
   }
