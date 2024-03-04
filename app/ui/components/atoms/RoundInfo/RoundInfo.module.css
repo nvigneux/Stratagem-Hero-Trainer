@@ -11,7 +11,7 @@
   line-height: 1;
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .label {
     font-size: 1.25rem;
   }

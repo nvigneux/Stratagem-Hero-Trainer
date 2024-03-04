@@ -52,7 +52,7 @@
   padding: 2rem 0;
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .large {
     --size-icon: 30px;
   }

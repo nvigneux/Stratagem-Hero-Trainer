@@ -26,7 +26,7 @@
   padding: 0 0 0.3rem;
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .roundScoreContainer {
     margin-bottom: 1rem;
   }
