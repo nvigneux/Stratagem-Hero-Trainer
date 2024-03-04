@@ -28,7 +28,7 @@ import useTimer from '../../../../lib/hooks/useTimer';
 // Lib
 import cn from '../../../../lib/cn';
 
-const TIMER_DURATION = 10;
+const TIMER_DURATION = 12;
 const TIME_BONUS = 1;
 
 function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored }) {
@@ -115,7 +115,7 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
       if (series.length === 1) {
         resetTimer();
       } else {
-        addTime(TIME_BONUS);
+        addTime(TIME_BONUS + 0.02 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
         handleSuccessStratagem(progress);
