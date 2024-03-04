@@ -77,7 +77,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       if (series.length === 1) {
         resetTimer();
       } else {
-        addTime(TIME_BONUS + 0.02 * stateSerie.round);
+        addTime(TIME_BONUS + 0.01 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
         handleSuccessStratagem(progress);
