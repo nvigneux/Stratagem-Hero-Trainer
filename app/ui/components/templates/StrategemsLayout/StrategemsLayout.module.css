@@ -122,7 +122,7 @@
 .main::before {
   position: absolute;
   content: url("/assets/logo_super_earth.svg");
-  max-width: 780px;
+  max-width: 700px;
   width: 50vw;
   top: 50%;
   transform: translateY(-50%);
@@ -145,12 +145,12 @@
   --width-side: 0px;
 }
 
-@media (width <= 768px) {
+@media (width <= 1024px) {
   .opened {
     --width-side: 322px;
   }
 
   .main::before {
-    width: 80vw;
+    width: 80%;
   }
 }
