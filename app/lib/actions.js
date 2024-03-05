@@ -10,7 +10,7 @@ import { cookies } from 'next/headers';
 import { setCookie } from 'cookies-next';
 
 // Constants
-import { COOKIE_BEST_SCORE } from './constants';
+import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from './constants';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -111,6 +111,20 @@ export async function deleteInvoice(id) {
   }
 }
 
+/**
+ * @description Set the best score in a cookie
+ * @param {number} bestScore
+ */
 export async function setCookieBestScore(bestScore) {
   setCookie(COOKIE_BEST_SCORE, `${bestScore}`, { cookies, maxAge: 60 * 60 * 24 * 365 });
+}
+
+/**
+ * @description Set the cookie settings
+ * @param {Object} value
+ * @param {boolean} value.timerDuration
+ * @param {boolean} value.keyBindings
+ */
+export async function setCookieSettings(value) {
+  setCookie(COOKIE_SETTINGS, JSON.stringify(value), { cookies, maxAge: 60 * 60 * 24 * 365 });
 }

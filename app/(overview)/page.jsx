@@ -5,7 +5,8 @@ import { cookies } from 'next/headers';
 import { fetchStratagems } from '../lib/data';
 
 // Lib
-import { COOKIE_BEST_SCORE } from '../lib/constants';
+import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../lib/constants';
+import { isJsonString } from '../lib/utils';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
@@ -13,9 +14,11 @@ import StratagemsGame from '../ui/components/organisms/StratagemsGame/Stratagems
 
 export default async function Page() {
   const bestScoreStored = getCookie(COOKIE_BEST_SCORE, { cookies }) || 0;
+  const settingsStored = getCookie(COOKIE_SETTINGS, { cookies }) || {};
 
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
+
   /**
    * Groups the stratagems by their category.
    */
@@ -34,6 +37,7 @@ export default async function Page() {
       <StratagemsGame
         stratagems={randomisedStratagems}
         bestScoreStored={+bestScoreStored}
+        settingsStored={isJsonString(settingsStored) ? JSON.parse(settingsStored) : {}}
       />
     </StratagemsLayout>
   );

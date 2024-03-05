@@ -33,7 +33,7 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 import cn from '../../../../lib/cn';
 import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
-function StratagemsGame({ stratagems, bestScoreStored }) {
+function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
   const { checkedStratagems = {} } = useStratagems();
 
@@ -45,7 +45,11 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
     tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
-  } = useStratagemsGameSettings();
+  } = useStratagemsGameSettings({
+    defaultDuration: settingsStored.timerDuration,
+    defaultKeyBindings: settingsStored.keyBindings,
+    defaultTempKeyBindings: settingsStored.keyBindings,
+  });
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -144,6 +148,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       }, 250);
     }
   };
+
   const handleKeyBindings = () => {
     setTimeout(() => { // fake loading ui
       applyTempKeyBindings();
@@ -265,6 +270,15 @@ StratagemsGame.propTypes = {
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
   bestScoreStored: PropTypes.number.isRequired,
+  settingsStored: PropTypes.shape({
+    timerDuration: PropTypes.number.isRequired,
+    keyBindings: PropTypes.shape({
+      up: PropTypes.string.isRequired,
+      down: PropTypes.string.isRequired,
+      left: PropTypes.string.isRequired,
+      right: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default StratagemsGame;

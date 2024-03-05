@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import { setCookieSettings } from '../../../../lib/actions';
 
 const initialState = {
   timerDuration: 10,
@@ -38,12 +39,12 @@ const settingsReducer = (state, action) => {
   }
 };
 
-const useStratagemsGameSettings = (
+const useStratagemsGameSettings = ({
   defaultDuration = initialState.timerDuration,
   defaultBonus = initialState.timeBonus,
   defaultKeyBindings = { ...initialState.keyBindings },
   defaultTempKeyBindings = { ...initialState.keyBindings },
-) => {
+}) => {
   const [state, dispatch] = useReducer(settingsReducer, {
     ...initialState,
     timerDuration: defaultDuration,
@@ -65,6 +66,7 @@ const useStratagemsGameSettings = (
   const setTimerDuration = (timerDuration) => {
     if (isValidDuration(timerDuration)) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
+      setCookieSettings({ timerDuration, keyBindings: state.keyBindings });
     }
   };
 
@@ -95,6 +97,7 @@ const useStratagemsGameSettings = (
    */
   const applyTempKeyBindings = () => {
     dispatch({ type: 'APPLY_TEMP_KEY_BINDINGS' });
+    setCookieSettings({ timerDuration: state.timerDuration, keyBindings: state.tempKeyBindings });
   };
 
   return {

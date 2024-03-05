@@ -28,6 +28,7 @@
   padding: 0.5rem;
   background: #3c3c3c;
   color: var(--white);
+  border-radius: 0;
 }
 
 .label input::-webkit-inner-spin-button,
