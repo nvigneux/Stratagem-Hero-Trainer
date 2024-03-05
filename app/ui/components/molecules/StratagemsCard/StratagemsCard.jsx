@@ -1,17 +1,15 @@
 /* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 
 // Styles
 import styles from './StratagemsCard.module.css';
-
-// Components
-import { Picto } from '../../atoms/Picto/Picto';
 
 // Lib
 import cn from '../../../../lib/cn';
 
 function StratagemsCard({
-  name, code, active = false, children = null,
+  name, code, category, active = false, children = null,
 }) {
   /**
    * Generate the HTML code for the arrow
@@ -42,7 +40,13 @@ function StratagemsCard({
 
   return (
     <div className={cn([styles.card, active && styles.active])} title={`${name} - ${generateHtmlCodeArrow(code)}`}>
-      <Picto icon={name} className={styles.icon} />
+      <Image
+        src={`/icons/stratagems/${category}/${name}.svg`}
+        alt={name}
+        width={55}
+        height={55}
+        className={styles.icon}
+      />
       {children}
     </div>
   );
@@ -51,6 +55,7 @@ function StratagemsCard({
 StratagemsCard.propTypes = {
   name: PropTypes.string.isRequired,
   code: PropTypes.arrayOf(PropTypes.string).isRequired,
+  category: PropTypes.string.isRequired,
   active: PropTypes.bool,
   children: PropTypes.node,
 };

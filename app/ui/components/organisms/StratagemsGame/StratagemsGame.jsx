@@ -205,6 +205,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                 // eslint-disable-next-line react/no-array-index-key
                   key={`${stratagem.id}-${index}`}
                   name={stratagem.name}
+                  category={stratagem.category.name}
                   active={index === 0}
                   success={stateSerie.success}
                 />

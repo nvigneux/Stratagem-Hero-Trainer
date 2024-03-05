@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 
 // Components
-import { Picto } from '../../atoms/Picto/Picto';
 import Arrow from '../../atoms/Arrow/Arrow';
 
 // Styles
@@ -18,7 +18,12 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
       className={styles.card}
     >
       <StratagemsLoadoutCard.Icon type={stratagem.category.name}>
-        <Picto icon={stratagem.name} />
+        <Image
+          src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
+          alt={stratagem.name}
+          width={55}
+          height={55}
+        />
       </StratagemsLoadoutCard.Icon>
       <div className={styles.info}>
         <div className={styles.name}>{stratagem.name}</div>
