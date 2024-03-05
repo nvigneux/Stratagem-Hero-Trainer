@@ -169,6 +169,16 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
           <Picto icon="settings" />
         </button>
 
+        <button
+          type="button"
+          onClick={() => setOpenSettings(false)}
+          className={cn([
+            styles.settingsOverlay,
+            openSettings ? styles.openedSettings : styles.closedSettings,
+          ])}
+          aria-label="Close settings"
+        />
+
         <div className={styles.roundScoreContainer}>
           <RoundInfo roundNb={stateSerie.round} />
           <ScoreInfo

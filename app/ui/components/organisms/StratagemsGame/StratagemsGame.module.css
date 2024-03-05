@@ -47,7 +47,7 @@
   width: var(--width-settings);
   scrollbar-gutter: stable;
   transition: width 0.5s;
-  z-index: 2;
+  z-index: 5;
   background: rgba(18 20 26 / 98%);
   gap: 1.5rem;
 }
@@ -81,8 +81,28 @@
   --width-settings: 0px;
 }
 
-.opened .settings{
+.opened .settings {
   padding: 0.5rem;
+}
+
+.settingsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0 0 0 / 50%);
+  z-index: 5;
+  border: none;
+  display: none;
+}
+
+.openedSettings {
+  display: block;
+}
+
+.closedSettings {
+  display: none;
 }
 
 .buttonSettings {
@@ -110,7 +130,7 @@
   height: var(--size-icon-settings);
 }
 
-.settingsLabelDesktop{
+.settingsLabelDesktop {
   color: var(--yellow);
   font-size: 1rem;
   text-transform: uppercase;
@@ -162,19 +182,24 @@
   padding: 0 1rem 0.3rem;
 }
 
-.timerDuration, .keyBindings {
+.timerDuration,
+.keyBindings {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.5rem;
   flex: 0 0 auto;
 }
 
+/* .keyBindings {
+  display: none;
+} */
+
 @media (width <= 1024px) {
   .main::before {
     width: 80%;
   }
 
-  .settingsLabelDesktop{
+  .settingsLabelDesktop {
     display: none;
   }
 
@@ -195,10 +220,6 @@
   }
 
   .opened {
-    --width-settings: 175px;
-  }
-
-  .keyBindings {
-    display: none;
+    --width-settings: 250px;
   }
 }
