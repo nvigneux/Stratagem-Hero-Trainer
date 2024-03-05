@@ -63,7 +63,7 @@ const useStratagemsGameSettings = (
    * @param {number} timerDuration
    */
   const setTimerDuration = (timerDuration) => {
-    if (isValidDuration(timerDuration) && timerDuration !== state.timerDuration) {
+    if (isValidDuration(timerDuration)) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
     }
   };

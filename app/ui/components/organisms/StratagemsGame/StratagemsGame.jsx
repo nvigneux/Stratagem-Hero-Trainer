@@ -132,8 +132,12 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
 
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
-    setTimerDuration(+timerDurationValue);
-    resetSeries();
+    if (+timerDurationValue !== timerDuration) {
+      setTimeout(() => { // fake loading ui
+        setTimerDuration(+timerDurationValue);
+        resetSeries();
+      }, 250);
+    }
   };
 
   const handleKeyBindings = () => {
