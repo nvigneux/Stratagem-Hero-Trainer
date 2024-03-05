@@ -106,14 +106,14 @@
 }
 
 .buttonSettings {
-  --size-icon-settings: 1.5rem;
+  --size-icon-settings: 1.3rem;
 
   position: fixed;
   display: flex;
   flex-flow: row nowrap;
   background: transparent;
   right: 1.15rem;
-  top: 1.2rem;
+  top: 1.3rem;
   z-index: 4;
   border: none;
   font-size: 0;
@@ -190,9 +190,9 @@
   flex: 0 0 auto;
 }
 
-/* .keyBindings {
+.keyBindings {
   display: none;
-} */
+}
 
 @media (width <= 1024px) {
   .main::before {
