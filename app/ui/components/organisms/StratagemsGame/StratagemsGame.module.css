@@ -80,17 +80,36 @@
 }
 
 .buttonSettings {
+  --size-icon-settings: 1.5rem;
+
   position: fixed;
-  height: 2rem;
-  width: 2rem;
+  display: flex;
+  flex-flow: row nowrap;
+  background: transparent;
   right: 1.15rem;
-  top: 1rem;
+  top: 1.2rem;
   z-index: 4;
   border: none;
   font-size: 0;
   color: var(--yellow);
   cursor: pointer;
   transition: right 0.5s;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonSettings svg {
+  width: var(--size-icon-settings);
+  height: var(--size-icon-settings);
+}
+
+.settingsLabelDesktop{
+  color: var(--yellow);
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-family: var(--font-fs-sinclair);
+  margin-top: 0.1rem;
 }
 
 .opened .buttonSettings {
@@ -140,6 +159,10 @@
 @media (width <= 1024px) {
   .main::before {
     width: 80%;
+  }
+
+  .settingsLabelDesktop{
+    display: none;
   }
 
   .roundScoreContainer {

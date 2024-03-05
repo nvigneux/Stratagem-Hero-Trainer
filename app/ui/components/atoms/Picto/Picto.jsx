@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 export const availablePictos = {
   // Arrow
   'arrow': dynamic(() => import('../../../../../public/icons/arrow.svg')),
+  // Settings
+  'settings': dynamic(() => import('../../../../../public/icons/settings.svg')),
 
   // Bridge
   'Orbital Precision Strike': dynamic(() => import('../../../../../public/icons/stratagems/Bridge/Orbital Precision Strike.svg')),

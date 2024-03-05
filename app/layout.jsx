@@ -20,6 +20,7 @@ const fsSinclair = localFont({
     },
   ],
   display: 'swap',
+  variable: '--font-fs-sinclair',
 });
 
 export const metadata = {
@@ -30,7 +31,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={fsSinclair.className}>
+      <body className={`${fsSinclair.className} ${fsSinclair.variable}`}>
         {children}
         {/* <Analytics /> */}
       </body>

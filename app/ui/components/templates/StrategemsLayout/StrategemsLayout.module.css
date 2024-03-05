@@ -8,6 +8,13 @@
   overflow: hidden auto;
 }
 
+.buttonSide {
+  position: fixed;
+  left: 1.15rem;
+  top: 1rem;
+  z-index: 4;
+}
+
 .side {
   display: flex;
   flex-flow: column wrap;

@@ -62,10 +62,12 @@ function StrategemsLayout({
 
   return (
     <main className={cn([styles.container, openStratagems ? styles.opened : styles.closed])}>
-      <ButtonSideStratagems
-        onClick={() => setOpenStratagems(!openStratagems)}
-        isOpened={openStratagems}
-      />
+      <div className={styles.buttonSide}>
+        <ButtonSideStratagems
+          onClick={() => setOpenStratagems(!openStratagems)}
+          isOpened={openStratagems}
+        />
+      </div>
       <div className={styles.side}>
         <StratagemsCategories>
           <Checkbox

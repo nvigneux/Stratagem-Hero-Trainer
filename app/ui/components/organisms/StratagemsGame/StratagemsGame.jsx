@@ -28,6 +28,8 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
+import { Picto } from '../../atoms/Picto/Picto';
 
 function StratagemsGame({ stratagems, bestScoreStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -157,8 +159,10 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
           type="button"
           onClick={() => setOpenSettings(!openSettings)}
           className={styles.buttonSettings}
+          aria-label="Settings"
         >
-          settings
+          <span className={styles.settingsLabelDesktop}>Settings</span>
+          <Picto icon="settings" />
         </button>
 
         <div className={styles.roundScoreContainer}>
