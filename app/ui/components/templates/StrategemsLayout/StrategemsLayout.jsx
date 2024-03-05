@@ -105,6 +105,7 @@ function StrategemsLayout({
                         <StratagemsCard
                           name={stratagem.name}
                           code={stratagem.code}
+                          category={stratagem.category.name}
                           active={checkboxes[stratagem.name]}
                         />
                       </Checkbox>
@@ -136,6 +137,9 @@ StrategemsLayout.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
+    category: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
   })).isRequired,
   stratagemsByCategories: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
