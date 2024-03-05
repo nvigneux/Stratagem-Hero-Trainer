@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
   transition: grid-template-columns 0.5s;
-  overflow: hidden auto;
+  overflow: hidden;
   width: 100%;
   min-height: 100dvh;
   padding: 3rem 0 1rem;
@@ -36,9 +36,8 @@
 
 .settings {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
   grid-column: 1;
-  background: #1c1c1c;
   color: var(--white);
   overflow: hidden scroll;
   height: 100%;
@@ -49,11 +48,14 @@
   scrollbar-gutter: stable;
   transition: width 0.5s;
   z-index: 2;
+  background: rgba(18 20 26 / 98%);
+  gap: 1.5rem;
 }
 
 .settings > * {
-  min-width: var(--width-settings);
+  min-width: calc(var(--width-settings) - 2rem);
   overflow: hidden;
+  transition: width 0.5s;
 }
 
 .settings::-webkit-scrollbar {
@@ -72,11 +74,15 @@
 }
 
 .opened {
-  --width-settings: 250px;
+  --width-settings: 300px;
 }
 
 .closed {
   --width-settings: 0px;
+}
+
+.opened .settings{
+  padding: 0.5rem;
 }
 
 .buttonSettings {
@@ -154,6 +160,13 @@
   display: none;
   overflow: hidden;
   padding: 0 1rem 0.3rem;
+}
+
+.timerDuration, .keyBindings {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.5rem;
+  flex: 0 0 auto;
 }
 
 @media (width <= 1024px) {

@@ -17,6 +17,8 @@ import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 import Arrow from '../../atoms/Arrow/Arrow';
 import { Picto } from '../../atoms/Picto/Picto';
+import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
+import TimerDurationForm from '../../../../forms/TimerDurationForm';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
@@ -29,6 +31,7 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
 function StratagemsGame({ stratagems, bestScoreStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -67,6 +70,7 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       return;
     }
     if (refCheckStratagems.current !== checkedStratagemsString) {
+      refCheckStratagems.current = checkedStratagemsString;
       dispatchStateSerie({ type: 'resetScore' });
       resetSeries();
       resetTimer();
@@ -140,9 +144,10 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
       }, 250);
     }
   };
-
   const handleKeyBindings = () => {
-    applyTempKeyBindings();
+    setTimeout(() => { // fake loading ui
+      applyTempKeyBindings();
+    }, 250);
   };
 
   const handleSetTempKeyBindings = (direction, code) => {
@@ -222,82 +227,21 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
         ) : null}
       </div>
       <div className={cn([styles.settings])}>
-        <form
-          className={styles.timerDurationForm}
-          action={handleSubmitTimerDuration}
-        >
-          <label htmlFor="timerDuration">
-            Timer duration
-            <input
-              id="timerDuration"
-              name="timerDuration"
-              type="number"
-              min={1}
-              step={1}
-              defaultValue={timerDuration}
-              required
-            />
-          </label>
-          <button
-            type="submit"
-          >
-            Change
-          </button>
-        </form>
+        <div className={styles.timerDuration}>
+          <HeadingForm title="Timer duration" />
+          <TimerDurationForm
+            timerDuration={timerDuration}
+            handleSubmitTimerDuration={handleSubmitTimerDuration}
+          />
+        </div>
 
         <div className={styles.keyBindings}>
-          <h2>Key bindings</h2>
-          <form action={handleKeyBindings}>
-            <label htmlFor="up">
-              {`${keyBindings.up}`}
-              <input
-                id="up"
-                name="up"
-                type="text"
-                value={tempKeyBindings.up}
-                onKeyDown={(event) => handleSetTempKeyBindings('up', event.code)}
-                onChange={() => {}}
-                required
-              />
-            </label>
-            <label htmlFor="right">
-              {`${keyBindings.right}`}
-              <input
-                id="right"
-                name="right"
-                type="text"
-                value={tempKeyBindings.right}
-                onKeyDown={(event) => handleSetTempKeyBindings('right', event.code)}
-                onChange={() => {}}
-                required
-              />
-            </label>
-            <label htmlFor="down">
-              {`${keyBindings.down}`}
-              <input
-                id="down"
-                name="down"
-                type="text"
-                value={tempKeyBindings.down}
-                onKeyDown={(event) => handleSetTempKeyBindings('down', event.code)}
-                onChange={() => {}}
-                required
-              />
-            </label>
-            <label htmlFor="left">
-              {`${keyBindings.left}`}
-              <input
-                id="left"
-                name="left"
-                type="text"
-                value={tempKeyBindings.left}
-                onKeyDown={(event) => handleSetTempKeyBindings('left', event.code)}
-                onChange={() => {}}
-                required
-              />
-            </label>
-            <button type="submit">Change</button>
-          </form>
+          <HeadingForm title="Key bindings" />
+          <KeyBindingsForm
+            tempKeyBindings={tempKeyBindings}
+            handleKeyBindings={handleKeyBindings}
+            handleSetTempKeyBindings={handleSetTempKeyBindings}
+          />
         </div>
       </div>
     </div>
