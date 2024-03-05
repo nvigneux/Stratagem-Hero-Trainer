@@ -150,6 +150,9 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
   return (
     <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
       <div className={styles.main}>
+        <button type="button" onClick={resetKeyBindings}>
+          reset
+        </button>
         <button type="button" onClick={() => setOpenSettings(!openSettings)}>
           settings
         </button>
