@@ -10,9 +10,13 @@ import styles from './StratagemsLoadoutCard.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 
-function StratagemsLoadoutCard({ stratagem }) {
+function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
   return (
-    <div className={styles.card}>
+    <button
+      type="button"
+      onClick={() => setCheckedStratagem(stratagem.name)}
+      className={styles.card}
+    >
       <StratagemsLoadoutCard.Icon type={stratagem.category.name}>
         <Picto icon={stratagem.name} />
       </StratagemsLoadoutCard.Icon>
@@ -25,7 +29,7 @@ function StratagemsLoadoutCard({ stratagem }) {
           ))}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -39,6 +43,7 @@ StratagemsLoadoutCard.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  setCheckedStratagem: PropTypes.func.isRequired,
 };
 
 export default StratagemsLoadoutCard;

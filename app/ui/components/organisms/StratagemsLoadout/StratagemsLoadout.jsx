@@ -35,7 +35,7 @@ function stratagemsReducer(state, action) {
 }
 
 function StratagemsLoadout({ stratagems }) {
-  const { checkedStratagems = {} } = useStratagems();
+  const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
   const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
 
   useEffect(() => {
@@ -62,7 +62,10 @@ function StratagemsLoadout({ stratagems }) {
         {stratagemsArray?.length ? (
           <StratagemsLoadoutList stratagems={stratagemsArray}>
             {(stratagem) => (
-              <StratagemsLoadoutCard stratagem={stratagem} />
+              <StratagemsLoadoutCard
+                stratagem={stratagem}
+                setCheckedStratagem={setCheckedStratagem}
+              />
             )}
           </StratagemsLoadoutList>
         ) : (

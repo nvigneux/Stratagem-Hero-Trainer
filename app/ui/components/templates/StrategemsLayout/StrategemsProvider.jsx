@@ -10,13 +10,18 @@ import {
 
 const StratagemsContext = createContext({
   checkedStratagems: {},
+  setCheckedStratagem: () => {},
 });
 
 export function StratagemsProvider({
   checkedStratagems = {},
+  setCheckedStratagem = () => {},
   children = null,
 }) {
-  const contextValue = useMemo(() => ({ checkedStratagems }), [checkedStratagems]);
+  const contextValue = useMemo(
+    () => ({ checkedStratagems, setCheckedStratagem }),
+    [checkedStratagems, setCheckedStratagem],
+  );
 
   return (
     <StratagemsContext.Provider value={contextValue}>
@@ -31,5 +36,6 @@ StratagemsProvider.propTypes = {
   checkedStratagems: PropTypes.shape({
     [PropTypes.string]: PropTypes.bool,
   }).isRequired,
+  setCheckedStratagem: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

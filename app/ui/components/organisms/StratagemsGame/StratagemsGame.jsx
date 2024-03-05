@@ -16,6 +16,7 @@ import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 import Arrow from '../../atoms/Arrow/Arrow';
+import { Picto } from '../../atoms/Picto/Picto';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
@@ -28,8 +29,6 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
-import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
-import { Picto } from '../../atoms/Picto/Picto';
 
 function StratagemsGame({ stratagems, bestScoreStored }) {
   const [openSettings, setOpenSettings] = useState(false);

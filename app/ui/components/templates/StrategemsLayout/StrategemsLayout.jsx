@@ -118,7 +118,10 @@ function StrategemsLayout({
       </div>
 
       <div className={styles.main}>
-        <StratagemsProvider checkedStratagems={checkboxes}>
+        <StratagemsProvider
+          setCheckedStratagem={handleChange}
+          checkedStratagems={checkboxes}
+        >
           {children}
         </StratagemsProvider>
       </div>
