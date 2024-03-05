@@ -157,15 +157,6 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
         >
           settings
         </button>
-        <button
-          type="button"
-          onClick={() => setOpenSettings(false)}
-          className={cn([
-            styles.settingsOverlay,
-            openSettings ? styles.opened : styles.closed,
-          ])}
-          aria-label="Close settings"
-        />
 
         <div className={styles.roundScoreContainer}>
           <RoundInfo roundNb={stateSerie.round} />
