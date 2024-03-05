@@ -1,3 +1,85 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: calc(100% - var(--width-settings)) var(
+      --width-settings
+    );
+  transition: grid-template-columns 0.5s;
+  overflow: hidden auto;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 3rem 1rem 1rem;
+  position: relative;
+}
+
+.main {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--width-side);
+}
+
+.main > * {
+  z-index: 1;
+}
+
+.main::before {
+  position: absolute;
+  content: url("/assets/logo_super_earth.svg");
+  max-width: 700px;
+  width: 50vw;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.02;
+  z-index: 0;
+  color: var(--white);
+  user-select: none;
+}
+
+.settings {
+  display: flex;
+  flex-flow: column wrap;
+  grid-column: 1;
+  background: #1c1c1c;
+  color: var(--white);
+  overflow: hidden scroll;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: var(--width-settings);
+  scrollbar-gutter: stable;
+  transition: width 0.5s;
+}
+
+.settings > * {
+  min-width: var(--width-settings);
+  overflow: hidden;
+}
+
+.settings::-webkit-scrollbar {
+  width: 8px;
+}
+
+.settings::-webkit-scrollbar-track {
+  background-color: #262626;
+}
+
+.settings::-webkit-scrollbar-thumb {
+  background-color: var(--taupe);
+  border-top: 2px solid var(--yellow);
+  border-bottom: 2px solid var(--yellow);
+  height: 120px;
+}
+
+.opened {
+  --width-settings: 250px;
+}
+
+.closed {
+  --width-settings: 0px;
+}
+
 .roundScoreContainer {
   display: flex;
   flex-flow: row nowrap;
@@ -27,6 +109,10 @@
 }
 
 @media (width <= 1024px) {
+  .main::before {
+    width: 80%;
+  }
+
   .roundScoreContainer {
     margin-bottom: 1rem;
   }

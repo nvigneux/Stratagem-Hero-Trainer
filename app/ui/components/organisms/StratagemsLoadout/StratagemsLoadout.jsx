@@ -57,16 +57,20 @@ function StratagemsLoadout({ stratagems }) {
   }, [checkedStratagems]);
 
   return (
-    <div className={styles.container}>
-      {stratagemsArray?.length ? (
-        <StratagemsLoadoutList stratagems={stratagemsArray}>
-          {(stratagem) => (
-            <StratagemsLoadoutCard stratagem={stratagem} />
-          )}
-        </StratagemsLoadoutList>
-      ) : (
-        <StratagemsName name="Select some stratagems !" />
-      )}
+    <div className={styles.wrapper}>
+      <div className={styles.main}>
+        {stratagemsArray?.length ? (
+          <StratagemsLoadoutList stratagems={stratagemsArray}>
+            {(stratagem) => (
+              <StratagemsLoadoutCard stratagem={stratagem} />
+            )}
+          </StratagemsLoadoutList>
+        ) : (
+          <div className={styles.empty}>
+            <StratagemsName name="Select some stratagems !" />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

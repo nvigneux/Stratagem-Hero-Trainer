@@ -104,12 +104,9 @@
 .main {
   display: flex;
   flex-flow: column wrap;
-  align-items: center;
-  justify-content: center;
   grid-column: 2;
   background: var(--blue-night);
   color: var(--white);
-  padding: 3rem 1rem 1rem;
   min-height: 100dvh;
   position: relative;
   min-width: var(--width-side);
@@ -117,19 +114,6 @@
 
 .main > * {
   z-index: 1;
-}
-
-.main::before {
-  position: absolute;
-  content: url("/assets/logo_super_earth.svg");
-  max-width: 700px;
-  width: 50vw;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.02;
-  z-index: 0;
-  color: var(--white);
-  user-select: none;
 }
 
 .checkboxAll {
@@ -148,9 +132,5 @@
 @media (width <= 1024px) {
   .opened {
     --width-side: 322px;
-  }
-
-  .main::before {
-    width: 80%;
   }
 }

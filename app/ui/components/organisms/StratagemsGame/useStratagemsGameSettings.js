@@ -27,6 +27,12 @@ const settingsReducer = (state, action) => {
       return { ...state, tempKeyBindings: { ...state.tempKeyBindings, ...action.payload } };
     case 'APPLY_TEMP_KEY_BINDINGS':
       return { ...state, keyBindings: { ...state.tempKeyBindings } };
+    case 'RESET_KEY_BINDINGS':
+      return {
+        ...state,
+        tempKeyBindings: { ...state.keyBindings },
+        keyBindings: { ...state.keyBindings },
+      };
     default:
       return state;
   }
@@ -91,6 +97,10 @@ const useStratagemsGameSettings = (
     dispatch({ type: 'APPLY_TEMP_KEY_BINDINGS' });
   };
 
+  const resetKeyBindings = () => {
+    dispatch({ type: 'RESET_KEY_BINDINGS' });
+  };
+
   return {
     timerDuration: state.timerDuration,
     timeBonus: state.timeBonus,
@@ -100,6 +110,7 @@ const useStratagemsGameSettings = (
     tempKeyBindings: state.tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
+    resetKeyBindings,
   };
 };
 
