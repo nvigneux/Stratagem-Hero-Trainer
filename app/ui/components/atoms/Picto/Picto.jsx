@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
 
+// TODO : Remove dynamic import
 export const availablePictos = {
   // Arrow
   'arrow': dynamic(() => import('../../../../../public/icons/arrow.svg')),
