@@ -1,8 +1,6 @@
 .wrapper {
   display: grid;
-  grid-template-columns: calc(100% - var(--width-settings)) var(
-      --width-settings
-    );
+  grid-template-columns: 1fr;
   transition: grid-template-columns 0.5s;
   overflow: hidden auto;
   width: 100%;
@@ -95,14 +93,30 @@
   transition: right 0.5s;
 }
 
+.settingsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0 0 0 / 50%);
+  z-index: 3;
+  display: none;
+}
+
 .opened .buttonSettings {
   right: calc(var(--width-settings) + 1.15rem);
+}
+
+.opened .settingsOverlay {
+  display: block;
 }
 
 .roundScoreContainer {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  align-self: center;
   max-width: 600px;
   width: 100%;
   margin-bottom: 3rem;
