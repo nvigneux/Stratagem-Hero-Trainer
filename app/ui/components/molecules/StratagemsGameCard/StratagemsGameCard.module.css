@@ -54,7 +54,7 @@
   flex: 0 0 auto;
 }
 
-.success .icon{
+.success .icon {
   animation: blink-success 0.5s;
 }
 
@@ -78,8 +78,8 @@
     --size-icon: 45px;
   }
 
-  .active{
-    --size-card: 100px;  
+  .active {
+    --size-card: 100px;
   }
 
   .active .icon {
@@ -88,5 +88,13 @@
 
   .list {
     gap: 0.5rem;
+  }
+
+  .list > *:first-child {
+    margin-left: 1rem;
+  }
+
+  .list > *:last-child {
+    margin-right: 0.25rem;
   }
 }

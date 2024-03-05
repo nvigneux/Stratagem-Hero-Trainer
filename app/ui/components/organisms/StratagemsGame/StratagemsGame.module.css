@@ -7,7 +7,7 @@
   overflow: hidden auto;
   width: 100%;
   min-height: 100dvh;
-  padding: 3rem 1rem 1rem;
+  padding: 3rem 0 1rem;
   position: relative;
 }
 
@@ -50,6 +50,7 @@
   width: var(--width-settings);
   scrollbar-gutter: stable;
   transition: width 0.5s;
+  z-index: 2;
 }
 
 .settings > * {
@@ -80,6 +81,24 @@
   --width-settings: 0px;
 }
 
+.buttonSettings {
+  position: fixed;
+  height: 2rem;
+  width: 2rem;
+  right: 1.15rem;
+  top: 1rem;
+  z-index: 4;
+  border: none;
+  font-size: 0;
+  color: var(--yellow);
+  cursor: pointer;
+  transition: right 0.5s;
+}
+
+.opened .buttonSettings {
+  right: calc(var(--width-settings) + 1.15rem);
+}
+
 .roundScoreContainer {
   display: flex;
   flex-flow: row nowrap;
@@ -89,6 +108,7 @@
   margin-bottom: 3rem;
   user-select: none;
   z-index: 2 !important;
+  padding: 0 1rem;
 }
 
 .activeStratagemsInfo {
@@ -102,10 +122,16 @@
   overflow: hidden;
 }
 
+.stratagemsList {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .mobileKeyboard {
   display: none;
   overflow: hidden;
-  padding: 0 0 0.3rem;
+  padding: 0 1rem 0.3rem;
 }
 
 @media (width <= 1024px) {
@@ -127,5 +153,13 @@
     justify-content: center;
     width: 100%;
     margin-top: 2rem;
+  }
+
+  .opened {
+    --width-settings: 175px;
+  }
+
+  .keyBindings {
+    display: none;
   }
 }

@@ -150,10 +150,11 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
   return (
     <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
       <div className={styles.main}>
-        <button type="button" onClick={resetKeyBindings}>
-          reset
-        </button>
-        <button type="button" onClick={() => setOpenSettings(!openSettings)}>
+        <button
+          type="button"
+          onClick={() => setOpenSettings(!openSettings)}
+          className={styles.buttonSettings}
+        >
           settings
         </button>
 
@@ -169,20 +170,22 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
           />
         </div>
 
-        <StratagemsGameCard.List>
-          {series?.length ? series.map((stratagem, index) => {
-            if (index >= 6) return null;
-            return (
-              <StratagemsGameCard
+        <div className={styles.stratagemsList}>
+          <StratagemsGameCard.List>
+            {series?.length ? series.map((stratagem, index) => {
+              if (index >= 6) return null;
+              return (
+                <StratagemsGameCard
                 // eslint-disable-next-line react/no-array-index-key
-                key={`${stratagem.id}-${index}`}
-                name={stratagem.name}
-                active={index === 0}
-                success={stateSerie.success}
-              />
-            );
-          }) : <div />}
-        </StratagemsGameCard.List>
+                  key={`${stratagem.id}-${index}`}
+                  name={stratagem.name}
+                  active={index === 0}
+                  success={stateSerie.success}
+                />
+              );
+            }) : <div />}
+          </StratagemsGameCard.List>
+        </div>
 
         {series?.length ? (
           <div className={styles.activeStratagemsInfo}>
@@ -213,6 +216,9 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
         ) : null}
       </div>
       <div className={cn([styles.settings])}>
+        <button type="button" onClick={resetKeyBindings}>
+          reset
+        </button>
         <form
           className={styles.timerDurationForm}
           action={handleSubmitTimerDuration}

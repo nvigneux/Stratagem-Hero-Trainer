@@ -21,6 +21,7 @@
   width: var(--width-side);
   scrollbar-gutter: stable;
   transition: width 0.5s;
+  z-index: 3;
 }
 
 .container::-webkit-scrollbar,
