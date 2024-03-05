@@ -41,7 +41,6 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
     tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
-    resetKeyBindings,
   } = useStratagemsGameSettings();
 
   const filteredStratagemsChecked = useMemo(
@@ -216,9 +215,6 @@ function StratagemsGame({ stratagems, bestScoreStored }) {
         ) : null}
       </div>
       <div className={cn([styles.settings])}>
-        <button type="button" onClick={resetKeyBindings}>
-          reset
-        </button>
         <form
           className={styles.timerDurationForm}
           action={handleSubmitTimerDuration}

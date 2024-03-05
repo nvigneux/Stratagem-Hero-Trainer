@@ -63,7 +63,7 @@ const useStratagemsGameSettings = (
    * @param {number} timerDuration
    */
   const setTimerDuration = (timerDuration) => {
-    if (isValidDuration(timerDuration)) {
+    if (isValidDuration(timerDuration) && timerDuration !== state.timerDuration) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
     }
   };
@@ -97,10 +97,6 @@ const useStratagemsGameSettings = (
     dispatch({ type: 'APPLY_TEMP_KEY_BINDINGS' });
   };
 
-  const resetKeyBindings = () => {
-    dispatch({ type: 'RESET_KEY_BINDINGS' });
-  };
-
   return {
     timerDuration: state.timerDuration,
     timeBonus: state.timeBonus,
@@ -110,7 +106,6 @@ const useStratagemsGameSettings = (
     tempKeyBindings: state.tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
-    resetKeyBindings,
   };
 };
 
