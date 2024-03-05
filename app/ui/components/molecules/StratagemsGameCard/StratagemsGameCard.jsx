@@ -23,6 +23,8 @@ function StratagemsGameCard({
         width={55}
         height={55}
         className={styles.icon}
+        loading="eager"
+        priority
       />
     </div>
   );

@@ -1,13 +1,15 @@
 /* eslint-disable quote-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import dynamic from 'next/dynamic';
+
+import ArrowIcon from '../../../../../public/icons/arrow.svg';
+import SettingsIcon from '../../../../../public/icons/settings.svg';
 
 export const availablePictos = {
   // Arrow
-  'arrow': dynamic(() => import('../../../../../public/icons/arrow.svg')),
+  'arrow': ArrowIcon,
   // Settings
-  'settings': dynamic(() => import('../../../../../public/icons/settings.svg')),
+  'settings': SettingsIcon,
 };
 
 export function Picto({ icon, ...props }) {
