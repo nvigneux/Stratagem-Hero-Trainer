@@ -5,16 +5,14 @@ import { cookies } from 'next/headers';
 import { fetchStratagems } from '../lib/data';
 
 // Lib
-import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../lib/constants';
-import { isJsonString } from '../lib/utils';
+import { COOKIE_LOADOUT } from '../lib/constants';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
-import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
+import StratagemsLoadout from '../ui/components/organisms/StratagemsLoadout/StratagemsLoadout';
 
 export default async function Page() {
-  const bestScoreStored = getCookie(COOKIE_BEST_SCORE, { cookies }) || 0;
-  const settingsStored = getCookie(COOKIE_SETTINGS, { cookies }) || {};
+  const loadoutStored = getCookie(COOKIE_LOADOUT, { cookies }) || 0;
 
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
@@ -31,13 +29,13 @@ export default async function Page() {
 
   return (
     <StratagemsLayout
-      stratagems={stratagems}
+      stratagems={randomisedStratagems}
       stratagemsByCategories={stratagemsByCategories}
+      defaultCheckValue={false}
     >
-      <StratagemsGame
-        stratagems={randomisedStratagems}
-        bestScoreStored={+bestScoreStored}
-        settingsStored={isJsonString(settingsStored) ? JSON.parse(settingsStored) : {}}
+      <StratagemsLoadout
+        stratagems={stratagems}
+        loadoutStored={loadoutStored}
       />
     </StratagemsLayout>
   );

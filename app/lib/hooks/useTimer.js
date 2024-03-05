@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useCallback } from 'react';
 
 const initialState = {
   progress: 0,
@@ -16,12 +16,18 @@ const timerReducer = (state, action) => {
       return { ...initialState, progress: action.payload, isFinished: true };
     case 'RESET':
       return { ...initialState, progress: action.payload };
-    case 'TICK':
-      return { ...state, progress: Math.max(state.progress - 1 / 60, 0) };
+    case 'TICK': {
+      const newProgress = Math.max(state.progress - action.payload.elapsedSeconds, 0);
+      if (newProgress === 0) {
+        action.payload.handleIsOver();
+        return { ...initialState, progress: action.payload.initialProgress, isFinished: true };
+      }
+      return { ...state, progress: newProgress };
+    }
     case 'ADD_TIME':
       return { ...state, progress: Math.min(state.progress + action.payload, action.total) };
     case 'RESTART':
-      return { ...state, ...initialState, isRunning: true };
+      return { ...initialState, isRunning: true };
     default:
       return state;
   }
@@ -35,43 +41,36 @@ const useTimer = (initialProgress, total, handleIsOver) => {
 
   useEffect(() => {
     let animationFrameId;
+    let lastTickTime = performance.now();
 
     const tick = () => {
-      dispatch({ type: 'TICK' });
-      animationFrameId = requestAnimationFrame(tick);
+      const now = performance.now();
+      const elapsedMilliseconds = now - lastTickTime;
+      lastTickTime = now;
+      const elapsedSeconds = elapsedMilliseconds / 1000;
+      dispatch({ type: 'TICK', payload: { elapsedSeconds, initialProgress, handleIsOver } });
+
+      if (state.progress > 0) {
+        animationFrameId = requestAnimationFrame(tick);
+      }
     };
 
-    if (state.isRunning && state.progress > 0) {
+    if (state.isRunning) {
       animationFrameId = requestAnimationFrame(tick);
-    }
-
-    if (state.isRunning && state.progress <= 0) {
-      dispatch({ type: 'FINISH', payload: initialProgress });
-      handleIsOver();
     }
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [handleIsOver, initialProgress, state.isRunning, state.progress]);
+  }, [state.isRunning]); // Only depend on state.isRunning
 
-  const startTimer = () => {
-    dispatch({ type: 'START' });
-  };
+  const startTimer = useCallback(() => dispatch({ type: 'START' }), []);
+  const pauseTimer = useCallback(() => dispatch({ type: 'PAUSE' }), []);
+  const resetTimer = useCallback(() => dispatch({ type: 'RESET', payload: initialProgress }), [initialProgress]);
+  const addTime = useCallback((amount) => dispatch({ type: 'ADD_TIME', payload: amount, total }), [total]);
+  const restartTimer = useCallback(() => dispatch({ type: 'RESTART' }), []);
 
-  const pauseTimer = () => {
-    dispatch({ type: 'PAUSE' });
-  };
-
-  const resetTimer = () => {
-    dispatch({ type: 'RESET', payload: initialProgress });
-  };
-
-  const addTime = (amount) => {
-    dispatch({ type: 'ADD_TIME', payload: amount, total });
-  };
-
-  const restartTimer = () => {
-    dispatch({ type: 'RESTART' });
-  };
+  useEffect(() => {
+    resetTimer();
+  }, [initialProgress, resetTimer]);
 
   return {
     progress: state.progress,

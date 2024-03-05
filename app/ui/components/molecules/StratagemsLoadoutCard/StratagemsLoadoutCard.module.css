@@ -1,0 +1,62 @@
+.card {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  text-align: left;
+  gap: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgb(0 0 0 / 30%);
+  border: 1px solid rgb(255 255 255 / 5%);
+  color: var(--white);
+  font-family: var(--font-fs-sinclair);
+  cursor: pointer;
+}
+
+.info {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  flex: 1 0 auto;
+}
+
+.code {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.5rem;
+}
+
+.icon {
+  --size: 65px;
+
+  height: var(--size);
+  width: var(--size);
+  padding: 0.1rem;
+  flex: 0 0 auto;
+}
+
+.patriotic-administration-center, .engineering-bay {
+  background: var(--blue-bg);
+  border: 3px solid var(--blue);
+}
+
+.hanger, .orbital-cannons, .bridge{
+  background: var(--red-bg);
+  border: 3px solid var(--red);
+}
+
+.robotics-workshop {
+  background: var(--green-bg);
+  border: 3px solid var(--green);
+}
+
+.general-stategems {
+  background: var(--yellow-bg);
+  border: 3px solid var(--taupe);
+}

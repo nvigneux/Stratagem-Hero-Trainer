@@ -1,0 +1,38 @@
+.label{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  background: rgb(255 255 255 / 5%);
+  padding: 0.5rem 1rem;
+}
+
+.labelText{
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.label input{
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-family: var(--font-fs-sinclair);
+  font-weight: 500;
+  height: 30px;
+  min-width: 80px;
+  border: none;
+  text-align: center;
+  width: 100px;
+  padding: 0.5rem;
+  background: #3c3c3c;
+  color: var(--white);
+  border-radius: 0;
+}
+
+.label input::-webkit-inner-spin-button,
+.label input::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}

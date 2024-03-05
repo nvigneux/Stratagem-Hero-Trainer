@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import localFont from 'next/font/local';
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react'; // TODO uncomment production
 
 import './globals.css';
 
@@ -20,6 +20,7 @@ const fsSinclair = localFont({
     },
   ],
   display: 'swap',
+  variable: '--font-fs-sinclair',
 });
 
 export const metadata = {
@@ -30,9 +31,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={fsSinclair.className}>
+      <body className={`${fsSinclair.className} ${fsSinclair.variable}`}>
         {children}
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   );

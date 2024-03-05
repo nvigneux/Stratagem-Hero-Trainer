@@ -1,53 +1,59 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 
 // Styles
 import styles from './StratagemsGame.module.css';
 
 // Components
-import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
-import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import StratagemsKeyboardMobile from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
-import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
-import Arrow from '../../molecules/Arrow/Arrow';
-import Checkbox from '../../atoms/Checkbox/Checkbox';
+import Arrow from '../../atoms/Arrow/Arrow';
+import { Picto } from '../../atoms/Picto/Picto';
+import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
+import TimerDurationForm from '../../../../forms/TimerDurationForm';
 
 // Hooks
-import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
+import useStratagemsGameSettings from './useStratagemsGameSettings';
+
+// Provider
+import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
 
 // Lib
 import cn from '../../../../lib/cn';
+import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
-const TIMER_DURATION = 10;
-const TIME_BONUS = 1;
-
-function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored }) {
-  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-  const [openStratagems, setOpenStratagems] = useState(false);
-
-  useEffect(() => {
-    if (isDesktop) setOpenStratagems(true);
-  }, [isDesktop]);
+function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
+  const [openSettings, setOpenSettings] = useState(false);
+  const { checkedStratagems = {} } = useStratagems();
 
   const {
-    checkboxes, handleChange, checkboxesAreChecked, handleChangeAll,
-  } = useCheckboxes(
-    { initialState: stratagems, key: 'name', defaultValue: true },
-  );
+    timerDuration,
+    timeBonus,
+    setTimerDuration,
+    keyBindings,
+    tempKeyBindings,
+    setTempKeyBinding,
+    applyTempKeyBindings,
+  } = useStratagemsGameSettings({
+    defaultDuration: settingsStored.timerDuration,
+    defaultKeyBindings: settingsStored.keyBindings,
+    defaultTempKeyBindings: settingsStored.keyBindings,
+  });
 
   const filteredStratagemsChecked = useMemo(
-    () => [...stratagems].filter((stratagem) => checkboxes[stratagem.name]),
-    [stratagems, checkboxes],
+    () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
+    [stratagems, checkedStratagems],
   );
 
   const {
@@ -58,38 +64,23 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
 
   const {
     progress, isRunning, startTimer, resetTimer, addTime,
-  } = useTimer(TIMER_DURATION, TIMER_DURATION, resetSeries);
+  } = useTimer(timerDuration, timerDuration, resetSeries);
 
-  /**
-   * Handle the change of a single checkbox
-   * @param {string} name
-   */
-  const handleChangeCheckbox = (name) => {
-    handleChange(name);
-    dispatchStateSerie({ type: 'resetScore' });
-    resetSeries();
-    resetTimer();
-  };
-
-  // Reset the series when the all checkboxes change
-  const handleChangeAllCheckbox = () => {
-    handleChangeAll();
-    dispatchStateSerie({ type: 'resetScore' });
-    resetSeries();
-    resetTimer();
-  };
-
-  /**
-   * Handle the change of all checkboxes in a category
-   * @param {string} category
-   * @param {boolean} value
-   */
-  const handleChangeCategoriesCheckbox = (category, value) => {
-    stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
-    dispatchStateSerie({ type: 'resetScore' });
-    resetSeries();
-    resetTimer();
-  };
+  const refCheckStratagems = useRef(null);
+  useEffect(() => {
+    const checkedStratagemsString = JSON.stringify(checkedStratagems);
+    if (!refCheckStratagems.current) {
+      refCheckStratagems.current = checkedStratagemsString;
+      return;
+    }
+    if (refCheckStratagems.current !== checkedStratagemsString) {
+      refCheckStratagems.current = checkedStratagemsString;
+      dispatchStateSerie({ type: 'resetScore' });
+      resetSeries();
+      resetTimer();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkedStratagems]);
 
   /**
    * Check if the active serie code is correct
@@ -102,12 +93,6 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
     } else {
       dispatchStateSerie({ type: 'error', payload: true });
-      // if (direction === series[0].code[0]) {
-      // // if the direction is the first one, reset the active index to 1
-      //   dispatchStateSerie({ type: 'index', payload: 1 });
-      //   return;
-      // }
-      dispatchStateSerie({ type: 'index', payload: 0 }); // direction error reset the active index
       return;
     }
 
@@ -115,10 +100,11 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
       if (series.length === 1) {
         resetTimer();
       } else {
-        addTime(TIME_BONUS + 0.01 * stateSerie.round);
+        addTime(timeBonus + 0.01 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
-        handleSuccessStratagem(progress);
+        const percentOfProgress = Math.round((progress / timerDuration) * 100);
+        handleSuccessStratagem(percentOfProgress);
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
     }
@@ -129,21 +115,22 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
+    if (event.target.tagName === 'INPUT') return;
     switch (event.code) {
       case 'ArrowUp':
-      case 'KeyW':
+      case keyBindings.up:
         checkActiveSerieCode('up');
         break;
       case 'ArrowDown':
-      case 'KeyS':
+      case keyBindings.down:
         checkActiveSerieCode('down');
         break;
       case 'ArrowLeft':
-      case 'KeyA':
+      case keyBindings.left:
         checkActiveSerieCode('left');
         break;
       case 'ArrowRight':
-      case 'KeyD':
+      case keyBindings.right:
         checkActiveSerieCode('right');
         break;
       default:
@@ -152,62 +139,51 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
   }
   useEventListener('keydown', keydownDirectionHandler);
 
+  const handleSubmitTimerDuration = (formData) => {
+    const timerDurationValue = formData.get('timerDuration');
+    if (+timerDurationValue !== timerDuration) {
+      setTimeout(() => { // fake loading ui
+        setTimerDuration(+timerDurationValue);
+        resetSeries();
+      }, 250);
+    }
+  };
+
+  const handleKeyBindings = () => {
+    setTimeout(() => { // fake loading ui
+      applyTempKeyBindings();
+    }, 250);
+  };
+
+  const handleSetTempKeyBindings = (direction, code) => {
+    const forbiddenKeys = ['Escape', 'Enter', 'Tab', 'Meta', 'MetaLeft', 'MetaRight', 'ContextMenu', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PageUp', 'PageDown', 'Home', 'End', 'Backspace', 'Delete'];
+    if (forbiddenKeys.includes(code)) return;
+    setTempKeyBinding(direction, code);
+  };
+
   return (
-    <main className={cn([styles.container, openStratagems ? styles.opened : styles.closed])}>
-      <ButtonSideStratagems
-        onClick={() => setOpenStratagems(!openStratagems)}
-        isOpened={openStratagems}
-      />
-      <div className={styles.side}>
-        <StratagemsCategories>
-          <Checkbox
-            id="all"
-            checked={checkboxesAreChecked}
-            onChange={handleChangeAllCheckbox}
-            label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}
-            className={styles.checkboxAll}
-          />
-          <div className={styles.sideContainer}>
-            <div className={styles.sideDecoration} />
-            {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
-              const categoryChecked = stratagemsByCategory.every(
-                (stratagem) => checkboxes[stratagem.name],
-              );
-              return (
-                <StratagemsCategories.Category key={category}>
-
-                  <StratagemsCategories.Head category={category}>
-                    <Checkbox
-                      id={category}
-                      checked={categoryChecked}
-                      onChange={() => handleChangeCategoriesCheckbox(category, !categoryChecked)}
-                    />
-                  </StratagemsCategories.Head>
-
-                  <StratagemsCategories.Cards stratagems={stratagemsByCategory}>
-                    {(stratagem) => (
-                      <Checkbox
-                        key={stratagem.name}
-                        id={stratagem.name}
-                        checked={checkboxes[stratagem.name]}
-                        onChange={() => handleChangeCheckbox(stratagem.name)}
-                      >
-                        <StratagemsCard
-                          name={stratagem.name}
-                          code={stratagem.code}
-                          active={checkboxes[stratagem.name]}
-                        />
-                      </Checkbox>
-                    )}
-                  </StratagemsCategories.Cards>
-                </StratagemsCategories.Category>
-              );
-            })}
-          </div>
-        </StratagemsCategories>
-      </div>
-
+    <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
       <div className={styles.main}>
+        <button
+          type="button"
+          onClick={() => setOpenSettings(!openSettings)}
+          className={styles.buttonSettings}
+          aria-label="Settings"
+        >
+          <span className={styles.settingsLabelDesktop}>Settings</span>
+          <Picto icon="settings" />
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setOpenSettings(false)}
+          className={cn([
+            styles.settingsOverlay,
+            openSettings ? styles.openedSettings : styles.closedSettings,
+          ])}
+          aria-label="Close settings"
+        />
+
         <div className={styles.roundScoreContainer}>
           <RoundInfo roundNb={stateSerie.round} />
           <ScoreInfo
@@ -220,20 +196,22 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
           />
         </div>
 
-        <StratagemsGameCard.List>
-          {series?.length ? series.map((stratagem, index) => {
-            if (index >= 6) return null;
-            return (
-              <StratagemsGameCard
+        <div className={styles.stratagemsList}>
+          <StratagemsGameCard.List>
+            {series?.length ? series.map((stratagem, index) => {
+              if (index >= 6) return null;
+              return (
+                <StratagemsGameCard
                 // eslint-disable-next-line react/no-array-index-key
-                key={`${stratagem.id}-${index}`}
-                name={stratagem.name}
-                active={index === 0}
-                success={stateSerie.success}
-              />
-            );
-          }) : <div />}
-        </StratagemsGameCard.List>
+                  key={`${stratagem.id}-${index}`}
+                  name={stratagem.name}
+                  active={index === 0}
+                  success={stateSerie.success}
+                />
+              );
+            }) : <div />}
+          </StratagemsGameCard.List>
+        </div>
 
         {series?.length ? (
           <div className={styles.activeStratagemsInfo}>
@@ -246,6 +224,7 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
                   direction={direction}
                   active={index + 1 <= stateSerie.index}
                   error={stateSerie.error}
+                  size="large"
                 />
               ))}
             </Arrow.List>
@@ -253,7 +232,7 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
         ) : <StratagemsName name="Traitor detected !" />}
 
         {series?.length ? (
-          <StratagemsTimer progress={progress} total={TIMER_DURATION} />
+          <StratagemsTimer progress={progress} total={timerDuration} />
         ) : null}
 
         {series?.length ? (
@@ -262,7 +241,25 @@ function StratagemsGame({ stratagems, stratagemsByCategories, bestScoreStored })
           </div>
         ) : null}
       </div>
-    </main>
+      <div className={cn([styles.settings])}>
+        <div className={styles.timerDuration}>
+          <HeadingForm title="Timer duration" />
+          <TimerDurationForm
+            timerDuration={timerDuration}
+            handleSubmitTimerDuration={handleSubmitTimerDuration}
+          />
+        </div>
+
+        <div className={styles.keyBindings}>
+          <HeadingForm title="Key bindings" />
+          <KeyBindingsForm
+            tempKeyBindings={tempKeyBindings}
+            handleKeyBindings={handleKeyBindings}
+            handleSetTempKeyBindings={handleSetTempKeyBindings}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -272,12 +269,16 @@ StratagemsGame.propTypes = {
     name: PropTypes.string.isRequired,
     code: PropTypes.arrayOf(PropTypes.string).isRequired,
   })).isRequired,
-  stratagemsByCategories: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }))).isRequired,
   bestScoreStored: PropTypes.number.isRequired,
+  settingsStored: PropTypes.shape({
+    timerDuration: PropTypes.number.isRequired,
+    keyBindings: PropTypes.shape({
+      up: PropTypes.string.isRequired,
+      down: PropTypes.string.isRequired,
+      left: PropTypes.string.isRequired,
+      right: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };
 
 export default StratagemsGame;

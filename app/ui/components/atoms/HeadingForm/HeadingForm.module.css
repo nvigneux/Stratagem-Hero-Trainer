@@ -1,0 +1,25 @@
+.title {
+--stripe-grey: rgba(255 255 255 / 12%);
+--stripe-blue: rgb(0 0 0 / 50%);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 0.8rem 1rem 0.75rem;
+  background-image: linear-gradient(
+    135deg,
+    var(--stripe-grey) 25%,
+    var(--stripe-blue) 25%,
+    var(--stripe-blue) 50%,
+    var(--stripe-grey) 50%,
+    var(--stripe-grey) 75%,
+    var(--stripe-blue) 75%,
+    var(--stripe-blue) 100%
+  );
+  background-size: 8.49px 8.49px;
+}

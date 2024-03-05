@@ -1,14 +1,11 @@
 .button {
-  position: fixed;
   height: 2rem;
   width: 2rem;
-  left: 1.15rem;
-  top: 1rem;
-  z-index: 1;
   border: none;
   font-size: 0;
   color: var(--yellow);
   background: transparent;
+  cursor: pointer;
 }
 
 .button svg {

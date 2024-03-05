@@ -1,0 +1,15 @@
+.list {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 0.15rem;
+  width: 100%;
+}
+
+.item {
+  display: flex;
+  width: 100%;
+}
+
+.item > * {
+  flex: 1 0 auto;
+}

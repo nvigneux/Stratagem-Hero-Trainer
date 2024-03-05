@@ -1,0 +1,39 @@
+.button{
+--bg: rgb(78 94 116 / 90%);
+--bg-light: #6b7f9e;
+--bg-dark: #3c4c5e;
+--border-color: #707f8e;
+--bg-success: #4caf50;
+
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--bg);
+  color: var(--white);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-family: var(--font-fs-sinclair);
+}
+
+.button:hover{
+  background: var(--bg-light);
+}
+
+.button:active{
+  background: var(--bg-dark);
+  cursor: progress;
+}
+
+.button:disabled{
+  background: var(--grey);
+  color: var(--white);
+  cursor: not-allowed;
+}
+
+.button:disabled:hover{
+  background: var(--grey);
+}

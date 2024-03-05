@@ -31,6 +31,7 @@ function reducerStateSerie(state, action) {
         ...state,
         error: action.payload,
         nbError: action.payload ? state.nbError + 1 : state.nbError,
+        index: 0,
       };
     case 'success':
       return {
@@ -103,10 +104,10 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
 
   /**
    * Add a stratagem to the series
-   * @param {Number} restingTime
+   * @param {Number} bonusRestingTime
    * @returns {void}
    */
-  const handleSuccessStratagem = (restingTime) => {
+  const handleSuccessStratagem = (bonusRestingTime) => {
     const pointToAdd = series[0].code.length * 5;
     dispatch({ type: 'removeFirst', stratagem: series[0] });
     dispatchStateSerie({ type: 'success', payload: true });
@@ -123,7 +124,6 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
     if (series.length === 1) { // if the series is 1, reset the series and increase the round
       const bonusRound = 25 * stateSerie.round + 50;
       const bonusPerfectRound = stateSerie.nbError === 0 ? 100 : 0;
-      const bonusRestingTime = Math.floor(restingTime * 10);
 
       const score = stateSerie.score + bonusRound + bonusPerfectRound + bonusRestingTime;
       const bestScore = score > stateSerie.bestScore ? score : stateSerie.bestScore;
