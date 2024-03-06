@@ -1,4 +1,5 @@
-// Migrating from the pages directory: The root layout replaces the _app.js and _document.js files.
+/* eslint-disable react/require-default-props */
+// Migrating from the pages directory: The root Layout replaces the _app.js and _document.js files.
 
 // Templates are similar to layouts in that they wrap each child layout or page.
 // Unlike layouts that persist across routes and maintain state,
@@ -17,20 +18,31 @@
 import PropTypes from 'prop-types';
 
 // Components
-import Navigation from '../ui/admin/Navigation/Navigation';
+import Navigation from '../ui/dashboard/Navigation/Navigation';
 
-function layout({ children }) {
+function Layout({ children, team, analytics }) {
   return (
     <section>
       <Navigation />
-
-      {children}
+      <div className="padding-l">
+        {children}
+      </div>
+      <div className="margin-m flex flex-row">
+        <div className="margin-m">
+          {team}
+        </div>
+        <div className="margin-m">
+          {analytics}
+        </div>
+      </div>
     </section>
   );
 }
 
-layout.propTypes = {
+Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  team: PropTypes.node,
+  analytics: PropTypes.node,
 };
 
-export default layout;
+export default Layout;
