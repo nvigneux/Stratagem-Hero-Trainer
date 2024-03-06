@@ -14,6 +14,9 @@ function Navigation() {
   return (
     <nav className={styles.nav}>
       <ul className={styles.list}>
+        <li>
+          <Link href="/dashboard/login">Open modal</Link>
+        </li>
         <li className={styles.item}>
           <Link className={`link ${pathname === '/dashboard' ? styles.active : ''}`} href="/dashboard">
             NAV - Admin

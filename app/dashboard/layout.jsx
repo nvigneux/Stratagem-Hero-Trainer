@@ -20,7 +20,9 @@ import PropTypes from 'prop-types';
 // Components
 import Navigation from '../ui/dashboard/Navigation/Navigation';
 
-function Layout({ children, team, analytics }) {
+function Layout({
+  children, team, analytics, auth,
+}) {
   return (
     <section>
       <Navigation />
@@ -35,6 +37,7 @@ function Layout({ children, team, analytics }) {
           {analytics}
         </div>
       </div>
+      {auth}
     </section>
   );
 }
@@ -43,6 +46,7 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
   team: PropTypes.node,
   analytics: PropTypes.node,
+  auth: PropTypes.node,
 };
 
 export default Layout;
