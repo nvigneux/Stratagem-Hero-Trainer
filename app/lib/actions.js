@@ -4,7 +4,7 @@
 
 import z from 'zod';
 import { sql } from '@vercel/postgres';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { setCookie } from 'cookies-next';
@@ -127,4 +127,92 @@ export async function setCookieBestScore(bestScore) {
  */
 export async function setCookieSettings(value) {
   setCookie(COOKIE_SETTINGS, JSON.stringify(value), { cookies, maxAge: 60 * 60 * 24 * 365 });
+}
+
+// POKEMON
+export const revalidateByTag = async (tags) => {
+  console.log(tags);
+  revalidateTag(tags);
+};
+
+// CATEGORIES
+// name required with zod
+const FormCategorySchema = z.object({
+  id: z.string(),
+  name: z.string({
+    invalid_type_error: 'Please enter a category name.',
+  }),
+});
+const CreateCategory = FormCategorySchema.omit({ id: true, date: true });
+const UpdateCategory = FormCategorySchema.omit({ id: true, date: true });
+
+export async function createCategory(prevState, formData) {
+  const validatedFields = CreateCategory.safeParse({
+    name: formData.get('name'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Category.',
+    };
+  }
+
+  const { name } = validatedFields.data;
+
+  try {
+    await sql`
+      INSERT INTO categories (name)
+      VALUES (${name})
+    `;
+  } catch (error) {
+    return {
+      message: 'Failed to create category',
+    };
+  }
+
+  revalidatePath('/stratagems-admin');
+  redirect('/stratagems-admin');
+}
+
+/**
+ * @description Update an invoice
+ * @param {string} id
+ * @param {FormData} formData
+ * @returns {Promise<void>}
+ */
+export async function updateCategory(id, formData) {
+  const { name } = UpdateCategory.parse({
+    name: formData.get('name'),
+  });
+
+  try {
+    await sql`
+    UPDATE categories
+    SET name = ${name}
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: 'Failed to update invoice',
+    };
+  }
+
+  revalidatePath('/stratagems-admin');
+  redirect('/stratagems-admin');
+}
+
+/**
+ * @description Delete an invoice
+ * @param {string} id
+ */
+export async function deleteCategory(id) {
+  console.log(id);
+  try {
+    await sql`DELETE FROM categories WHERE id = ${id}`;
+    revalidatePath('/stratagems-admin');
+    return { message: 'Deleted Category' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Category.' };
+  }
 }
