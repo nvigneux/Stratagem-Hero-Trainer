@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { fetchCustomers, fetchInvoiceById } from '../../../../lib/data';
 
 // Ui
-import EditInvoiceForm from '../../../../ui/invoices/Form/Edit';
+import EditInvoiceForm from '../../../components/invoices/Form/Edit';
 
 export default async function Page({ params }) {
   const { id } = params;

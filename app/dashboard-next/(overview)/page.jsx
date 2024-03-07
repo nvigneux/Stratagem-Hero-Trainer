@@ -4,14 +4,27 @@ import { Suspense } from 'react';
 import { fetchLatestInvoices } from '../../lib/data';
 
 // UI
-import Card from '../../ui/dashboard/Card/Card';
-import RevenueList from '../../ui/dashboard/RevenueList/RevenueList';
+import Card from '../components/dashboard/Card/Card';
+import RevenueList from '../components/dashboard/RevenueList/RevenueList';
+
+// Actions
+import ButtonRevalidate from '../components/dashboard/ButtonRevalidate/ButtonRevalidate';
 
 export default async function Page() {
   const lastestInvoices = await fetchLatestInvoices();
+  const pokemon = 'ditto';
+  const results = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`, { next: { tags: [`pokemon:${pokemon}`] } });
+  const data = await results.json();
 
   return (
     <main>
+
+      <div>
+        <h2>Pokemon</h2>
+        <pre>{JSON.stringify(data.name, null, 2)}</pre>
+        <ButtonRevalidate pokemon={pokemon} />
+      </div>
+
       <h1>
         Dashboard
       </h1>

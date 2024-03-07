@@ -2,7 +2,7 @@
 import { fetchCustomers } from '../../../lib/data';
 
 // Ui
-import Form from '../../../ui/invoices/Form/Form';
+import Form from '../../components/invoices/Form/Form';
 
 export default async function Page() {
   const customers = await fetchCustomers();

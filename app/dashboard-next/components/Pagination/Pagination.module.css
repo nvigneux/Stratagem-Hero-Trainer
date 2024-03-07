@@ -1,0 +1,11 @@
+.container{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1.5rem;
+}
+
+.numbers{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}

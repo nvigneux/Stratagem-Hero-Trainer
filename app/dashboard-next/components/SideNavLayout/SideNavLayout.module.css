@@ -1,0 +1,17 @@
+.container{
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100dvh;
+}
+
+.sidebar{
+  color: rgb(var(--foreground-rgb));
+  background: #788b9f;
+  padding: 1rem;
+}
+
+.content{
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient( to bottom, transparent, rgb(var(--background-end-rgb)) ) rgb(var(--background-start-rgb));
+  padding: 2rem;
+}

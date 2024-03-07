@@ -5,9 +5,9 @@ import Link from 'next/link';
 // Lib
 import { fetchInvoicesPages } from '../../lib/data';
 // UI
-import Search from '../../ui/dashboard/Search/Search';
-import Invoices from '../../ui/dashboard/Invoices/Invoices';
 import Pagination from '../../ui/components/atoms/Pagination/Pagination';
+import Search from '../components/dashboard/Search/Search';
+import Invoices from '../components/dashboard/Invoices/Invoices';
 
 const ITEMS_PER_PAGE = 2;
 
@@ -19,7 +19,7 @@ export default async function Page({ searchParams = {} }) {
 
   return (
     <div>
-      <Link href="/dashboard/invoices/create">Create Invoice</Link>
+      <Link href="/dashboard-next/invoices/create">Create Invoice</Link>
       <Search placeholder="Search invoices..." />
       <Suspense key={query + currentPage} fallback={<p>Loading query + currentPage...</p>}>
         <Invoices query={query} currentPage={currentPage} pageSize={ITEMS_PER_PAGE} />
