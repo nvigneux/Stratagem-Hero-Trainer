@@ -182,16 +182,11 @@
   padding: 0 1rem 0.3rem;
 }
 
-.timerDuration,
-.keyBindings {
+.settingsSection {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.5rem;
   flex: 0 0 auto;
-}
-
-.keyBindings {
-  display: none;
 }
 
 @media (width <= 1024px) {

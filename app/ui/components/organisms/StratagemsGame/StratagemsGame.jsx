@@ -243,7 +243,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ) : null}
       </div>
       <div className={cn([styles.settings])}>
-        <div className={styles.timerDuration}>
+        <div className={styles.settingsSection}>
           <HeadingForm title="Timer duration" />
           <TimerDurationForm
             timerDuration={timerDuration}
@@ -251,7 +251,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           />
         </div>
 
-        <div className={styles.keyBindings}>
+        <div className={styles.settingsSection}>
           <HeadingForm title="Key bindings" />
           <KeyBindingsForm
             tempKeyBindings={tempKeyBindings}
