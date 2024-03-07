@@ -156,6 +156,11 @@ const HANGER = [
     code: ['up', 'right', 'down', 'down', 'down'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
+  {
+    name: 'Eagle Rearm',
+    code: ['up', 'up', 'left', 'up', 'right'],
+    category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+  },
 ];
 
 const BRIDGE = [
@@ -306,6 +311,26 @@ const GENERAL_STRATEGEMS = [
   {
     name: 'SEAF Artillery',
     code: ['right', 'up', 'up', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Seismic Probe',
+    code: ['up', 'up', 'left', 'right', 'down', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Prospecting Drill',
+    code: ['down', 'down', 'left', 'right', 'down', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Super Earth Flag',
+    code: ['down', 'up', 'down', 'up'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Orbital Illumination Flare',
+    code: ['right', 'right', 'left', 'left'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
 ];
