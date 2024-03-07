@@ -18,7 +18,7 @@
 import PropTypes from 'prop-types';
 
 // Components
-import Navigation from '../ui/dashboard/Navigation/Navigation';
+import Navigation from './components/Navigation/Navigation';
 
 function Layout({
   children, team, analytics, auth,
