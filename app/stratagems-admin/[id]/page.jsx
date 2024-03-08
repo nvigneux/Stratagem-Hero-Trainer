@@ -3,11 +3,15 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 // Lib
-import { fetchCategoryById } from '../../lib/data';
+import { fetchCategoryById, fetchStratagemByCategory } from '../../lib/data';
 
 export default async function Page({ params }) {
   const { id } = params;
-  const category = await fetchCategoryById(id);
+  const [category, stratagems] = await Promise.all([
+    fetchCategoryById(id),
+    fetchStratagemByCategory(id),
+  ]);
+
   if (!category) {
     notFound();
   }
@@ -17,6 +21,12 @@ export default async function Page({ params }) {
       <Link href={`/stratagems-admin/${category.id}/edit`}>Edit</Link>
       <Link href="/stratagems-admin">Retour</Link>
       <h1>{category.name}</h1>
+      {stratagems.map((stratagem) => (
+        <div key={stratagem.id}>
+          <h2>{stratagem.name}</h2>
+          <Link href={`/stratagems-admin/${category.id}/${stratagem.id}`}>Edit</Link>
+        </div>
+      ))}
     </main>
   );
 }
