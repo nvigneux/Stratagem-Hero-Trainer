@@ -135,7 +135,10 @@ export const revalidateByTag = async (tags) => {
   revalidateTag(tags);
 };
 
-// CATEGORIES
+/**
+ * CATEGORIES
+ */
+
 // name required with zod
 const FormCategorySchema = z.object({
   id: z.string(),
@@ -216,3 +219,7 @@ export async function deleteCategory(id) {
     return { message: 'Database Error: Failed to Delete Category.' };
   }
 }
+
+/**
+ * STRATAGEMS
+ */
