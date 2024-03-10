@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 // Lib
 import { fetchCategoryById, fetchStratagemByCategory } from '../../lib/data';
+import DeleteStratagem from '../components/DeleteStratagem';
 
 export default async function Page({ params }) {
   const { id } = params;
@@ -18,6 +19,7 @@ export default async function Page({ params }) {
 
   return (
     <main>
+      <Link href={`/stratagems-admin/${category.id}/create`}>Ajouter Stratagem</Link>
       <Link href={`/stratagems-admin/${category.id}/edit`}>Edit</Link>
       <Link href="/stratagems-admin">Retour</Link>
       <h1>{category.name}</h1>
@@ -25,6 +27,7 @@ export default async function Page({ params }) {
         <div key={stratagem.id}>
           <h2>{stratagem.name}</h2>
           <Link href={`/stratagems-admin/${category.id}/${stratagem.id}`}>Edit</Link>
+          <DeleteStratagem id={stratagem.id} categoryId={category.id} />
         </div>
       ))}
     </main>

@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 
 // Lib
 import { fetchCategoryById } from '../../../lib/data';
+// Components
 import EditCategoryForm from '../../components/EditCategoryForm';
 
 export default async function Page({ params }) {
   const { id } = params;
   const category = await fetchCategoryById(id);
 
-  console.log(category);
   if (!category) {
     notFound();
   }
