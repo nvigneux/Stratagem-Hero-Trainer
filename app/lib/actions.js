@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 
 'use server';
@@ -223,3 +224,93 @@ export async function deleteCategory(id) {
 /**
  * STRATAGEMS
  */
+
+// name required with zod
+const FormStratagemSchema = z.object({
+  id: z.string(),
+  name: z.string({ required_error: 'Please enter a stratagem name.' }).min(1, { message: 'Please enter a stratagem name.' }),
+  code: z.string({ required_error: 'Please enter a stratagem code.' }).min(1, { message: 'Please enter a stratagem name.' }),
+  category_id: z.string({ required_error: 'Please select a category.' }).min(1, { message: 'Please enter a stratagem name.' }),
+});
+const CreateStratagem = FormStratagemSchema.omit({ id: true, date: true });
+const UpdateStratagem = FormStratagemSchema.omit({ id: true, date: true });
+
+export async function createStratagem(prevState, formData) {
+  const validatedFields = CreateStratagem.safeParse({
+    name: formData.get('name'),
+    code: formData.get('code'),
+    category_id: formData.get('category_id'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Stratagem.',
+    };
+  }
+
+  const { name, code, category_id } = validatedFields.data;
+
+  const codeArray = code.split(' ');
+
+  try {
+    await sql`
+      INSERT INTO stratagems (name, code, category_id)
+      VALUES (${name}, ${JSON.stringify(codeArray)}, ${category_id})
+    `;
+  } catch (error) {
+    return {
+      message: `Failed to create stratagem ${name} ${JSON.stringify(codeArray)} ${category_id}`,
+    };
+  }
+
+  revalidatePath(`/stratagems-admin/${category_id}`);
+  redirect(`/stratagems-admin/${category_id}`);
+}
+
+/**
+ * @description Update a stratagem
+ * @param {string} id
+ * @param {FormData} formData
+ * @returns {Promise<void>}
+ */
+export async function updateStratagem(id, formData) {
+  const { name, code, category_id } = UpdateStratagem.parse({
+    name: formData.get('name'),
+    code: formData.get('code'),
+    category_id: formData.get('category_id'),
+  });
+
+  const codeArray = code.split(' ');
+
+  try {
+    await sql`
+    UPDATE stratagems
+    SET name = ${name}, code = ${JSON.stringify(codeArray)}
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: 'Failed to update stratagem',
+    };
+  }
+
+  revalidatePath(`/stratagems-admin/${category_id}`);
+  revalidatePath(`/stratagems-admin/${category_id}/${id}`);
+  redirect(`/stratagems-admin/${category_id}`);
+}
+
+/**
+ * @description Delete a stratagem
+ * @param {string} id
+ */
+export async function deleteStratagem(id, formData) {
+  const categoryId = formData.get('category_id');
+  try {
+    await sql`DELETE FROM stratagems WHERE id = ${id}`;
+    revalidatePath(`/stratagems-admin/${categoryId}`);
+    return { message: 'Deleted Stratagem' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Stratagem.' };
+  }
+}
