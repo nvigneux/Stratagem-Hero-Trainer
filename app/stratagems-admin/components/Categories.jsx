@@ -12,7 +12,6 @@ async function Invoices({ query, currentPage, pageSize }) {
       {categories.map((category) => (
         <div key={category.id}>
           <Link href={`/stratagems-admin/${category.id}`}>{category.name}</Link>
-          <Link href={`/stratagems-admin/${category.id}/edit`}>Edit</Link>
           {/* <DeleteCategory id={category.id} /> */}
         </div>
       ))}
