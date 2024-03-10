@@ -115,6 +115,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
+    event.preventDefault();
     if (event.target.tagName === 'INPUT') return;
     switch (event.code) {
       case 'ArrowUp':
