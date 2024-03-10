@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 
 // Lib
 import { fetchStratagemById } from '../../../lib/data';
+// Components
+import EditStratagemForm from '../../components/EditStratagemForm';
 
 export default async function Page({ params }) {
-  const { stratagem: stratagemId, id: idCategory } = params;
-
+  const { stratagem: stratagemId } = params;
   const stratagem = await fetchStratagemById(stratagemId);
-
-  console.log(stratagem, idCategory, params);
 
   if (!stratagem) {
     notFound();
@@ -18,14 +16,7 @@ export default async function Page({ params }) {
 
   return (
     <main>
-      <Link href={`/stratagems-admin/${idCategory}`}>Retour</Link>
-      <h1>{stratagem.name}</h1>
-      <form action={updateStratagem}>
-        <label htmlFor="name">
-          Name
-          <input type="text" id="name" name="name" defaultValue={stratagem.name} />
-        </label>
-      </form>
+      <EditStratagemForm stratagem={stratagem} />
     </main>
   );
 }
