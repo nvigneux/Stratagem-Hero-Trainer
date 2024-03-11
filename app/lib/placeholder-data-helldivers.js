@@ -285,6 +285,11 @@ const ROBOTICS_WORKSHOP = [
     code: ['down', 'up', 'right', 'down', 'right'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
+  {
+    name: 'Patriot Exosuit',
+    code: ['left', 'down', 'right', 'up', 'left', 'down', 'down'],
+    category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
+  },
 ];
 
 const GENERAL_STRATEGEMS = [
