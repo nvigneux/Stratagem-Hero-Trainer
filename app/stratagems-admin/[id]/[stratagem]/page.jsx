@@ -15,9 +15,7 @@ export default async function Page({ params }) {
   }
 
   return (
-    <main>
-      <EditStratagemForm stratagem={stratagem} />
-    </main>
+    <EditStratagemForm stratagem={stratagem} />
   );
 }
 

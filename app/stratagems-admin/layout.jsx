@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 
+// Components
+import StratagemFormLayout from './components/StratagemFormLayout';
+
 export default function Layout({ children }) {
   return (
-    <div>
-      <p>Admin Stratagems</p>
+    <StratagemFormLayout>
       {children}
-    </div>
+    </StratagemFormLayout>
   );
 }
 

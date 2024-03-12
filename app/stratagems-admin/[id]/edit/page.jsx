@@ -15,9 +15,7 @@ export default async function Page({ params }) {
   }
 
   return (
-    <main>
-      <EditCategoryForm category={category} />
-    </main>
+    <EditCategoryForm category={category} />
   );
 }
 
