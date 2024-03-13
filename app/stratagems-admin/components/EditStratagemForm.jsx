@@ -54,7 +54,7 @@ export default function EditCategoryForm({
             Cancel
           </Button>
         </Link>
-        <Button type="submit">Edit Category</Button>
+        <Button type="submit">Edit Stratagem</Button>
       </div>
       <input type="hidden" name="category_id" value={stratagem.category_id} />
     </form>
