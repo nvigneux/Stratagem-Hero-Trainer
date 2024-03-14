@@ -1,0 +1,51 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.action{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.head {
+  text-align: left;
+}
+
+.headRow {
+  border: 1px solid var(--grey);
+}
+
+.headerCell {
+  padding: 10px;
+  text-align: left;
+}
+
+.body {
+  padding: 10px;
+  text-align: left;
+}
+
+.row {
+  border: 1px solid var(--grey);
+  background: var(--blue-night);
+}
+
+.body .row:nth-child(odd) {
+  background: var(--blue-moon);
+}
+
+.cell {
+  padding: 10px;
+  text-align: left;
+}
+
+.cellContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+}
