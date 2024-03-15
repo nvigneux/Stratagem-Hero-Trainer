@@ -86,6 +86,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Check if the active serie code is correct
    * @param {string} direction
    */
+  // TODO build an historic of time the player take to make the entire code
+  // to build an history for the player
   const checkActiveSerieCode = (direction) => {
     const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) { // direction is correct
@@ -114,6 +116,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the keydown event
    * @param {KeyboardEvent} event
    */
+  // TODO Add gamepad support
   function keydownDirectionHandler(event) {
     if (event.target.tagName === 'INPUT') return;
     switch (event.code) {

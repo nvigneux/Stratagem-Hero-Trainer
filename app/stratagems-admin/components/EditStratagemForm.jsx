@@ -16,6 +16,8 @@ import Button from '../../ui/components/atoms/Button/Button';
 export default function EditCategoryForm({
   stratagem,
 }) {
+  // bind() Créer une nouvelle fonction qui, lorsqu'elle est appelée, appellera la fonction
+  // `updateStratagem` avec `stratagem.id` comme premier argument.
   const updateStratagemWithId = updateStratagem.bind(null, stratagem.id);
 
   const code = JSON.parse(stratagem.code).join(' ');

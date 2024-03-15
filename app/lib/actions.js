@@ -225,6 +225,8 @@ export async function deleteCategory(id) {
  * STRATAGEMS
  */
 
+// TODO add an order to the stratagems to sort them by order in the category
+
 // name required with zod
 const FormStratagemSchema = z.object({
   id: z.string(),
