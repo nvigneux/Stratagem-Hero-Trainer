@@ -34,7 +34,7 @@ export default function EditCategoryForm({
       </div>
       <div className={styles.actions}>
         <Link
-          href={`/stratagems-admin/${category.id}`}
+          href="/stratagems-admin"
         >
           <Button>
             Cancel

@@ -8,6 +8,7 @@ import { fetchCategoriesPages } from '../lib/data';
 // UI
 import Pagination from '../ui/components/atoms/Pagination/Pagination';
 import Categories from './components/Categories';
+import Button from '../ui/components/atoms/Button/Button';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -19,7 +20,7 @@ export default async function Page({ searchParams = {} }) {
 
   return (
     <div>
-      <Link href="/stratagems-admin/create">Create Categorie</Link>
+      <Link href="/stratagems-admin/create"><Button>Create Categorie</Button></Link>
       <Suspense key={query + currentPage} fallback={<p>Loading query + currentPage...</p>}>
         <Categories query={query} currentPage={currentPage} pageSize={ITEMS_PER_PAGE} />
       </Suspense>
