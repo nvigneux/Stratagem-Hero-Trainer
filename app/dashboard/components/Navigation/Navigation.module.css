@@ -1,0 +1,23 @@
+.nav{
+  padding: 1rem;
+  background: var(--blue-bg);
+  color: var(--white);
+}
+
+.list{
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.item{
+  padding: 0.5rem;
+  color: var(--grey);
+  text-decoration: none;
+}
+
+.active {
+  color: var(--white);
+  font-weight: 800;
+}

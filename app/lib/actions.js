@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 
 'use server';
 
 import z from 'zod';
 import { sql } from '@vercel/postgres';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { setCookie } from 'cookies-next';
@@ -127,4 +128,191 @@ export async function setCookieBestScore(bestScore) {
  */
 export async function setCookieSettings(value) {
   setCookie(COOKIE_SETTINGS, JSON.stringify(value), { cookies, maxAge: 60 * 60 * 24 * 365 });
+}
+
+// POKEMON
+export const revalidateByTag = async (tags) => {
+  console.log(tags);
+  revalidateTag(tags);
+};
+
+/**
+ * CATEGORIES
+ */
+
+// name required with zod
+const FormCategorySchema = z.object({
+  id: z.string(),
+  name: z.string({
+    invalid_type_error: 'Please enter a category name.',
+  }),
+});
+const CreateCategory = FormCategorySchema.omit({ id: true, date: true });
+const UpdateCategory = FormCategorySchema.omit({ id: true, date: true });
+
+export async function createCategory(prevState, formData) {
+  const validatedFields = CreateCategory.safeParse({
+    name: formData.get('name'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Category.',
+    };
+  }
+
+  const { name } = validatedFields.data;
+
+  try {
+    await sql`
+      INSERT INTO categories (name)
+      VALUES (${name})
+    `;
+  } catch (error) {
+    return {
+      message: 'Failed to create category',
+    };
+  }
+
+  revalidatePath('/stratagems-admin');
+  redirect('/stratagems-admin');
+}
+
+/**
+ * @description Update an invoice
+ * @param {string} id
+ * @param {FormData} formData
+ * @returns {Promise<void>}
+ */
+export async function updateCategory(id, formData) {
+  const { name } = UpdateCategory.parse({
+    name: formData.get('name'),
+  });
+
+  try {
+    await sql`
+    UPDATE categories
+    SET name = ${name}
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: 'Failed to update invoice',
+    };
+  }
+
+  revalidatePath('/stratagems-admin');
+  redirect('/stratagems-admin');
+}
+
+/**
+ * @description Delete an invoice
+ * @param {string} id
+ */
+export async function deleteCategory(id) {
+  console.log(id);
+  try {
+    await sql`DELETE FROM categories WHERE id = ${id}`;
+    revalidatePath('/stratagems-admin');
+    return { message: 'Deleted Category' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Category.' };
+  }
+}
+
+/**
+ * STRATAGEMS
+ */
+
+// TODO add an order to the stratagems to sort them by order in the category
+
+// name required with zod
+const FormStratagemSchema = z.object({
+  id: z.string(),
+  name: z.string({ required_error: 'Please enter a stratagem name.' }).min(1, { message: 'Please enter a stratagem name.' }),
+  code: z.string({ required_error: 'Please enter a stratagem code.' }).min(1, { message: 'Please enter a stratagem name.' }),
+  category_id: z.string({ required_error: 'Please select a category.' }).min(1, { message: 'Please enter a stratagem name.' }),
+});
+const CreateStratagem = FormStratagemSchema.omit({ id: true, date: true });
+const UpdateStratagem = FormStratagemSchema.omit({ id: true, date: true });
+
+export async function createStratagem(prevState, formData) {
+  const validatedFields = CreateStratagem.safeParse({
+    name: formData.get('name'),
+    code: formData.get('code'),
+    category_id: formData.get('category_id'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Stratagem.',
+    };
+  }
+
+  const { name, code, category_id } = validatedFields.data;
+
+  const codeArray = code.split(' ');
+
+  try {
+    await sql`
+      INSERT INTO stratagems (name, code, category_id)
+      VALUES (${name}, ${JSON.stringify(codeArray)}, ${category_id})
+    `;
+  } catch (error) {
+    return {
+      message: `Failed to create stratagem ${name} ${JSON.stringify(codeArray)} ${category_id}`,
+    };
+  }
+
+  revalidatePath(`/stratagems-admin/${category_id}`);
+  redirect(`/stratagems-admin/${category_id}`);
+}
+
+/**
+ * @description Update a stratagem
+ * @param {string} id
+ * @param {FormData} formData
+ * @returns {Promise<void>}
+ */
+export async function updateStratagem(id, formData) {
+  const { name, code, category_id } = UpdateStratagem.parse({
+    name: formData.get('name'),
+    code: formData.get('code'),
+    category_id: formData.get('category_id'),
+  });
+
+  const codeArray = code.split(' ');
+
+  try {
+    await sql`
+    UPDATE stratagems
+    SET name = ${name}, code = ${JSON.stringify(codeArray)}
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: 'Failed to update stratagem',
+    };
+  }
+
+  revalidatePath(`/stratagems-admin/${category_id}`);
+  revalidatePath(`/stratagems-admin/${category_id}/${id}`);
+  redirect(`/stratagems-admin/${category_id}`);
+}
+
+/**
+ * @description Delete a stratagem
+ * @param {string} id
+ */
+export async function deleteStratagem(id, formData) {
+  const categoryId = formData.get('category_id');
+  try {
+    await sql`DELETE FROM stratagems WHERE id = ${id}`;
+    revalidatePath(`/stratagems-admin/${categoryId}`);
+    return { message: 'Deleted Stratagem' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Stratagem.' };
+  }
 }

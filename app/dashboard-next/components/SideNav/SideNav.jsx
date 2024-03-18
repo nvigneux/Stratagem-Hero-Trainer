@@ -7,7 +7,7 @@ function SideNav() {
   return (
     <div className={styles.container}>
       <div className={styles.links}>
-        <Link href="/dashboard-next">
+        <Link href="/dashboard">
           Dashboard
         </Link>
         <Link href="/dashboard-next/invoices">

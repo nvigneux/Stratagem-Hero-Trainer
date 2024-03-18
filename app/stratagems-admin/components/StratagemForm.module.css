@@ -1,0 +1,55 @@
+.layout{
+  background: var(--blue-night);
+  color: var(--white);
+  min-height: 100dvh;
+  padding: var(--spacing-24);
+}
+
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+}
+
+.fieldset {
+  display: flex;
+}
+
+.fieldset label {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  color: var(--white);
+}
+
+.fieldset input {
+  width: 100%;
+  text-align: left;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actions button,
+.actions a {
+  grid-column: span 1;
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+
+@media (width <= 1024px) {
+  .actions button,
+  .actions a {
+    grid-column: span 2;
+    align-self: center;
+  }
+}
