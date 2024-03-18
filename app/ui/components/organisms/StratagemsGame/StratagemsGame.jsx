@@ -122,18 +122,22 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     switch (event.code) {
       case 'ArrowUp':
       case keyBindings.up:
+        event.preventDefault();
         checkActiveSerieCode('up');
         break;
       case 'ArrowDown':
       case keyBindings.down:
+        event.preventDefault();
         checkActiveSerieCode('down');
         break;
       case 'ArrowLeft':
       case keyBindings.left:
+        event.preventDefault();
         checkActiveSerieCode('left');
         break;
       case 'ArrowRight':
       case keyBindings.right:
+        event.preventDefault();
         checkActiveSerieCode('right');
         break;
       default:
