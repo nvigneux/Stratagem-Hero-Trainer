@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import localFont from 'next/font/local';
-import { Analytics } from '@vercel/analytics/react'; // TODO uncomment production
+import { Analytics } from '@vercel/analytics/react';
 
 import './globals.css';
 
