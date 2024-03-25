@@ -22,13 +22,13 @@ const Checkbox = forwardRef(({
   !children ? (
     <label htmlFor={props.id} className={cn([styles['checkbox-container'], styles[size], 'ui-checkbox', className])}>
       {label ? <span className={styles.label}>{label}</span> : null}
-      <input ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+      <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
       <span className={cn([styles['checkbox-checkmark'], 'ui-checkbox-checkmark'])} />
     </label>
   )
     : (
       <label htmlFor={props.id} className={cn([styles['label-children'], className])}>
-        <input ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+        <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
         {children}
       </label>
     )
