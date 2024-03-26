@@ -19,19 +19,20 @@ import Arrow from '../../atoms/Arrow/Arrow';
 import { Picto } from '../../atoms/Picto/Picto';
 import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
 import TimerDurationForm from '../../../../forms/TimerDurationForm';
+import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
 import useStratagemsGameSettings from './useStratagemsGameSettings';
+import useGamepad from '../../../../lib/hooks/useGamepad';
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
 
 // Lib
 import cn from '../../../../lib/cn';
-import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -145,6 +146,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   }
   useEventListener('keydown', keydownDirectionHandler);
+
+  useGamepad(checkActiveSerieCode);
 
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
