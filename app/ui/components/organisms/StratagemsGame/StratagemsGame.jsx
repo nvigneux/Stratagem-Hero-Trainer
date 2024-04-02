@@ -184,9 +184,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
   const handleSubmitGameSound = (formData) => {
     const gameSoundValue = formData.get('gameSound');
-    if (gameSoundValue !== gameSound) {
+    if (!!gameSoundValue !== !!gameSound) {
       setTimeout(() => { // fake loading ui
-        setGameSound(gameSoundValue);
+        setGameSound(!!gameSoundValue);
       }, 250);
     }
   };
@@ -245,7 +245,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
               return (
                 <StratagemsGameCard
                 // eslint-disable-next-line react/no-array-index-key
-                  key={`${stratagem.id}-${index}`}
+                  key={`${stratagem.code}-${index}`}
                   name={stratagem.name}
                   category={stratagem.category.name}
                   active={index === 0}
