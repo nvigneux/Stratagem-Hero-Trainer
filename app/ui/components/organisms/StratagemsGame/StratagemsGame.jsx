@@ -5,6 +5,8 @@ import {
   useEffect, useMemo, useRef, useState,
 } from 'react';
 
+import useSound from 'use-sound';
+
 // Styles
 import styles from './StratagemsGame.module.css';
 
@@ -18,7 +20,9 @@ import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 import Arrow from '../../atoms/Arrow/Arrow';
 import { Picto } from '../../atoms/Picto/Picto';
 import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
+import GameSoundForm from '../../../../forms/GameSoundForm';
 import TimerDurationForm from '../../../../forms/TimerDurationForm';
+import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
@@ -31,13 +35,21 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
-import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
+
+// Sounds
+// import pressSound1 from '../../../../../public/sounds/stratagem-code-press-1.mp3';
+// import pressSound2 from '../../../../../public/sounds/stratagem-code-press-2.mp3';
+// import finishSound from '../../../../../public/sounds/stratagem-code-finish.mp3';
+// import newRound from '../../../../../public/sounds/stratagem-code-new-round.mp3';
+// import errorSound from '../../../../../public/sounds/stratagem-code-error.mp3';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
   const { checkedStratagems = {} } = useStratagems();
 
   const {
+    gameSound,
+    setGameSound,
     timerDuration,
     timeBonus,
     setTimerDuration,
@@ -49,7 +61,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     defaultDuration: settingsStored.timerDuration,
     defaultKeyBindings: settingsStored.keyBindings,
     defaultTempKeyBindings: settingsStored.keyBindings,
+    defaultGameSound: settingsStored.gameSound,
   });
+
+  const [playPress1] = useSound('/sounds/stratagem-code-press-1.mp3', { soundEnabled: gameSound });
+  const [playPress2] = useSound('/sounds/stratagem-code-press-2.mp3', { soundEnabled: gameSound });
+  const [playFinish] = useSound('/sounds/stratagem-code-finish.mp3', { soundEnabled: gameSound });
+  const [playNewRound] = useSound('/sounds/stratagem-code-new-round.mp3', { soundEnabled: gameSound });
+  const [playError] = useSound('/sounds/stratagem-code-error.mp3', { soundEnabled: gameSound });
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -92,21 +111,28 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) { // direction is correct
       if (!isRunning) startTimer();
+      const playSound = Math.random() < 0.75 ? playPress2 : playPress1;
+      playSound();
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
     } else {
       dispatchStateSerie({ type: 'error', payload: true });
+      playError();
       return;
     }
 
     if (stateSerie.index === series[0].code.length - 1) {
       if (series.length === 1) {
         resetTimer();
+        playNewRound();
       } else {
         addTime(timeBonus + 0.01 * stateSerie.round);
       }
       setTimeout(() => { // wait for the last code arrow to be seen correctly
         const percentOfProgress = Math.round((progress / timerDuration) * 100);
         handleSuccessStratagem(percentOfProgress);
+        if (series.length !== 1) { // play sound of finished stratagem if there is more than one
+          playFinish();
+        }
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
     }
@@ -152,6 +178,15 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       setTimeout(() => { // fake loading ui
         setTimerDuration(+timerDurationValue);
         resetSeries();
+      }, 250);
+    }
+  };
+
+  const handleSubmitGameSound = (formData) => {
+    const gameSoundValue = formData.get('gameSound');
+    if (gameSoundValue !== gameSound) {
+      setTimeout(() => { // fake loading ui
+        setGameSound(gameSoundValue);
       }, 250);
     }
   };
@@ -251,7 +286,15 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       </div>
       <div className={cn([styles.settings])}>
         <div className={styles.settingsSection}>
-          <HeadingForm title="Timer duration" />
+          <HeadingForm title="Audio" />
+          <GameSoundForm
+            gameSound={gameSound}
+            handleSubmitGameSound={handleSubmitGameSound}
+          />
+        </div>
+
+        <div className={styles.settingsSection}>
+          <HeadingForm title="Timer" />
           <TimerDurationForm
             timerDuration={timerDuration}
             handleSubmitTimerDuration={handleSubmitTimerDuration}
@@ -279,6 +322,7 @@ StratagemsGame.propTypes = {
   })).isRequired,
   bestScoreStored: PropTypes.number.isRequired,
   settingsStored: PropTypes.shape({
+    gameSound: PropTypes.bool.isRequired,
     timerDuration: PropTypes.number.isRequired,
     keyBindings: PropTypes.shape({
       up: PropTypes.string.isRequired,
