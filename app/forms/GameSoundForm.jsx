@@ -14,7 +14,8 @@ function GameSoundForm({ gameSound, handleSubmitGameSound }) {
         <Checkbox
           id="gameSound"
           name="gameSound"
-          defaultChecked={gameSound}
+          defaultChecked={!!gameSound || false}
+          value="true"
         />
       </LabelInput>
     </Form>
@@ -22,7 +23,7 @@ function GameSoundForm({ gameSound, handleSubmitGameSound }) {
 }
 
 GameSoundForm.propTypes = {
-  gameSound: PropTypes.string.isRequired,
+  gameSound: PropTypes.bool.isRequired,
   handleSubmitGameSound: PropTypes.func.isRequired,
 };
 
