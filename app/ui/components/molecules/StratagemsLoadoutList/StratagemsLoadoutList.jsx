@@ -8,7 +8,7 @@ function StratagemsLoadoutList({ stratagems, children }) {
     <div className={styles.list}>
       {stratagems.map((stratagem, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <div key={`${stratagem.id}-${index}`} className={styles.item}>
+        <div key={`${stratagem.code}-${index}`} className={styles.item}>
           {children(stratagem, index)}
         </div>
       ))}
