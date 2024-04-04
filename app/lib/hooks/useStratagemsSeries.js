@@ -90,7 +90,7 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
     (state, action) => {
       switch (action.type) {
         case 'remove':
-          return state.filter((stratagem) => stratagem.id !== action.stratagem.id);
+          return state.filter((stratagem) => stratagem.name !== action.stratagem.name);
         case 'removeFirst':
           return state.slice(1);
         case 'reset':

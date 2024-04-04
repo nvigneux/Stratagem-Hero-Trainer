@@ -15,20 +15,19 @@ const Checkbox = forwardRef(({
   className,
   label,
   size,
-  checked,
   children,
   ...props
 }, ref) => (
   !children ? (
     <label htmlFor={props.id} className={cn([styles['checkbox-container'], styles[size], 'ui-checkbox', className])}>
       {label ? <span className={styles.label}>{label}</span> : null}
-      <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+      <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} {...props} />
       <span className={cn([styles['checkbox-checkmark'], 'ui-checkbox-checkmark'])} />
     </label>
   )
     : (
       <label htmlFor={props.id} className={cn([styles['label-children'], className])}>
-        <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} checked={checked} {...props} />
+        <input name={props.id} ref={ref} type="checkbox" className={styles['checkbox-input']} {...props} />
         {children}
       </label>
     )
@@ -38,7 +37,6 @@ Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
-  checked: PropTypes.bool,
   size: PropTypes.oneOf(['small', 'large']),
   children: PropTypes.node,
 };
@@ -47,7 +45,6 @@ Checkbox.defaultProps = {
   className: '',
   label: null,
   size: 'large',
-  checked: null,
   children: null,
 };
 

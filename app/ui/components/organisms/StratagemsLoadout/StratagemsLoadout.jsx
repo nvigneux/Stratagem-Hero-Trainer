@@ -23,12 +23,12 @@ function stratagemsReducer(state, action) {
       return [...state, ...action.payload];
     case 'UPDATE_STRATAGEM':
       return state.map(
-        (stratagem) => (stratagem.id === action.payload.id ? action.payload : stratagem),
+        (stratagem) => (stratagem.code === action.payload.code ? action.payload : stratagem),
       );
     case 'DELETE_STRATAGEM':
-      return state.filter((stratagem) => stratagem.id !== action.payload);
+      return state.filter((stratagem) => stratagem.code !== action.payload);
     case 'DELETE_MANY_STRATAGEM':
-      return state.filter((stratagem) => !action.payload.includes(stratagem.id));
+      return state.filter((stratagem) => !action.payload.includes(stratagem.code));
     default:
       return state;
   }
@@ -52,7 +52,7 @@ function StratagemsLoadout({ stratagems }) {
 
     if (stratagemsArray.length && !diffArray.length) {
       const diffArrayStratagems = findDiffArray(stratagemsArray, checkedStratagemsData);
-      dispatch({ type: 'DELETE_MANY_STRATAGEM', payload: diffArrayStratagems.map((stratagem) => stratagem.id) });
+      dispatch({ type: 'DELETE_MANY_STRATAGEM', payload: diffArrayStratagems.map((stratagem) => stratagem.code) });
     }
   }, [checkedStratagems]);
 

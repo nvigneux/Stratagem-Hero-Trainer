@@ -2,6 +2,7 @@ import { useReducer } from 'react';
 import { setCookieSettings } from '../../../../lib/actions';
 
 const initialState = {
+  gameSound: false,
   timerDuration: 10,
   timeBonus: 1,
   keyBindings: {
@@ -20,6 +21,8 @@ const initialState = {
 
 const settingsReducer = (state, action) => {
   switch (action.type) {
+    case 'SET_GAME_SOUND':
+      return { ...state, gameSound: action.payload };
     case 'SET_TIMER_DURATION':
       return { ...state, timerDuration: action.payload };
     case 'SET_TIME_BONUS':
@@ -40,6 +43,7 @@ const settingsReducer = (state, action) => {
 };
 
 const useStratagemsGameSettings = ({
+  defaultGameSound = initialState.gameSound,
   defaultDuration = initialState.timerDuration,
   defaultBonus = initialState.timeBonus,
   defaultKeyBindings = { ...initialState.keyBindings },
@@ -47,11 +51,25 @@ const useStratagemsGameSettings = ({
 }) => {
   const [state, dispatch] = useReducer(settingsReducer, {
     ...initialState,
+    gameSound: defaultGameSound,
     timerDuration: defaultDuration,
     timeBonus: defaultBonus,
     keyBindings: defaultKeyBindings,
     tempKeyBindings: defaultTempKeyBindings,
   });
+
+  /**
+   * Set the game sound
+   * @param {boolean} gameSound
+   */
+  const setGameSound = (gameSound) => {
+    dispatch({ type: 'SET_GAME_SOUND', payload: gameSound });
+    setCookieSettings({
+      gameSound,
+      timerDuration: state.timerDuration,
+      keyBindings: state.keyBindings,
+    });
+  };
 
   /**
    * Check if the duration is valid
@@ -66,7 +84,11 @@ const useStratagemsGameSettings = ({
   const setTimerDuration = (timerDuration) => {
     if (isValidDuration(timerDuration)) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
-      setCookieSettings({ timerDuration, keyBindings: state.keyBindings });
+      setCookieSettings({
+        timerDuration,
+        keyBindings: state.keyBindings,
+        gameSound: state.gameSound,
+      });
     }
   };
 
@@ -97,12 +119,18 @@ const useStratagemsGameSettings = ({
    */
   const applyTempKeyBindings = () => {
     dispatch({ type: 'APPLY_TEMP_KEY_BINDINGS' });
-    setCookieSettings({ timerDuration: state.timerDuration, keyBindings: state.tempKeyBindings });
+    setCookieSettings({
+      timerDuration: state.timerDuration,
+      keyBindings: state.tempKeyBindings,
+      gameSound: state.gameSound,
+    });
   };
 
   return {
+    gameSound: state.gameSound,
     timerDuration: state.timerDuration,
     timeBonus: state.timeBonus,
+    setGameSound,
     setTimerDuration,
     setTimeBonus,
     keyBindings: state.keyBindings,
