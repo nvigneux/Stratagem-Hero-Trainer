@@ -114,6 +114,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       const playSound = Math.random() < 0.75 ? playPress2 : playPress1;
       playSound();
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
+
+      if (stateSerie.index === 0) {
+        dispatchStateSerie({ type: 'startTime', payload: Date.now() });
+      }
     } else {
       dispatchStateSerie({ type: 'error', payload: true });
       playError();
@@ -124,14 +128,18 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       if (series.length === 1) {
         resetTimer();
         playNewRound();
+        dispatchStateSerie({ type: 'endTime', payload: { date: Date.now(), stratagem: series[0] } });
       } else {
         addTime(timeBonus + 0.01 * stateSerie.round);
       }
+
       setTimeout(() => { // wait for the last code arrow to be seen correctly
         const percentOfProgress = Math.round((progress / timerDuration) * 100);
         handleSuccessStratagem(percentOfProgress);
         if (series.length !== 1) { // play sound of finished stratagem if there is more than one
           playFinish();
+
+          dispatchStateSerie({ type: 'endTime', payload: { date: Date.now(), stratagem: series[0] } });
         }
         dispatchStateSerie({ type: 'index', payload: 0 });
       }, 175);
@@ -284,6 +292,36 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           </div>
         ) : null}
       </div>
+
+      { Object.keys(stateSerie.history)?.length ? (
+        <div className={styles.history}>
+          <h2 className={styles.historyTitle}>History</h2>
+          <div className={styles.historyList}>
+            {Object.keys(stateSerie.history).reverse().map((round) => {
+              if (!stateSerie.history[round]?.length) return null;
+              return (
+                <div key={round} style={{ padding: '1rem' }}>
+                  <span>{`Round ${round}`}</span>
+                  <div>
+                    {stateSerie.history[round].map((item, index) => (
+                      <div key={item.startTime} className={styles.historyItemDetail}>
+                        <span style={{ display: 'inline-block', width: '250px' }}>
+                          {`${index + 1} ${item.stratagem.name}`}
+                        </span>
+                        <span style={{ display: 'inline-block', width: '150px' }}>
+                          {`${((item.endTime - item.startTime) / 1000).toFixed(2)} sec`}
+                        </span>
+                        <span>{`error: ${item.nbError}`}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
       <div className={cn([styles.settings])}>
         <div className={styles.settingsSection}>
           <HeadingForm title="Audio" />
