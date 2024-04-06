@@ -36,13 +36,6 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 // Lib
 import cn from '../../../../lib/cn';
 
-// Sounds
-// import pressSound1 from '../../../../../public/sounds/stratagem-code-press-1.mp3';
-// import pressSound2 from '../../../../../public/sounds/stratagem-code-press-2.mp3';
-// import finishSound from '../../../../../public/sounds/stratagem-code-finish.mp3';
-// import newRound from '../../../../../public/sounds/stratagem-code-new-round.mp3';
-// import errorSound from '../../../../../public/sounds/stratagem-code-error.mp3';
-
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
   const { checkedStratagems = {} } = useStratagems();
@@ -101,12 +94,12 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedStratagems]);
 
+  // TODO build an historic of time the player take to make the entire code
+  // to build an history for the player
   /**
    * Check if the active serie code is correct
    * @param {string} direction
    */
-  // TODO build an historic of time the player take to make the entire code
-  // to build an history for the player
   const checkActiveSerieCode = (direction) => {
     const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) { // direction is correct
@@ -180,6 +173,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   }
   useEventListener('keydown', keydownDirectionHandler);
 
+  /** * Form handlers */
+  /**
+   * Handle the submit of the timer duration form
+   * @param {FormData} formData
+   */
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
     if (+timerDurationValue !== timerDuration) {
@@ -190,6 +188,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   };
 
+  /**
+   * Handle the submit of the game sound form
+   * @param {FormData} formData
+   */
   const handleSubmitGameSound = (formData) => {
     const gameSoundValue = formData.get('gameSound');
     if (!!gameSoundValue !== !!gameSound) {
@@ -199,17 +201,47 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   };
 
+  /**
+   * Handle the key bindings
+   */
   const handleKeyBindings = () => {
     setTimeout(() => { // fake loading ui
       applyTempKeyBindings();
     }, 250);
   };
 
+  /**
+   * Set the temp key bindings
+   * @param {string} direction
+   * @param {string} code
+   * @returns {void}
+   */
   const handleSetTempKeyBindings = (direction, code) => {
     const forbiddenKeys = ['Escape', 'Enter', 'Tab', 'Meta', 'MetaLeft', 'MetaRight', 'ContextMenu', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PageUp', 'PageDown', 'Home', 'End', 'Backspace', 'Delete'];
     if (forbiddenKeys.includes(code)) return;
     setTempKeyBinding(direction, code);
   };
+
+  // History transformation to get each stratagem stats
+  // const stats = useMemo(() => Object.values(stateSerie.history)
+  //   .flat()
+  //   .reduce((acc, item) => {
+  //     const { name } = item.stratagem;
+
+  //     if (!acc[name]) {
+  //       acc[name] = {
+  //         nb: 0,
+  //         time: 0,
+  //         error: 0,
+  //       };
+  //     }
+
+  //     acc[name].nb += 1;
+  //     acc[name].time += item.endTime - item.startTime;
+  //     acc[name].error += item.nbError;
+
+  //     return acc;
+  //   }, {}), [stateSerie.history]);
 
   return (
     <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
@@ -293,7 +325,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ) : null}
       </div>
 
-      { Object.keys(stateSerie.history)?.length ? (
+      {Object.keys(stateSerie.history)?.length ? (
         <div className={styles.history}>
           <h2 className={styles.historyTitle}>History</h2>
           <div className={styles.historyList}>
