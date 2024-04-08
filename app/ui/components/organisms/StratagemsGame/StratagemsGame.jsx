@@ -108,7 +108,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       playSound();
       dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
 
-      if (stateSerie.index === 0) {
+      if (stateSerie.index === 0 && stateSerie.nbError === 0) {
         dispatchStateSerie({ type: 'startTime', payload: Date.now() });
       }
     } else {
