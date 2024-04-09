@@ -22,22 +22,20 @@ import {
  * @returns {null}
  */
 const useGamepad = (eventPressedButton) => {
+  const [gamepadConnected, setGamepadConnected] = useState({});
   const requestRef = useRef();
-  const [pressedButtons, setPressedButtons] = useState(new Set());
+  const pressedButtonsRef = useRef(new Set());
 
-  /**
-   * This function is called by `requestAnimationFrame` to check the gamepad status
-   * and update the pressed buttons state.
-   */
   const updateGamepadStatus = useCallback(() => {
     const gamepads = Array.from(navigator.getGamepads()).filter(Boolean);
+    const pressedButtons = new Set(pressedButtonsRef.current);
+
     gamepads.forEach((gamepad) => {
       gamepad.buttons.forEach((button, index) => {
         const isPressed = button.pressed;
-        const wasPressed = pressedButtons.has(index);
 
-        if (isPressed && !wasPressed) {
-          setPressedButtons((prevPressedButtons) => new Set(prevPressedButtons).add(index));
+        if (isPressed && !pressedButtons.has(index)) {
+          pressedButtons.add(index);
           switch (index) {
             case 12: eventPressedButton('up'); break;
             case 13: eventPressedButton('down'); break;
@@ -45,34 +43,35 @@ const useGamepad = (eventPressedButton) => {
             case 15: eventPressedButton('right'); break;
             default: break;
           }
-        } else if (!isPressed && wasPressed) {
-          setPressedButtons((prevPressedButtons) => {
-            const newPressedButtons = new Set(prevPressedButtons);
-            newPressedButtons.delete(index);
-            return newPressedButtons;
-          });
+        } else if (!isPressed) {
+          pressedButtons.delete(index);
         }
       });
     });
 
-    requestRef.current = requestAnimationFrame(updateGamepadStatus);
-  }, [pressedButtons, setPressedButtons, eventPressedButton]);
+    pressedButtonsRef.current = pressedButtons;
 
-  /**
-   * Update the gamepad status.
-   */
+    requestRef.current = requestAnimationFrame(updateGamepadStatus);
+  }, [eventPressedButton]);
+
   useEffect(() => {
     requestRef.current = requestAnimationFrame(updateGamepadStatus);
 
     return () => cancelAnimationFrame(requestRef.current);
-  }, [pressedButtons, updateGamepadStatus]);
+  }, [updateGamepadStatus]);
 
   /**
    * Event listener for gamepad connections and disconnections.
    */
   useEffect(() => {
-    const connectHandler = (e) => console.log(`Gamepad connected at index ${e.gamepad.index}: ${e.gamepad.id}.`);
-    const disconnectHandler = (e) => console.log(`Gamepad disconnected from index ${e.gamepad.index}: ${e.gamepad.id}.`);
+    const connectHandler = (e) => {
+      setGamepadConnected(e.gamepad);
+      console.log(`Gamepad connected at index ${e.gamepad.index}: ${e.gamepad.id}.`);
+    };
+    const disconnectHandler = (e) => {
+      setGamepadConnected({});
+      console.log(`Gamepad disconnected from index ${e.gamepad.index}: ${e.gamepad.id}.`);
+    };
 
     window.addEventListener('gamepadconnected', connectHandler);
     window.addEventListener('gamepaddisconnected', disconnectHandler);
@@ -83,7 +82,9 @@ const useGamepad = (eventPressedButton) => {
     };
   }, []);
 
-  return null;
+  return {
+    gamepadConnected,
+  };
 };
 
 export default useGamepad;
