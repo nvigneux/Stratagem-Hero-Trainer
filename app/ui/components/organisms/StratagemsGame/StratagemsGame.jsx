@@ -136,7 +136,6 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the keydown event
    * @param {KeyboardEvent} event
    */
-  // TODO Add gamepad support
   function keydownDirectionHandler(event) {
     if (event.target.tagName === 'INPUT') return;
     switch (event.code) {

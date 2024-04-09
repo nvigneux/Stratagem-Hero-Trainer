@@ -1,46 +1,78 @@
-import { useEffect, useRef } from 'react';
+import {
+  useEffect, useRef, useState, useCallback,
+} from 'react';
 
-const useGamepad = (checkActiveSerieCode) => {
+/**
+ *  * A custom React hook that enables the use of a gamepad within a React component.
+ * It listens for gamepad connections and disconnections, as well as button presses and releases.
+ * When a gamepad button is pressed or released, it updates an internal state of pressed buttons
+ * and calls the provided `checkActiveSerieCode` function with the direction corresponding to the
+ * button pressed.
+ *
+ * The hook utilizes the `navigator.getGamepads()` method to access the connected gamepad(s)
+ * and their states.
+ * It uses `requestAnimationFrame` to continuously check the gamepad status at a high refresh
+ * rate, ensuring
+ * responsiveness to user input. This hook is designed to handle directional input
+ * (up, down, left, right)
+ * based on the gamepad's button indices which are assumed to be 12, 13, 14, and 15
+ * respectively for those directions.
+ *
+ * @param {function} eventPressedButton
+ * @returns {null}
+ */
+const useGamepad = (eventPressedButton) => {
   const requestRef = useRef();
+  const [pressedButtons, setPressedButtons] = useState(new Set());
 
-  // Fonction pour mettre à jour l'état en fonction des boutons appuyés
-  const updateGamepadStatus = () => {
-    const gamepads = navigator.getGamepads ? [...navigator.getGamepads()] : [];
-
+  /**
+   * This function is called by `requestAnimationFrame` to check the gamepad status
+   * and update the pressed buttons state.
+   */
+  const updateGamepadStatus = useCallback(() => {
+    const gamepads = Array.from(navigator.getGamepads()).filter(Boolean);
     gamepads.forEach((gamepad) => {
-      if (gamepad) {
-        gamepad.buttons.forEach((button, index) => {
-          if (button.pressed) {
-            switch (index) {
-              case 0: checkActiveSerieCode('up'); break;
-              case 1: checkActiveSerieCode('down'); break;
-              case 2: checkActiveSerieCode('left'); break;
-              case 3: checkActiveSerieCode('right'); break;
-              default: break;
-            }
+      gamepad.buttons.forEach((button, index) => {
+        const isPressed = button.pressed;
+        const wasPressed = pressedButtons.has(index);
+
+        if (isPressed && !wasPressed) {
+          setPressedButtons((prevPressedButtons) => new Set(prevPressedButtons).add(index));
+          switch (index) {
+            case 12: eventPressedButton('up'); break;
+            case 13: eventPressedButton('down'); break;
+            case 14: eventPressedButton('left'); break;
+            case 15: eventPressedButton('right'); break;
+            default: break;
           }
-        });
-      }
+        } else if (!isPressed && wasPressed) {
+          setPressedButtons((prevPressedButtons) => {
+            const newPressedButtons = new Set(prevPressedButtons);
+            newPressedButtons.delete(index);
+            return newPressedButtons;
+          });
+        }
+      });
     });
 
     requestRef.current = requestAnimationFrame(updateGamepadStatus);
-  };
+  }, [pressedButtons, setPressedButtons, eventPressedButton]);
 
+  /**
+   * Update the gamepad status.
+   */
   useEffect(() => {
     requestRef.current = requestAnimationFrame(updateGamepadStatus);
 
-    return () => {
-      cancelAnimationFrame(requestRef.current);
-    };
-  }, []);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [pressedButtons, updateGamepadStatus]);
 
+  /**
+   * Event listener for gamepad connections and disconnections.
+   */
   useEffect(() => {
-    const connectHandler = (e) => {
-      console.log(`%cGamepad connected%c at index ${e.gamepad.index}: ${e.gamepad.id}.`, 'color: yellow; font-weight: bold;', 'color: reset;');
-    };
-    const disconnectHandler = (e) => {
-      console.log(`%cGamepad disconnected%c from index ${e.gamepad.index}: ${e.gamepad.id}.`, 'color: yellow; font-weight: bold;', 'color: reset;');
-    };
+    const connectHandler = (e) => console.log(`Gamepad connected at index ${e.gamepad.index}: ${e.gamepad.id}.`);
+    const disconnectHandler = (e) => console.log(`Gamepad disconnected from index ${e.gamepad.index}: ${e.gamepad.id}.`);
 
     window.addEventListener('gamepadconnected', connectHandler);
     window.addEventListener('gamepaddisconnected', disconnectHandler);
@@ -50,6 +82,8 @@ const useGamepad = (checkActiveSerieCode) => {
       window.removeEventListener('gamepaddisconnected', disconnectHandler);
     };
   }, []);
+
+  return null;
 };
 
 export default useGamepad;
