@@ -2,6 +2,7 @@
 
 import PropTypes from 'prop-types';
 import {
+  useCallback,
   useEffect, useMemo, useRef, useState,
 } from 'react';
 
@@ -307,9 +308,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         </div>
 
         <div className={styles.settingsSection}>
-          <HeadingForm title="Controller" />
+          <HeadingForm title="Gamepad" />
           <InfoMessage>
-            You can also play with a gamepad
+            You can also play with a gamepad !
           </InfoMessage>
         </div>
       </div>
