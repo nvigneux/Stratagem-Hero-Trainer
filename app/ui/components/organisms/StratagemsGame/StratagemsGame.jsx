@@ -36,6 +36,7 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+import InfoMessage from '../../atoms/InfoMessage/InfoMessage';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -303,6 +304,13 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             handleKeyBindings={handleKeyBindings}
             handleSetTempKeyBindings={handleSetTempKeyBindings}
           />
+        </div>
+
+        <div className={styles.settingsSection}>
+          <HeadingForm title="Controller" />
+          <InfoMessage>
+            You can also play with a gamepad
+          </InfoMessage>
         </div>
       </div>
     </div>
