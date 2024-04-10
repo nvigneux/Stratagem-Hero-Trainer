@@ -166,7 +166,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   }
   useEventListener('keydown', keydownDirectionHandler);
 
-  useGamepad(checkActiveSerieCode);
+  const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
@@ -309,7 +309,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         <div className={styles.settingsSection}>
           <HeadingForm title="Gamepad" />
           <InfoMessage>
-            You can also play with a gamepad !
+            {gamepadConnected?.id || 'You can also play with a gamepad !'}
           </InfoMessage>
         </div>
       </div>
