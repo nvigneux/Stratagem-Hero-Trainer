@@ -29,19 +29,14 @@ import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
 import useStratagemsGameSettings from './useStratagemsGameSettings';
+import useGamepad from '../../../../lib/hooks/useGamepad';
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
 
 // Lib
 import cn from '../../../../lib/cn';
-
-// Sounds
-// import pressSound1 from '../../../../../public/sounds/stratagem-code-press-1.mp3';
-// import pressSound2 from '../../../../../public/sounds/stratagem-code-press-2.mp3';
-// import finishSound from '../../../../../public/sounds/stratagem-code-finish.mp3';
-// import newRound from '../../../../../public/sounds/stratagem-code-new-round.mp3';
-// import errorSound from '../../../../../public/sounds/stratagem-code-error.mp3';
+import InfoMessage from '../../atoms/InfoMessage/InfoMessage';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -142,7 +137,6 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the keydown event
    * @param {KeyboardEvent} event
    */
-  // TODO Add gamepad support
   function keydownDirectionHandler(event) {
     if (event.target.tagName === 'INPUT') return;
     switch (event.code) {
@@ -171,6 +165,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   }
   useEventListener('keydown', keydownDirectionHandler);
+
+  const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
@@ -308,6 +304,13 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             handleKeyBindings={handleKeyBindings}
             handleSetTempKeyBindings={handleSetTempKeyBindings}
           />
+        </div>
+
+        <div className={styles.settingsSection}>
+          <HeadingForm title="Gamepad" />
+          <InfoMessage>
+            {gamepadConnected?.id || 'You can also play with a gamepad !'}
+          </InfoMessage>
         </div>
       </div>
     </div>
