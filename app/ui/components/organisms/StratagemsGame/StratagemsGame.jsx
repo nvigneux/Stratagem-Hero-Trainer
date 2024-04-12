@@ -64,6 +64,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [playFinish] = useSound('/sounds/stratagem-code-finish.mp3', { soundEnabled: gameSound });
   const [playNewRound] = useSound('/sounds/stratagem-code-new-round.mp3', { soundEnabled: gameSound });
   const [playError] = useSound('/sounds/stratagem-code-error.mp3', { soundEnabled: gameSound });
+  const [playGameover] = useSound('/sounds/stratagem-code-game-over.mp3', { soundEnabled: gameSound });
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -76,9 +77,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     initialState: filteredStratagemsChecked, maxLength: 6, bestScoreStored,
   });
 
+  const handleGameOver = () => {
+    playGameover();
+    resetSeries();
+  };
+
   const {
     progress, isRunning, startTimer, resetTimer, addTime,
-  } = useTimer(timerDuration, timerDuration, resetSeries);
+  } = useTimer(timerDuration, timerDuration, handleGameOver);
 
   const refCheckStratagems = useRef(null);
   useEffect(() => {
@@ -165,9 +171,13 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   }
   useEventListener('keydown', keydownDirectionHandler);
-
   const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
+  // FORM ACTIONS
+  /**
+   * Handle the submit of the timer duration form
+   * @param {FormData} formData
+   */
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
     if (+timerDurationValue !== timerDuration) {
@@ -178,6 +188,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   };
 
+  /**
+   * Handle the submit of the game sound form
+   * @param {FormData} formData
+   */
   const handleSubmitGameSound = (formData) => {
     const gameSoundValue = formData.get('gameSound');
     if (!!gameSoundValue !== !!gameSound) {
@@ -187,12 +201,21 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   };
 
+  /**
+  * Handle the key bindings form
+  */
   const handleKeyBindings = () => {
     setTimeout(() => { // fake loading ui
       applyTempKeyBindings();
     }, 250);
   };
 
+  /**
+   * Set the temp key bindings
+   * @param {string} direction
+   * @param {string} code
+   * @returns {void}
+   */
   const handleSetTempKeyBindings = (direction, code) => {
     const forbiddenKeys = ['Escape', 'Enter', 'Tab', 'Meta', 'MetaLeft', 'MetaRight', 'ContextMenu', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PageUp', 'PageDown', 'Home', 'End', 'Backspace', 'Delete'];
     if (forbiddenKeys.includes(code)) return;
