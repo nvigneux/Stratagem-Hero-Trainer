@@ -12,8 +12,9 @@ const timerReducer = (state, action) => {
       return { ...state, isRunning: true, isFinished: false };
     case 'PAUSE':
       return { ...state, isRunning: false };
-    case 'FINISH':
+    case 'FINISH': {
       return { ...initialState, progress: action.payload, isFinished: true };
+    }
     case 'RESET':
       return { ...initialState, progress: action.payload };
     case 'TICK': {
@@ -22,7 +23,11 @@ const timerReducer = (state, action) => {
         action.payload.handleIsOver();
         return { ...initialState, progress: action.payload.initialProgress, isFinished: true };
       }
-      return { ...state, progress: newProgress };
+      if (state.isRunning) {
+        return { ...state, progress: newProgress };
+      }
+
+      return { ...state, progress: action.payload.initialProgress };
     }
     case 'ADD_TIME':
       return { ...state, progress: Math.min(state.progress + action.payload, action.total) };
