@@ -23,12 +23,14 @@ import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
 import GameSoundForm from '../../../../forms/GameSoundForm';
 import TimerDurationForm from '../../../../forms/TimerDurationForm';
 import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
+import InfoMessage from '../../atoms/InfoMessage/InfoMessage';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
 import useEventListener from '../../../../lib/hooks/useEventListener';
 import useTimer from '../../../../lib/hooks/useTimer';
 import useStratagemsGameSettings from './useStratagemsGameSettings';
+import useGamepad from '../../../../lib/hooks/useGamepad';
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
@@ -62,6 +64,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [playFinish] = useSound('/sounds/stratagem-code-finish.mp3', { soundEnabled: gameSound });
   const [playNewRound] = useSound('/sounds/stratagem-code-new-round.mp3', { soundEnabled: gameSound });
   const [playError] = useSound('/sounds/stratagem-code-error.mp3', { soundEnabled: gameSound });
+  const [playGameover] = useSound('/sounds/stratagem-code-game-over.mp3', { soundEnabled: gameSound });
 
   const filteredStratagemsChecked = useMemo(
     () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
@@ -74,9 +77,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     initialState: filteredStratagemsChecked, maxLength: 6, bestScoreStored,
   });
 
+  const handleGameOver = () => {
+    playGameover();
+    resetSeries();
+  };
+
   const {
     progress, isRunning, startTimer, resetTimer, addTime,
-  } = useTimer(timerDuration, timerDuration, resetSeries);
+  } = useTimer(timerDuration, timerDuration, handleGameOver);
 
   const refCheckStratagems = useRef(null);
   useEffect(() => {
@@ -143,7 +151,6 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the keydown event
    * @param {KeyboardEvent} event
    */
-  // TODO Add gamepad support
   function keydownDirectionHandler(event) {
     if (event.target.tagName === 'INPUT') return;
     switch (event.code) {
@@ -172,8 +179,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
   }
   useEventListener('keydown', keydownDirectionHandler);
+  const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
-  /** * Form handlers */
+  // FORM ACTIONS
   /**
    * Handle the submit of the timer duration form
    * @param {FormData} formData
@@ -378,6 +386,13 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             handleKeyBindings={handleKeyBindings}
             handleSetTempKeyBindings={handleSetTempKeyBindings}
           />
+        </div>
+
+        <div className={styles.settingsSection}>
+          <HeadingForm title="Gamepad" />
+          <InfoMessage>
+            {gamepadConnected?.id || 'You can also play with a gamepad !'}
+          </InfoMessage>
         </div>
       </div>
     </div>
