@@ -8,13 +8,14 @@ import styles from './StratagemsGameCard.module.css';
 import cn from '../../../../lib/cn';
 
 function StratagemsGameCard({
-  name, category, active = false, success = false,
+  name, category, active = false, success = false, className = '',
 }) {
   return (
     <div className={cn([
       styles.container,
       active && styles.active,
       active && success && styles.success,
+      className,
     ])}
     >
       <Image
@@ -35,6 +36,7 @@ StratagemsGameCard.propTypes = {
   category: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   success: PropTypes.bool.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 StratagemsGameCard.List = function StratagemsGameCardList({ children }) {

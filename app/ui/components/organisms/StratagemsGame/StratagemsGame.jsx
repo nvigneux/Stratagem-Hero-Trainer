@@ -87,6 +87,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   } = useTimer(timerDuration, timerDuration, handleGameOver);
 
   const refCheckStratagems = useRef(null);
+
   useEffect(() => {
     const checkedStratagemsString = JSON.stringify(checkedStratagems);
     if (!refCheckStratagems.current) {
@@ -251,6 +252,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   //     return acc;
   //   }, {}), [stateSerie.history]);
 
+  const isPanicMode = useMemo(() => {
+    const progressTimer = (progress / timerDuration) * 100;
+    return progressTimer < 30;
+  }, [progress, timerDuration]);
+
   return (
     <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
       <div className={styles.main}>
@@ -275,7 +281,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         />
 
         <div className={styles.roundScoreContainer}>
-          <RoundInfo roundNb={stateSerie.round} />
+          <RoundInfo
+            roundNb={stateSerie.round}
+            className={isPanicMode ? styles.panicModeColor : ''}
+          />
           <ScoreInfo
             score={stateSerie.score}
             bonusRound={stateSerie.bonusRound}
@@ -283,6 +292,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             bonusPerfectRound={stateSerie.bonusPerfectRound}
             bestScore={stateSerie.bestScore}
             displayBonus={!isRunning && stateSerie.score > 0}
+            className={isPanicMode ? styles.panicModeColor : ''}
           />
         </div>
 
@@ -298,6 +308,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                   category={stratagem.category.name}
                   active={index === 0}
                   success={stateSerie.success}
+                  className={isPanicMode ? styles.panicModeBorder : ''}
                 />
               );
             }) : <div />}
@@ -306,7 +317,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
         {series?.length ? (
           <div className={styles.activeStratagemsInfo}>
-            <StratagemsName name={series[0].name} />
+            <StratagemsName
+              name={series[0].name}
+              className={isPanicMode ? styles.panicMode : ''}
+            />
             <Arrow.List>
               {series[0].code.map((direction, index) => (
                 <Arrow
@@ -323,7 +337,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ) : <StratagemsName name="Traitor detected !" />}
 
         {series?.length ? (
-          <StratagemsTimer progress={progress} total={timerDuration} />
+          <StratagemsTimer
+            progress={progress}
+            total={timerDuration}
+            className={isPanicMode ? styles.panicMode : ''}
+          />
         ) : null}
 
         {series?.length ? (
