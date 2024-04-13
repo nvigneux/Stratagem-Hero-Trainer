@@ -189,6 +189,21 @@
   flex: 0 0 auto;
 }
 
+.panicMode {
+  background: var(--orange) !important;
+  transition: background 0.5s;
+}
+
+.panicModeBorder {
+  border-color: var(--orange);
+  transition: border-color 0.5s;
+}
+
+.panicModeColor {
+  color: var(--orange);
+  transition: color 0.5s;
+}
+
 @media (width <= 1024px) {
   .main::before {
     width: 80%;

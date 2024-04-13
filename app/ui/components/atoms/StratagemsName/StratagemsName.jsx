@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 // Styles
 import styles from './StratagemsName.module.css';
 
-function StratagemsName({ name }) {
+// Lib
+import cn from '../../../../lib/cn';
+
+function StratagemsName({ name, className = '' }) {
   return (
-    <div className={styles.container}>
+    <div className={cn([styles.container, className])}>
       <span className={styles.name}>{name}</span>
     </div>
   );
@@ -13,6 +16,7 @@ function StratagemsName({ name }) {
 
 StratagemsName.propTypes = {
   name: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default StratagemsName;
