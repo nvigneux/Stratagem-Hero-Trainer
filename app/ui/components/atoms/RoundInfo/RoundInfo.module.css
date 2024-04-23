@@ -11,6 +11,16 @@
   line-height: 1;
 }
 
+@media (width > 1920px) {
+  .label {
+    font-size: 1.85rem;
+  }
+
+  .round {
+    font-size: 4rem;
+  }
+}
+
 @media (width <= 1024px) {
   .label {
     font-size: 1.25rem;
