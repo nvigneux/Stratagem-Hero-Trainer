@@ -19,6 +19,15 @@
   text-align: center;
 }
 
+@media (width > 1920px) {
+  .container {
+    height: 60px;
+  }
+
+  .name {
+    font-size: 1.85rem;
+  }
+}
 
 @media (width <= 1024px) {
   .name {

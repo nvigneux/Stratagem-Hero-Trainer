@@ -52,6 +52,20 @@
   padding: 2rem 0;
 }
 
+@media (width > 1920px) {
+  .large {
+    --size-icon: 45px;
+  }
+
+  .small {
+    --size-icon: 25px;
+  }
+
+  .list {
+    gap: 1rem;
+  }
+}
+
 @media (width <= 1024px) {
   .large {
     --size-icon: 30px;
