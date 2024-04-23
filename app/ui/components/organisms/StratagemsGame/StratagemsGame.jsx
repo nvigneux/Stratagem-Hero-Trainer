@@ -232,25 +232,28 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   };
 
   // History transformation to get each stratagem stats
-  // const stats = useMemo(() => Object.values(stateSerie.history)
-  //   .flat()
-  //   .reduce((acc, item) => {
-  //     const { name } = item.stratagem;
+  const stats = useMemo(() => Object.values(stateSerie.history)
+    .flat()
+    .reduce((acc, item) => {
+      const { name } = item.stratagem;
 
-  //     if (!acc[name]) {
-  //       acc[name] = {
-  //         nb: 0,
-  //         time: 0,
-  //         error: 0,
-  //       };
-  //     }
+      if (!acc[name]) {
+        acc[name] = {
+          nb: 0,
+          time: 0,
+          error: 0,
+          stratagem: item.stratagem,
+        };
+      }
 
-  //     acc[name].nb += 1;
-  //     acc[name].time += item.endTime - item.startTime;
-  //     acc[name].error += item.nbError;
+      acc[name].nb += 1;
+      acc[name].time += item.endTime - item.startTime;
+      acc[name].error += item.nbError;
 
-  //     return acc;
-  //   }, {}), [stateSerie.history]);
+      return acc;
+    }, {}), [stateSerie.history]);
+
+  console.log(stats);
 
   const isPanicMode = useMemo(() => {
     const progressTimer = (progress / timerDuration) * 100;
@@ -380,6 +383,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         </div>
       ) : null}
 
+      {/* SETTINGS PANEL */}
       <div className={cn([styles.settings])}>
         <div className={styles.settingsSection}>
           <HeadingForm title="Audio" />

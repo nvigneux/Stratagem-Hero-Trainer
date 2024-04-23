@@ -204,6 +204,12 @@
   transition: color 0.5s;
 }
 
+/* HISTORY */
+.history{
+  display: flex;
+  flex-flow: column wrap;
+}
+
 @media (width <= 1024px) {
   .main::before {
     width: 80%;
