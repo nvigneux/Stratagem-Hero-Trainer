@@ -28,6 +28,24 @@
   --size-icon: 95px;
 }
 
+@media (width > 1920px) {
+  .container {
+    --size-card: 146px;
+  }
+  
+  .icon {
+    --size-icon: 90px;
+  }
+
+  .active {
+    --size-card: 190px;
+  }
+
+  .active .icon {
+    --size-icon: 150px;
+  }
+}
+
 .list {
   display: flex;
   flex-flow: row nowrap;
@@ -36,6 +54,12 @@
   max-width: 600px;
   width: 100%;
   overflow: auto hidden;
+}
+
+@media (width > 1920px) {
+  .list {
+    max-width: 1000px;
+  }
 }
 
 .list::-webkit-scrollbar {
