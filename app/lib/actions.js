@@ -132,7 +132,6 @@ export async function setCookieSettings(value) {
 
 // POKEMON
 export const revalidateByTag = async (tags) => {
-  console.log(tags);
   revalidateTag(tags);
 };
 
