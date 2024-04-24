@@ -1,0 +1,84 @@
+.table {
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: var(--spacing-24);
+  gap: var(--spacing-34);
+  background-color: rgb(255 255 255 / 1%);
+  margin-top: var(--spacing-8);
+  min-width: calc(768px - 115px);
+}
+
+.title {
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  display: flex;
+  padding: 0 var(--spacing-16);
+}
+
+.title span {
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacing-8);
+  padding: var(--spacing-16);
+  background-color: rgb(255 255 255 / 4%);
+  font-weight: 700;
+}
+
+.body {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 6px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--spacing-8);
+  padding: var(--spacing-12) var(--spacing-16);
+  background-color: rgb(255 255 255 / 4%);
+}
+
+.cell {
+  font-family: var(--font-fs-sinclair);
+  font-size: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: var(--spacing-16);
+  background: transparent;
+  border: 0;
+  color: var(--white);
+}
+
+.cell img {
+  --size-img: 45px;
+
+  height: var(--size-img);
+  width: var(--size-img);
+  border: 2px solid rgb(255 255 255 / 5%);
+  padding: var(--spacing-4);
+}
+
+.header .cell {
+  font-weight: 700;
+}
+
+.cell.button {
+  cursor: pointer;
+}
+
+.cell.active {
+  color: var(--yellow);
+}
