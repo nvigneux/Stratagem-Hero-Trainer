@@ -1,0 +1,81 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  border: 2px solid var(--grey);
+  border-top: 0;
+  padding: var(--spacing-24);
+  margin: var(--spacing-24);
+}
+
+.titleContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  z-index: 2;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: none;
+  left: var(--spacing-40);
+  padding: 0 var(--spacing-16);
+}
+
+.titleContainer::before {
+  content: "";
+  position: relative;
+  width: 20px;
+  min-width: var(--spacing-16);
+  margin-right: 2px;
+  border-radius: 2px 0 0;
+  transform: translateY(1px) translateX(-1px);
+  background: var(--grey);
+  height: 2px;
+  top: -1px;
+}
+
+.titleContainer::after {
+  content: "";
+  position: relative;
+  flex: 1 1 auto;
+  min-width: var(--spacing-16);
+  margin-left: 2px;
+  border-radius: 0 2px 0 0;
+  transform: translateY(1px) translateX(1px);
+  background: var(--grey);
+  height: 2px;
+  top: -1px;
+}
+
+.container {
+  overflow: auto;
+  height: calc(100dvh - 190px);
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #262626;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: var(--taupe);
+  height: 120px;
+}
