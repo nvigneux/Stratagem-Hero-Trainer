@@ -38,7 +38,7 @@ Table.Head.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-Table.HeaderCell = function TableHeaderCell({ width, children }) {
+Table.HeaderCell = function TableStatsHeaderCell({ width, children }) {
   return <th width={width} className={styles.headerCell}>{children}</th>;
 };
 Table.HeaderCell.propTypes = {
@@ -46,7 +46,7 @@ Table.HeaderCell.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-Table.Body = function TableBody({ data, children }) {
+Table.Body = function TableStatsBody({ data, children }) {
   return (
     <tbody className={styles.body}>
       {data.map((row) => (
@@ -62,7 +62,7 @@ Table.Body.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
-Table.Cell = function TableCell({ children }) {
+Table.Cell = function TableStatsCell({ children }) {
   return (
     <td className={styles.cell}>
       <div className={styles.cellContainer}>
