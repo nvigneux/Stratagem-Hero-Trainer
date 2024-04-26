@@ -4,12 +4,18 @@ import PropTypes from 'prop-types';
 
 import ArrowIcon from '../../../../../public/icons/arrow.svg';
 import SettingsIcon from '../../../../../public/icons/settings.svg';
+import CloseIcon from '../../../../../public/icons/close.svg';
+import HistoryIcon from '../../../../../public/icons/history.svg';
 
 export const availablePictos = {
   // Arrow
   'arrow': ArrowIcon,
   // Settings
   'settings': SettingsIcon,
+  // Close
+  'close': CloseIcon,
+  // History
+  'history': HistoryIcon,
 };
 
 export function Picto({ icon, ...props }) {
