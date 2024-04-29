@@ -60,6 +60,7 @@
   background: transparent;
   border: 0;
   color: var(--white);
+  text-align: left;
 }
 
 .cell img {
@@ -81,4 +82,16 @@
 
 .cell.active {
   color: var(--yellow);
+}
+
+@media (width <= 1000px) {
+  .table {
+    min-width: calc(750px - 115px);
+  }
+}
+
+@media (width <= 768px) {
+  .table {
+    padding: var(--spacing-16);
+  }
 }
