@@ -71,6 +71,11 @@ const PATRIOTIC_ADMINISTRATION_CENTER = [
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   },
   {
+    name: 'Airburst Rocket Launcher',
+    code: ['down', 'up', 'up', 'left', 'right'],
+    category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
+  },
+  {
     name: 'Railgun',
     code: ['down', 'right', 'down', 'up', 'left', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
