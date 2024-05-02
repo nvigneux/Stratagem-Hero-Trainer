@@ -1,9 +1,12 @@
+/* eslint-disable no-nested-ternary */
+
 'use client';
 
 import PropTypes from 'prop-types';
 import {
-  useEffect, useMemo, useRef, useState,
+  useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
+import Image from 'next/image';
 
 import useSound from 'use-sound';
 
@@ -15,7 +18,7 @@ import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
 import StratagemsKeyboardMobile from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
-import RoundInfo from '../../atoms/RoundInfo/RoundInfo';
+import RoundInfo, { RoundInfoButton } from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
 import Arrow from '../../atoms/Arrow/Arrow';
 import { Picto } from '../../atoms/Picto/Picto';
@@ -37,6 +40,12 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+import TableStatsWrapper from '../../atoms/TableStatsWrapper/TableStatsWrapper';
+import TableStats, {
+  TableStatsBody, TableStatsCell, TableStatsHeader, TableStatsRow, TableStatsTitle,
+} from '../../atoms/TableStats/TableStats';
+import StatsButton, { StatsButtonClose, StatsButtonLabel, StatsButtonWrapper } from '../../atoms/StatsButton/StatsButton';
+import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -86,6 +95,35 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     progress, isRunning, startTimer, resetTimer, addTime,
   } = useTimer(timerDuration, timerDuration, handleGameOver);
 
+  const [statsPanel, seOpenPanel] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'open':
+        return { type: 'open', panel: action.panel };
+      case 'close':
+        return { type: 'close', panel: action.panel };
+      default:
+        return state;
+    }
+  }, { open: 'close', panel: '' });
+
+  /**
+   * Handle the stats panel
+   * @param {string} panel
+   * @returns {void}
+   */
+  const handleStatsPanel = (panel, type) => {
+    if (type === 'close' || (statsPanel.type === 'open' && panel === statsPanel.panel)) {
+      seOpenPanel({ type: 'close', panel: statsPanel.panel });
+      setTimeout(() => {
+        seOpenPanel({ type: 'close', panel: '' });
+      }, 500);
+      return;
+    }
+    if (type === 'open' || statsPanel.type === 'close' || panel !== statsPanel.panel) {
+      seOpenPanel({ type: 'open', panel });
+    }
+  };
+
   const refCheckStratagems = useRef(null);
 
   useEffect(() => {
@@ -99,6 +137,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       dispatchStateSerie({ type: 'resetScore' });
       resetSeries();
       resetTimer();
+      handleStatsPanel('', 'close');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedStratagems]);
@@ -153,7 +192,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * @param {KeyboardEvent} event
    */
   function keydownDirectionHandler(event) {
-    if (event.target.tagName === 'INPUT') return;
+    if (event.target.tagName === 'INPUT' || openSettings || statsPanel.type === 'open') return;
     switch (event.code) {
       case 'ArrowUp':
       case keyBindings.up:
@@ -231,6 +270,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     setTempKeyBinding(direction, code);
   };
 
+  const [filterStatsKey, setFilterStatsKey] = useState({ key: 'nb', order: 'desc' });
   // History transformation to get each stratagem stats
   const stats = useMemo(() => Object.values(stateSerie.history)
     .flat()
@@ -246,14 +286,15 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         };
       }
 
+      // TODO faire des stats sur le meilleur temps, le pire temps, le temps moyen
       acc[name].nb += 1;
-      acc[name].time += item.endTime - item.startTime;
+      acc[name].bestTime = Math.min(acc[name].bestTime || Infinity, item.endTime - item.startTime);
+      acc[name].worstTime = Math.max(acc[name].worstTime || 0, item.endTime - item.startTime);
+      acc[name].averageTime = (acc[name].average || 0) + (item.endTime - item.startTime);
       acc[name].error += item.nbError;
 
       return acc;
     }, {}), [stateSerie.history]);
-
-  console.log(stats);
 
   const isPanicMode = useMemo(() => {
     const progressTimer = (progress / timerDuration) * 100;
@@ -262,14 +303,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
   return (
     <div className={cn([styles.wrapper, openSettings ? styles.opened : styles.closed])}>
-      <div className={styles.main}>
+      <div className={cn([styles.main, statsPanel.type === 'open' && styles.activePanel])}>
         <button
           type="button"
           onClick={() => setOpenSettings(!openSettings)}
           className={styles.buttonSettings}
           aria-label="Settings"
         >
-          <span className={styles.settingsLabelDesktop}>Settings</span>
+          <span className={styles.buttonLabelDesktop}>Settings</span>
           <Picto icon="settings" />
         </button>
 
@@ -287,7 +328,23 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           <RoundInfo
             roundNb={stateSerie.round}
             className={isPanicMode ? styles.panicModeColor : ''}
-          />
+            historyButton={(
+              <button
+                type="button"
+                onClick={() => handleStatsPanel('history')}
+                className={styles.buttonHistory}
+                aria-label="Round history"
+                disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+              >
+                <Picto icon="history" />
+              </button>
+      )}
+          >
+            <RoundInfoButton
+              onClick={() => handleStatsPanel('history')}
+              disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+            />
+          </RoundInfo>
           <ScoreInfo
             score={stateSerie.score}
             bonusRound={stateSerie.bonusRound}
@@ -337,7 +394,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
               ))}
             </Arrow.List>
           </div>
-        ) : <StratagemsName name="Traitor detected !" />}
+        ) : <StratagemsName name="Traitor detected !" className="" />}
 
         {series?.length ? (
           <StratagemsTimer
@@ -354,34 +411,174 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ) : null}
       </div>
 
-      {Object.keys(stateSerie.history)?.length ? (
-        <div className={styles.history}>
-          <h2 className={styles.historyTitle}>History</h2>
-          <div className={styles.historyList}>
-            {Object.keys(stateSerie.history).reverse().map((round) => {
-              if (!stateSerie.history[round]?.length) return null;
-              return (
-                <div key={round} style={{ padding: '1rem' }}>
-                  <span>{`Round ${round}`}</span>
-                  <div>
-                    {stateSerie.history[round].map((item, index) => (
-                      <div key={item.startTime} className={styles.historyItemDetail}>
-                        <span style={{ display: 'inline-block', width: '250px' }}>
-                          {`${index + 1} ${item.stratagem.name}`}
-                        </span>
-                        <span style={{ display: 'inline-block', width: '150px' }}>
-                          {`${((item.endTime - item.startTime) / 1000).toFixed(2)} sec`}
-                        </span>
-                        <span>{`error: ${item.nbError}`}</span>
-                      </div>
-                    ))}
-                  </div>
+      <StatsButtonWrapper
+        className={cn(
+          [styles.buttonWrapper, !!statsPanel.panel && styles.activeBg, statsPanel.type === 'open' && styles.active],
+        )}
+      >
+        <StatsButton
+          disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+          active={statsPanel.panel === 'history'}
+          small={stateSerie.round - 1 || 0}
+          onClick={() => handleStatsPanel('history')}
+        >
+          <StatsButtonLabel mobile="History" desktop="Round history" />
+        </StatsButton>
+        <StatsButton
+          disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+          active={statsPanel.panel === 'stats'}
+          small={Object.keys(stats)?.length}
+          onClick={() => handleStatsPanel('stats')}
+        >
+          <StatsButtonLabel mobile="Stats" desktop="Stratagem stats" />
+        </StatsButton>
+        <StatsButtonClose disabled={openSettings || isRunning || stateSerie.round - 1 === 0 || statsPanel.type === 'close'}>
+          <ButtonSideStratagems isOpened onClick={() => handleStatsPanel('', 'close')} />
+        </StatsButtonClose>
+      </StatsButtonWrapper>
+
+      {/* TODO faire un affichage special pour le mobile les tableaux c'est pas fou */}
+      {/* STATS PANEL */}
+      <div className={cn([styles.modalStats, statsPanel.type === 'open' && styles.activeModal])}>
+        {statsPanel.panel === 'stats' ? (
+          Object.keys(stats)?.length ? (
+            <TableStatsWrapper title="Stats">
+              <TableStats>
+                <div className={styles.overflowTable}>
+                  <TableStatsHeader className={styles.statsGrid}>
+                    <TableStatsCell>Stratagem</TableStatsCell>
+                    <TableStatsCell
+                      onClick={() => setFilterStatsKey({ key: 'nb', order: filterStatsKey.order === 'asc' ? 'desc' : 'asc' })}
+                      isActiveFilter={filterStatsKey.key === 'nb'}
+                    >
+                      Count
+                    </TableStatsCell>
+                    <TableStatsCell
+                      onClick={() => setFilterStatsKey({ key: 'averageTime', order: filterStatsKey.order === 'asc' ? 'desc' : 'asc' })}
+                      isActiveFilter={filterStatsKey.key === 'averageTime'}
+                    >
+                      Average
+                    </TableStatsCell>
+                    <TableStatsCell
+                      onClick={() => setFilterStatsKey({ key: 'bestTime', order: filterStatsKey.order === 'asc' ? 'desc' : 'asc' })}
+                      isActiveFilter={filterStatsKey.key === 'bestTime'}
+                    >
+                      Best
+                    </TableStatsCell>
+                    <TableStatsCell
+                      onClick={() => setFilterStatsKey({ key: 'worstTime', order: filterStatsKey.order === 'asc' ? 'desc' : 'asc' })}
+                      isActiveFilter={filterStatsKey.key === 'worstTime'}
+                    >
+                      Worst
+                    </TableStatsCell>
+                    <TableStatsCell
+                      onClick={() => setFilterStatsKey({ key: 'error', order: filterStatsKey.order === 'asc' ? 'desc' : 'asc' })}
+                      isActiveFilter={filterStatsKey.key === 'error'}
+                    >
+                      Errors
+                    </TableStatsCell>
+                  </TableStatsHeader>
+                  <TableStatsBody>
+                    {Object.values(stats)
+                      .sort((a, b) => {
+                        if (filterStatsKey.order === 'asc') {
+                          return a[filterStatsKey.key] - b[filterStatsKey.key];
+                        }
+                        return b[filterStatsKey.key] - a[filterStatsKey.key];
+                      })
+                      .map((stat) => (
+                        <div key={stat.stratagem.name} className={styles.gridRow}>
+                          <TableStatsRow className={styles.statsGrid}>
+                            <TableStatsCell>
+                              <>
+                                <Image
+                                  src={`/icons/stratagems/${stat.stratagem.category?.name}/${stat.stratagem.name}.svg`}
+                                  alt={stat.stratagem.name}
+                                  width={55}
+                                  height={55}
+                                />
+                                {` ${stat.stratagem.name}`}
+                              </>
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              {`${stat.nb}`}
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              {`${(stat.averageTime / 1000).toFixed(3)} sec`}
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              {`${(stat.bestTime / 1000).toFixed(2)} sec`}
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              {`${(stat.worstTime / 1000).toFixed(2)} sec`}
+                            </TableStatsCell>
+                            <TableStatsCell>{`${stat.error}`}</TableStatsCell>
+                          </TableStatsRow>
+                        </div>
+                      ))}
+                  </TableStatsBody>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      ) : null}
+              </TableStats>
+            </TableStatsWrapper>
+          ) : null
+        ) : null}
+        {statsPanel.panel === 'history' ? (
+          Object.keys(stateSerie.history)?.length ? (
+            <TableStatsWrapper title="History">
+              <TableStats>
+                {Object.keys(stateSerie.history).reverse().map((round) => {
+                  if (!stateSerie.history[round]?.length) return null;
+                  return (
+                    <div className={styles.overflowTable} key={round}>
+                      <TableStatsTitle>
+                        {round ? (
+                          <>
+                            <div>{`Round ${round}`}</div>
+                            <span>{`${stateSerie.history[round] ? (stateSerie.history[round].reduce((acc, item) => acc + item.endTime - item.startTime, 0) / 1000).toFixed(2) : 0} sec` }</span>
+                          </>
+                        ) : null}
+                      </TableStatsTitle>
+                      <TableStatsHeader className={styles.historyGrid}>
+                        <TableStatsCell>N°</TableStatsCell>
+                        <TableStatsCell>Stratagem</TableStatsCell>
+                        <TableStatsCell>Time</TableStatsCell>
+                        <TableStatsCell>Nb Errors</TableStatsCell>
+                      </TableStatsHeader>
+                      <TableStatsBody>
+                        {stateSerie.history[round].map((item, index) => (
+                          <TableStatsRow
+                            key={`${round} - ${item.startTime} - ${item.stratagem.name}`}
+                            className={styles.historyGrid}
+                          >
+                            <TableStatsCell>
+                              {`${index + 1}`}
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              <>
+                                <Image
+                                  src={`/icons/stratagems/${item.stratagem.category?.name}/${item.stratagem.name}.svg`}
+                                  alt={item.stratagem.name}
+                                  width={55}
+                                  height={55}
+                                />
+                                {` ${item.stratagem.name}`}
+                              </>
+                            </TableStatsCell>
+                            <TableStatsCell>
+                              {`${((item.endTime - item.startTime) / 1000).toFixed(2)} sec`}
+                            </TableStatsCell>
+                            <TableStatsCell>{`${item.nbError}`}</TableStatsCell>
+                          </TableStatsRow>
+                        ))}
+                      </TableStatsBody>
+                    </div>
+                  );
+                })}
+              </TableStats>
+            </TableStatsWrapper>
+          ) : null
+        ) : null}
+      </div>
 
       {/* SETTINGS PANEL */}
       <div className={cn([styles.settings])}>
