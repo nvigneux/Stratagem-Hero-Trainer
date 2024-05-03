@@ -1,0 +1,36 @@
+.button{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12);
+  background: var(--yellow);
+  color: var(--black);
+  border-radius: var(--radius-m);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  transition: opacity 0.3s;
+  margin: var(--spacing-8) var(--spacing-12);
+}
+
+.button:hover{
+  opacity: 0.9;
+}
+
+.button:active{
+  opacity: 0.95;
+}
+
+@media (width <= 1024px){
+  .button{
+    padding: var(--spacing-12);
+    font-size: 1rem;
+  }
+
+  .button svg{
+    width: 2rem;
+    height: 2rem;
+  }
+}
