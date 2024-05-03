@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 
 import ArrowIcon from '../../../../../public/icons/arrow.svg';
 import SettingsIcon from '../../../../../public/icons/settings.svg';
+import CoffeeIcon from '../../../../../public/assets/bmec_logo.svg';
 
 export const availablePictos = {
   // Arrow
   'arrow': ArrowIcon,
   // Settings
   'settings': SettingsIcon,
+  // Coffee
+  'coffee': CoffeeIcon,
 };
 
 export function Picto({ icon, ...props }) {
