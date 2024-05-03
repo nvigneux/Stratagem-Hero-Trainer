@@ -40,12 +40,17 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+<<<<<<< HEAD
 import TableStatsWrapper from '../../atoms/TableStatsWrapper/TableStatsWrapper';
 import TableStats, {
   TableStatsBody, TableStatsCell, TableStatsHeader, TableStatsRow, TableStatsTitle,
 } from '../../atoms/TableStats/TableStats';
 import StatsButton, { StatsButtonClose, StatsButtonLabel, StatsButtonWrapper } from '../../atoms/StatsButton/StatsButton';
 import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
+=======
+import InfoMessage from '../../atoms/InfoMessage/InfoMessage';
+import ButtonBuyMeACoffee from '../../atoms/ButtonBuyMeACoffee/ButtonBuyMeACoffee';
+>>>>>>> master
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -582,36 +587,45 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
       {/* SETTINGS PANEL */}
       <div className={cn([styles.settings])}>
-        <div className={styles.settingsSection}>
-          <HeadingForm title="Audio" />
-          <GameSoundForm
-            gameSound={gameSound}
-            handleSubmitGameSound={handleSubmitGameSound}
-          />
+        <div className={styles.settingsTop}>
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Audio" />
+            <GameSoundForm
+              gameSound={gameSound}
+              handleSubmitGameSound={handleSubmitGameSound}
+            />
+          </div>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Timer" />
+            <TimerDurationForm
+              timerDuration={timerDuration}
+              handleSubmitTimerDuration={handleSubmitTimerDuration}
+            />
+          </div>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Key bindings" />
+            <KeyBindingsForm
+              tempKeyBindings={tempKeyBindings}
+              handleKeyBindings={handleKeyBindings}
+              handleSetTempKeyBindings={handleSetTempKeyBindings}
+            />
+          </div>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Gamepad" />
+            <InfoMessage>
+              {gamepadConnected?.id || 'You can also play with a gamepad !'}
+            </InfoMessage>
+          </div>
         </div>
 
-        <div className={styles.settingsSection}>
-          <HeadingForm title="Timer" />
-          <TimerDurationForm
-            timerDuration={timerDuration}
-            handleSubmitTimerDuration={handleSubmitTimerDuration}
-          />
-        </div>
-
-        <div className={styles.settingsSection}>
-          <HeadingForm title="Key bindings" />
-          <KeyBindingsForm
-            tempKeyBindings={tempKeyBindings}
-            handleKeyBindings={handleKeyBindings}
-            handleSetTempKeyBindings={handleSetTempKeyBindings}
-          />
-        </div>
-
-        <div className={styles.settingsSection}>
-          <HeadingForm title="Gamepad" />
-          <InfoMessage>
-            {gamepadConnected?.id || 'You can also play with a gamepad !'}
-          </InfoMessage>
+        <div className={styles.settingsBottom}>
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Support me" />
+            <ButtonBuyMeACoffee />
+          </div>
         </div>
       </div>
     </div>
