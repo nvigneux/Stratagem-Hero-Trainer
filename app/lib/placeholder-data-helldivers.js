@@ -363,6 +363,11 @@ const GENERAL_STRATEGEMS = [
     code: ['up', 'down', 'up', 'down', 'up', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
+  {
+    name: 'Dark Fluid Vessel',
+    code: ['up', 'left', 'right', 'down', 'up', 'up'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
 ];
 
 const STRATAGEMS = [
