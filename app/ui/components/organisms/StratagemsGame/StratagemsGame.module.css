@@ -299,24 +299,11 @@
   pointer-events: all;
 }
 
-@media (width <= 1000px) {
-  .historyGrid {
-    grid-template-columns: minmax(20px, 26px) 1fr minmax(80px, 0fr) minmax(
-        60px,
-        0fr
-      );
-  }
-
-  .statsGrid {
-    min-width: calc(700px - 115px);
-    grid-template-columns: 1fr minmax(50px, 0fr) minmax(74px, 0fr) minmax(
-        67px,
-        0fr
-      ) minmax(67px, 0fr) minmax(54px, 0fr);
-  }
-}
-
 @media (width <= 1024px) {
+  .historyGrid, .statsGrid {
+    grid-template-columns: minmax(60px, 0fr) 1fr;
+  }
+
   .main::before {
     width: 80%;
   }
