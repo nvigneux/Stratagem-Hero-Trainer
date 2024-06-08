@@ -50,7 +50,8 @@
   background-color: rgb(255 255 255 / 4%);
 }
 
-.cell {
+.cell,
+.cellMobile {
   font-family: var(--font-fs-sinclair);
   font-size: 1rem;
   display: flex;
@@ -63,7 +64,8 @@
   text-align: left;
 }
 
-.cell img {
+.cell img,
+.cellMobile img {
   --size-img: 45px;
 
   height: var(--size-img);
@@ -84,9 +86,46 @@
   color: var(--yellow);
 }
 
-@media (width <= 1000px) {
+.cellMobile {
+  display: none;
+}
+
+@media (width <= 1024px) {
   .table {
-    min-width: calc(750px - 115px);
+    min-width: auto;
+  }
+
+  .header,
+  .cell {
+    display: none !important;
+  }
+
+  .row {
+    gap: var(--spacing-4) var(--spacing-16);
+  }
+
+  .cellMobile {
+    display: flex;
+    grid-column: 2 / 3;
+    gap: var(--spacing-8);
+  }
+
+  .cellMobile[name="img"] {
+    --size-img: 60px;
+
+    grid-column: 1 / 2;
+    grid-row: 2 / 2;
+    height: 20px;
+  }
+
+  .cellMobile img {
+    --size-img: 50px;
+  }
+
+  .cellMobileLabel {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    padding-right: var(--spacing-8);
   }
 }
 
