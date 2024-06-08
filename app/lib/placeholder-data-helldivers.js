@@ -305,6 +305,11 @@ const ROBOTICS_WORKSHOP = [
     code: ['left', 'down', 'right', 'up', 'left', 'down', 'down'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
   },
+  {
+    name: 'Emancipator Exosuit',
+    code: ['left', 'down', 'right', 'up', 'left', 'down', 'up'],
+    category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
+  },
 ];
 
 const GENERAL_STRATEGEMS = [
@@ -351,6 +356,16 @@ const GENERAL_STRATEGEMS = [
   {
     name: 'Orbital Illumination Flare',
     code: ['right', 'right', 'left', 'left'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Tectonic Drill',
+    code: ['up', 'down', 'up', 'down', 'up', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Dark Fluid Vessel',
+    code: ['up', 'left', 'right', 'down', 'up', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
 ];
