@@ -1,3 +1,9 @@
+.labelContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--spacing-8);
+}
+
 .label {
   font-size: 1.5rem;
   font-weight: 500;
@@ -9,6 +15,47 @@
   font-weight: 500;
   color: var(--yellow);
   line-height: 1;
+}
+
+.historyButton {
+  --size-icon-settings: 1.3rem;
+
+  display: flex;
+  flex-flow: row nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-family: var(--font-fs-sinclair);
+  transition: all 0.3s;
+}
+
+.historyButton svg {
+  position: relative;
+  top: 0;
+  width: var(--size-icon-settings);
+  height: var(--size-icon-settings);
+  color: var(--yellow);
+}
+
+.historyButton:disabled svg {
+  pointer-events: none;
+  color: var(--grey);
+}
+
+.historyButton:disabled {
+  pointer-events: none;
+}
+
+.historyButton:hover {
+  opacity: 0.85;
+}
+
+.historyButton:active {
+  opacity: 0.70;
 }
 
 @media (width > 1920px) {

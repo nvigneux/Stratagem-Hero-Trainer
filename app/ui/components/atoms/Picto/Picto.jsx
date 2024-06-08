@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import ArrowIcon from '../../../../../public/icons/arrow.svg';
 import SettingsIcon from '../../../../../public/icons/settings.svg';
+import CloseIcon from '../../../../../public/icons/close.svg';
+import HistoryIcon from '../../../../../public/icons/history.svg';
 import CoffeeIcon from '../../../../../public/assets/bmec_logo.svg';
 
 export const availablePictos = {
@@ -11,6 +13,10 @@ export const availablePictos = {
   'arrow': ArrowIcon,
   // Settings
   'settings': SettingsIcon,
+  // Close
+  'close': CloseIcon,
+  // History
+  'history': HistoryIcon,
   // Coffee
   'coffee': CoffeeIcon,
 };

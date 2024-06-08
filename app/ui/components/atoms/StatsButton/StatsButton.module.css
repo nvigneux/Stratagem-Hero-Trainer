@@ -1,0 +1,423 @@
+.button {
+  position: relative;
+  font-family: var(--font-fs-sinclair);
+  border: 2px solid var(--grey);
+  border-bottom: 0;
+  border-top: 0;
+  padding: var(--spacing-4) var(--spacing-56) 20px 26px;
+  background: transparent;
+  color: var(--grey);
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  height: 49px;
+  transition: all 0.3s;
+}
+
+/* SMALL */
+.small {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: absolute;
+  font-size: 1.25rem;
+  font-weight: 700;
+  bottom: -11px;
+  right: 0;
+  width: 100%;
+}
+
+.small::before {
+  content: "";
+  position: relative;
+  flex: 1 1 auto;
+  min-width: var(--spacing-16);
+  margin-right: 2px;
+  transform: translateY(1px) translateX(-1px);
+  background: transparent;
+  top: -1px;
+  opacity: 0;
+  transition: top 0.3s, opacity 0.3s, background 0.3s, height 0.3s;
+}
+
+.small::after {
+  content: "";
+  position: relative;
+  width: 26px;
+  margin-left: 2px;
+  transform: translateY(1px) translateX(1px);
+  background: transparent;
+  top: -1px;
+  opacity: 0;
+  transition: top 0.3s, opacity 0.3s, background 0.3s, height 0.3s;
+}
+
+/* SMALL BORDER */
+.smallBorder {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  position: absolute;
+  font-size: 1.25rem;
+  font-weight: 700;
+  bottom: -11px;
+  right: 0;
+  width: 100%;
+  color: transparent;
+}
+
+.smallBorder::before {
+  content: "";
+  position: relative;
+  flex: 1 1 auto;
+  min-width: var(--spacing-16);
+  margin-right: 2px;
+  transform: translateY(1px) translateX(-1px);
+  background: var(--grey);
+  height: 2px;
+  top: -1px;
+  transition: top 0.3s, opacity 0.3s, background 0.3s, height 0.3s;
+}
+
+.smallBorder::after {
+  content: "";
+  position: relative;
+  width: 26px;
+  margin-left: 2px;
+  transform: translateY(1px) translateX(1px);
+  background: var(--grey);
+  height: 2px;
+  top: -1px;
+  transition: top 0.3s, opacity 0.3s, background 0.3s, height 0.3s;
+}
+
+/* / SMALL BORDER */
+
+/* SMALL VALUE */
+.smallValue {
+  position: relative;
+  padding: 0 var(--spacing-4);
+  top: 0;
+  transition: top 0.3s;
+}
+
+/* WRAPPER */
+.wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--spacing-16);
+  align-items: flex-start;
+}
+
+/* ACTIVE */
+.active {
+  color: var(--white);
+  border-color: var(--white);
+  padding-bottom: 35px;
+  height: 64px;
+}
+
+.active .smallBorder::before,
+.active .smallBorder::after {
+  background-color: var(--white);
+}
+
+.active .smallValue {
+  position: relative;
+  top: -1.1rem;
+}
+
+.active .small {
+  padding: 0 var(--spacing-12);
+}
+
+.active .small::before,
+.active .small::after {
+  background-image: linear-gradient(
+    135deg,
+    transparent 2%,
+    var(--grey) 2%,
+    var(--grey) 5%,
+    transparent 5%,
+    transparent 12%,
+    var(--grey) 12%,
+    var(--grey) 15%,
+    transparent 15%,
+    transparent 22%,
+    var(--grey) 22%,
+    var(--grey) 25%,
+    transparent 25%,
+    transparent 32%,
+    var(--grey) 32%,
+    var(--grey) 35%,
+    transparent 35%,
+    transparent 42%,
+    var(--grey) 42%,
+    var(--grey) 45%,
+    transparent 45%,
+    transparent 52%,
+    var(--grey) 52%,
+    var(--grey) 55%,
+    transparent 55%,
+    transparent 62%,
+    var(--grey) 62%,
+    var(--grey) 65%,
+    transparent 65%,
+    transparent 72%,
+    var(--grey) 72%,
+    var(--grey) 75%,
+    transparent 75%,
+    transparent 82%,
+    var(--grey) 82%,
+    var(--grey) 85%,
+    transparent 85%,
+    transparent 92%,
+    var(--grey) 92%,
+    var(--grey) 95%,
+    transparent 95%,
+    transparent 100%
+  );
+  top: -1.2rem;
+  height: 12px;
+  opacity: 1;
+}
+
+.active .small::after {
+  width: 14px;
+  background-image: linear-gradient(
+    135deg,
+    transparent 5%,
+    transparent 19%,
+    var(--grey) 19%,
+    var(--grey) 35%,
+    transparent 35%,
+    transparent 85%,
+    var(--grey) 85%,
+    var(--grey) 100%
+  );
+}
+
+.button:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.button:hover .smallBorder::before,
+.button:hover .smallBorder::after {
+  background-color: var(--white);
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.disabled:hover {
+  color: var(--grey);
+  border-color: var(--grey);
+}
+
+/* CLOSE BUTTON */
+.container {
+  position: relative;
+  display: flex;
+  gap: var(--spacing-16);
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: -50px;
+}
+
+/* @media (width <= 1024px) {
+  .close {
+    position: fixed;
+    right: var(--spacing-16);
+    top: var(--spacing-16);
+  }
+} */
+
+.close button {
+  display: flex;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.close path {
+  stroke: var(--white);
+}
+
+.close:hover path {
+  stroke: var(--grey);
+}
+
+.close:active path {
+  color: var(--white);
+}
+
+.disabledClose {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: flex;
+}
+
+@media (width <= 1024px) {
+  .mobile {
+    display: flex;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .active .small::before,
+  .active .small::after {
+    background-image: linear-gradient(
+      135deg,
+      var(--grey) 5%,
+      transparent 5%,
+      transparent 15%,
+      var(--grey) 15%,
+      var(--grey) 22%,
+      transparent 22%,
+      transparent 32%,
+      var(--grey) 32%,
+      var(--grey) 39%,
+      transparent 39%,
+      transparent 49%,
+      var(--grey) 49%,
+      var(--grey) 56%,
+      transparent 56%,
+      transparent 66%,
+      var(--grey) 66%,
+      var(--grey) 73%,
+      transparent 73%,
+      transparent 83%,
+      var(--grey) 83%,
+      var(--grey) 90%,
+      transparent 90%,
+      transparent 100%
+    );
+  }
+
+  .active .small::after {
+    width: 14px;
+    background-image: linear-gradient(
+      135deg,
+      transparent 5%,
+      transparent 7%,
+      transparent 20%,
+      var(--grey) 20%,
+      var(--grey) 35%,
+      transparent 35%,
+      transparent 55%,
+      transparent 90%,
+      var(--grey) 90%,
+      var(--grey) 100%
+    );
+  }
+}
+
+@media (width <= 768px) {
+  .button {
+    padding: var(--spacing-4) var(--spacing-34) 16px 20px;
+    font-size: 1rem;
+  }
+
+  .active .small::before,
+  .active .small::after {
+    background-image: linear-gradient(
+      135deg,
+      var(--grey) 5%,
+      transparent 5%,
+      transparent 10%,
+      transparent 20%,
+      var(--grey) 20%,
+      var(--grey) 30%,
+      transparent 30%,
+      transparent 35%,
+      transparent 45%,
+      var(--grey) 45%,
+      var(--grey) 55%,
+      transparent 55%,
+      transparent 60%,
+      transparent 70%,
+      var(--grey) 70%,
+      var(--grey) 80%,
+      transparent 80%,
+      transparent 85%,
+      transparent 95%,
+      var(--grey) 95%,
+      var(--grey) 100%
+    );
+  }
+
+  .active .small::after {
+    width: 14px;
+    background-image: linear-gradient(
+      135deg,
+      transparent 5%,
+      transparent 7%,
+      transparent 15%,
+      var(--grey) 15%,
+      var(--grey) 30%,
+      transparent 35%,
+      transparent 55%,
+      transparent 80%,
+      var(--grey) 80%,
+      var(--grey) 100%
+    );
+  }
+}
+
+@media (width <= 480px) {
+  .button {
+    padding: var(--spacing-4) var(--spacing-16) 20px 10px;
+    font-size: 1rem;
+  }
+
+  .active .small::before,
+  .active .small::after {
+    background-image: linear-gradient(
+      135deg,
+      var(--grey) 5%,
+      transparent 5%,
+      transparent 10%,
+      transparent 30%,
+      var(--grey) 30%,
+      var(--grey) 40%,
+      transparent 40%,
+      transparent 45%,
+      transparent 65%,
+      var(--grey) 65%,
+      var(--grey) 75%,
+      transparent 75%,
+      transparent 80%,
+      transparent 100%
+    );
+  }
+
+  .active .small::after {
+    width: 14px;
+    background-image: linear-gradient(
+      135deg,
+      transparent 5%,
+      transparent 7%,
+      transparent 35%,
+      var(--grey) 35%,
+      var(--grey) 50%,
+      transparent 50%,
+      transparent 90%,
+      var(--grey) 90%,
+      var(--grey) 100%
+    );
+  }
+}

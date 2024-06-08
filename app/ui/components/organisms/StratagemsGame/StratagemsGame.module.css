@@ -10,11 +10,14 @@
 }
 
 .main {
+  position: relative;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
   min-width: var(--width-side);
+  top: 0;
+  transition: top 0.5s;
 }
 
 .main > * {
@@ -103,6 +106,7 @@
 
 .opened .settings {
   padding: 0.5rem;
+  z-index: 14;
 }
 
 .settingsOverlay {
@@ -112,7 +116,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0 0 0 / 50%);
-  z-index: 5;
+  z-index: 13;
   border: none;
   display: none;
 }
@@ -150,12 +154,12 @@
   height: var(--size-icon-settings);
 }
 
-.settingsLabelDesktop {
+.buttonLabelDesktop {
   color: var(--yellow);
   font-size: 1rem;
   text-transform: uppercase;
   font-family: var(--font-fs-sinclair);
-  margin-top: 0.1rem;
+  margin-top: 0.2rem;
 }
 
 .opened .buttonSettings {
@@ -231,12 +235,80 @@
   transition: color 0.5s;
 }
 
+/* HISTORY */
+.history {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.historyGrid {
+  display: grid;
+  grid-template-columns:
+    minmax(25px, 30px)
+    2fr
+    minmax(90px, 1fr)
+    minmax(80px, 0fr);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns:
+    2fr
+    minmax(25px, 1fr)
+    minmax(90px, 1fr)
+    minmax(90px, 1fr)
+    minmax(90px, 1fr)
+    minmax(80px, 0fr);
+}
+
+.gridRow {
+  width: 100%;
+}
+
+/* Button stats */
+.buttonWrapper {
+  position: fixed;
+  top: 0;
+  left: calc(50% - var(--width-side) / -2);
+  transform: translateX(-50%);
+  background-color: transparent;
+  padding: 0.75rem 0;
+  width: calc(100% - var(--width-side));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition-delay: 0s;
+  transition-property: background-color, width, overflow, opacity;
+  transition-duration: 0s, 0.5s, 0.5s, 0.5s;
+  pointer-events: none;
+}
+
+.buttonWrapper.activeBg {
+  transition: background-color 0.5s;
+  transition-delay: 0.5s;
+}
+
+.buttonWrapper.active {
+  z-index: 11;
+  width: calc(100% - var(--width-side));
+  display: flex;
+  justify-content: center;
+  height: 88px;
+  opacity: 1;
+  pointer-events: all;
+}
+
 @media (width <= 1024px) {
+  .historyGrid, .statsGrid {
+    grid-template-columns: minmax(60px, 0fr) 1fr;
+  }
+
   .main::before {
     width: 80%;
   }
 
-  .settingsLabelDesktop {
+  .buttonLabelDesktop {
     display: none;
   }
 
@@ -259,4 +331,35 @@
   .opened {
     --width-settings: 250px;
   }
+
+  .buttonWrapper {
+    width: 100% !important;
+    transition: all 0.5s !important;
+  }
+}
+
+/* MODAL STATS */
+.modalStats {
+  width: calc(100% - var(--width-side));
+  height: 100dvh;
+  display: flex;
+  flex-flow: column nowrap;
+  background: #12141a;
+  z-index: 10;
+  overflow: auto;
+  position: fixed;
+  top: 100dvh;
+  padding-top: 5.5rem;
+  transition: top 0.5s, height 0.5s, padding-top 0.5s, background 0.5s;
+}
+
+.modalStats.activeModal {
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.activePanel {
+  position: relative;
+  top: -100dvh;
 }

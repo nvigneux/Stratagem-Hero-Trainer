@@ -15,6 +15,8 @@ const initialStateSerie = {
   bonusPerfectRound: 0,
   bonusRestingTime: 0,
   bestScore: 0,
+  startTime: null,
+  history: {},
 };
 
 /**
@@ -40,7 +42,11 @@ function reducerStateSerie(state, action) {
         nbSuccess: action.payload ? state.nbSuccess + 1 : state.nbSuccess,
       };
     case 'round':
-      return { ...state, round: action.payload };
+      return {
+        ...state,
+        round: action.payload,
+        history: { ...state.history, [action.payload]: [] },
+      };
     case 'score':
       return { ...state, ...action.payload };
     case 'resetScore':
@@ -52,6 +58,26 @@ function reducerStateSerie(state, action) {
       return {
         ...state, error: false, success: false, nbError: 0, nbSuccess: 0,
       };
+    case 'startTime':
+      return { ...state, startTime: action.payload };
+    case 'endTime': {
+      return {
+        ...state,
+        history: {
+          ...state.history,
+          [state.round]: [
+            ...(state.history[state.round] || []),
+            {
+              startTime: state.startTime,
+              endTime: action.payload.date,
+              stratagem: action.payload.stratagem,
+              nbError: state.nbError,
+            },
+          ],
+        },
+        nbError: 0,
+      };
+    }
     default:
       return state;
   }
