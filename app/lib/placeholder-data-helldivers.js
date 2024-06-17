@@ -368,6 +368,11 @@ const GENERAL_STRATEGEMS = [
     code: ['up', 'left', 'right', 'down', 'up', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
+  {
+    name: 'Hive Breaker Drill',
+    code: ['left', 'up', 'down', 'right', 'down', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
 ];
 
 const STRATAGEMS = [
