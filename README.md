@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Screenshots
+
+#### Stratagem hero
+![Stratagem hero](public/assets/readme/Stratagem-hero-1_1.webp)
+
+#### Settings
+![Stratagem hero 2](public/assets/readme/Stratagem-hero-2.webp)
+
+#### History & Stats
+![Stratagem hero 3](public/assets/readme/Stratagem-hero-3_1.webp)
+
 ## Getting Started
 
 First, run the development server:
