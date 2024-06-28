@@ -7,7 +7,7 @@ import {
   useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 import useSound from 'use-sound';
 
 // Styles
@@ -56,6 +56,9 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+
+// Constants
+import { CONTACT_LINK } from '../../../../lib/constants';
 
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
@@ -579,51 +582,36 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                   <TableStatsHeader className={styles.statsGrid}>
                     <TableStatsCell>Stratagem</TableStatsCell>
                     <TableStatsCell
-                      onClick={() => setFilterStatsKey({
-                        key: 'nb',
-                        order:
-                            filterStatsKey.order === 'asc' ? 'desc' : 'asc',
-                      })}
+                      onClick={(order) => setFilterStatsKey({ key: 'nb', order })}
+                      order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'nb'}
                     >
                       Count
                     </TableStatsCell>
                     <TableStatsCell
-                      onClick={() => setFilterStatsKey({
-                        key: 'averageTime',
-                        order:
-                            filterStatsKey.order === 'asc' ? 'desc' : 'asc',
-                      })}
+                      onClick={(order) => setFilterStatsKey({ key: 'averageTime', order })}
+                      order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'averageTime'}
                     >
                       Average
                     </TableStatsCell>
                     <TableStatsCell
-                      onClick={() => setFilterStatsKey({
-                        key: 'bestTime',
-                        order:
-                            filterStatsKey.order === 'asc' ? 'desc' : 'asc',
-                      })}
+                      onClick={(order) => setFilterStatsKey({ key: 'bestTime', order })}
+                      order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'bestTime'}
                     >
                       Best
                     </TableStatsCell>
                     <TableStatsCell
-                      onClick={() => setFilterStatsKey({
-                        key: 'worstTime',
-                        order:
-                            filterStatsKey.order === 'asc' ? 'desc' : 'asc',
-                      })}
+                      onClick={(order) => setFilterStatsKey({ key: 'worstTime', order })}
+                      order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'worstTime'}
                     >
                       Worst
                     </TableStatsCell>
                     <TableStatsCell
-                      onClick={() => setFilterStatsKey({
-                        key: 'error',
-                        order:
-                            filterStatsKey.order === 'asc' ? 'desc' : 'asc',
-                      })}
+                      onClick={(order) => setFilterStatsKey({ key: 'error', order })}
+                      order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'error'}
                     >
                       Errors
@@ -838,6 +826,15 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         </div>
 
         <div className={styles.settingsBottom}>
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Contact me" />
+            <InfoMessage>
+              <Link href={CONTACT_LINK} target="_blank">
+                If you have any feedback or suggestion, feel free to contact me !
+              </Link>
+            </InfoMessage>
+          </div>
+
           <div className={styles.settingsSection}>
             <HeadingForm title="Support me" />
             <ButtonBuyMeACoffee />
