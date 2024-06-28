@@ -72,27 +72,35 @@ export function TableStatsCell({
   name,
   onClick = false,
   isActiveFilter = false,
+  order,
   children,
 }) {
+  const Tag = onClick ? 'button' : 'div';
   return (
-    <button
-      type="button"
+    <Tag
+      type={onClick ? 'button' : undefined}
       name={name}
-      onClick={onClick || undefined}
+      onClick={onClick ? () => onClick(order) : undefined}
       className={cn([
         styles.cell,
         !!onClick && styles.button,
         isActiveFilter && styles.active,
       ])}
     >
-      {children}
-    </button>
+      <div className={styles.children}>
+        {children}
+        {order
+          ? <span className={cn([isActiveFilter ? `${styles.arrow} ${styles[order]}` : ''])} />
+          : null}
+      </div>
+    </Tag>
   );
 }
 TableStatsCell.propTypes = {
   name: PropTypes.string.isRequired,
   onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   isActiveFilter: PropTypes.bool,
+  order: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
