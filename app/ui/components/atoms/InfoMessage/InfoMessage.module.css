@@ -10,3 +10,12 @@
   padding: 10px;
   box-shadow: 0 0 10px rgb(0 0 0 / 10%);
 }
+
+.container > a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.container:hover > a {
+  opacity: 0.8;
+}
