@@ -76,6 +76,11 @@ const PATRIOTIC_ADMINISTRATION_CENTER = [
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   },
   {
+    name: 'Commando',
+    code: ['down', 'left', 'up', 'down', 'right'],
+    category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
+  },
+  {
     name: 'Railgun',
     code: ['down', 'right', 'down', 'up', 'left', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
