@@ -124,6 +124,11 @@ const ORBITAL_CANNONS = [
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
   },
   {
+    name: 'Orbital Napalm Barrage',
+    code: ['right', 'right', 'down', 'left', 'right', 'up'],
+    category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
+  },
+  {
     name: 'Orbital Railcannon Strike',
     code: ['right', 'up', 'down', 'down', 'right'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
