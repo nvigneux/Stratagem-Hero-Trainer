@@ -24,6 +24,10 @@ const CATEGORIES = [
     name: 'Robotics Workshop',
   },
   {
+    id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
+    name: 'Chemical Agents',
+  },
+  {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
@@ -322,6 +326,19 @@ const ROBOTICS_WORKSHOP = [
   },
 ];
 
+const CHEMICAL_AGENTS = [
+  {
+    name: 'Sterilizer',
+    code: ['down', 'left', 'up', 'down', 'left'],
+    category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
+  },
+  {
+    name: 'Guard Dog Breath',
+    code: ['down', 'up', 'left', 'up', 'right', 'up'],
+    category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -392,6 +409,7 @@ const STRATAGEMS = [
   ...BRIDGE,
   ...ENGINEERING_BAY,
   ...ROBOTICS_WORKSHOP,
+  ...CHEMICAL_AGENTS,
   ...GENERAL_STRATEGEMS,
 ];
 
