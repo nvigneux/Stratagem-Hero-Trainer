@@ -28,6 +28,10 @@ const CATEGORIES = [
     name: 'Chemical Agents',
   },
   {
+    id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
+    name: 'Urban Legends',
+  },
+  {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
@@ -339,6 +343,24 @@ const CHEMICAL_AGENTS = [
   },
 ];
 
+const URBAN_LEGENDS = [
+  {
+    name: 'Directional Shield',
+    code: ['down', 'up', 'left', 'right', 'up', 'up'],
+    category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
+  },
+  {
+    name: 'Flame Sentry',
+    code: ['down', 'up', 'right', 'down', 'up', 'up'],
+    category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
+  },
+  {
+    name: 'Anti-Tank Emplacement',
+    code: ['down', 'up', 'left', 'right', 'right', 'right'],
+    category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -410,6 +432,7 @@ const STRATAGEMS = [
   ...ENGINEERING_BAY,
   ...ROBOTICS_WORKSHOP,
   ...CHEMICAL_AGENTS,
+  ...URBAN_LEGENDS,
   ...GENERAL_STRATEGEMS,
 ];
 
