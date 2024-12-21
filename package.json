@@ -13,14 +13,14 @@
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
     "@vercel/analytics": "^1.2.2",
-    "@vercel/postgres": "^0.7.2",
+    "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
     "cookies-next": "^4.1.1",
     "file-loader": "^6.2.0",
-    "next": "^14.0.0",
+    "next": "^15.1.1-canary.16",
     "next-auth": "^5.0.0-beta.13",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "url-loader": "^4.1.1",
     "use-sound": "^4.0.1",
     "zod": "^3.22.4"
@@ -29,14 +29,14 @@
     "dotenv": "^16.4.5",
     "eslint": "^8",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "15.1.2",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "stylelint": "^16.2.1",
-    "stylelint-config-css-modules": "^4.3.0",
-    "stylelint-config-standard": "^33.0.0"
+    "stylelint": "^16.12.0",
+    "stylelint-config-css-modules": "^4.4.0",
+    "stylelint-config-standard": "^36.0.1"
   }
 }
