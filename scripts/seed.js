@@ -3,8 +3,13 @@ const { db } = require('@vercel/postgres');
 const {
   CATEGORIES,
   STRATAGEMS,
-} = require('../app/lib/placeholder-data-helldivers.js');
+} = require('../app/lib/placeholder-data-helldivers');
 
+/**
+ * Seed stratagems categories
+ * @param {object} client - Database client
+ * @returns {Promise<object>} Result of seeding categories
+ */
 async function seedStratagemsCategories(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
@@ -38,7 +43,12 @@ async function seedStratagemsCategories(client) {
   }
 }
 
-async function seedStatagems(client) {
+/**
+ * Seed stratagems
+ * @param {object} client - Database client
+ * @returns {Promise<object>} Result of seeding stratagems
+ */
+async function seedStratagems(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
@@ -77,11 +87,15 @@ async function seedStatagems(client) {
   }
 }
 
+/**
+ * Main function to seed the database
+ * @returns {Promise<void>}
+ */
 async function main() {
   const client = await db.connect();
 
   await seedStratagemsCategories(client);
-  await seedStatagems(client);
+  await seedStratagems(client);
 
   await client.end();
 }
