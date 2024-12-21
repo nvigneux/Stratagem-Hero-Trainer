@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 
+/**
+ * Middleware function for handling basic authentication.
+ * @param {NextRequest} req - The incoming request object.
+ * @returns {NextResponse} The response object.
+ */
 export function middleware(req) {
   // Basic Auth example taken from https://github.com/vercel/examples/tree/main/edge-functions/basic-auth-password
   const basicAuth = req.headers.get('authorization');
