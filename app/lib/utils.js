@@ -1,3 +1,8 @@
+/**
+ * Format a currency amount to a localized currency string.
+ * @param {number} amount - The amount to format.
+ * @returns {string} The formatted currency string.
+ */
 export const formatCurrency = (amount) => (amount / 100).toLocaleString('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -25,8 +30,8 @@ export const formatDateToLocal = (
 
 /**
  * Generate the y-axis labels and the top label for the revenue chart.
- * @param {Array} revenue - The revenue data to generate the y-axis labels from.
- * @returns {Object} An object with the y-axis labels and the top label.
+ * @param {Array<{ revenue: number }>} revenue - The revenue data to generate the y-axis labels from.
+ * @returns {object} An object with the y-axis labels and the top label.
  */
 export const generateYAxis = (revenue) => {
   // Calculate what labels we need to display on the y-axis
@@ -46,6 +51,7 @@ export const generateYAxis = (revenue) => {
  * Generate the pagination array based on the current page and the total number of pages.
  * @param {number} currentPage - The current page.
  * @param {number} totalPages - The total number of pages.
+ * @returns {Array<number|string>} The pagination array.
  */
 export const generatePagination = (currentPage, totalPages) => {
   // If the total number of pages is 7 or less,
@@ -80,6 +86,11 @@ export const generatePagination = (currentPage, totalPages) => {
   ];
 };
 
+/**
+ * Check if a string is a valid JSON string.
+ * @param {string} str - The string to check.
+ * @returns {boolean} True if the string is a valid JSON string, false otherwise.
+ */
 export function isJsonString(str) {
   try {
     JSON.parse(str);

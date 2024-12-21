@@ -22,8 +22,8 @@ export async function fetchStratagems() {
 
 /**
  * Fetches a stratagem by its ID.
- * @param {number} id The stratagem ID.
- * @returns {Promise<Object>} The stratagem.
+ * @param {number} id - The stratagem ID.
+ * @returns {Promise<object>} The stratagem.
  */
 export async function fetchStratagemById(id) {
   try {
@@ -40,7 +40,7 @@ export async function fetchStratagemById(id) {
 
 /**
  * Fetches the stratagems by category from the database.
- * @param {number} categoryId The category ID.
+ * @param {number} categoryId - The category ID.
  * @returns {Promise<Array>} The stratagems.
  */
 export async function fetchStratagemByCategory(categoryId) {
@@ -56,6 +56,13 @@ export async function fetchStratagemByCategory(categoryId) {
   }
 }
 
+/**
+ * Fetches filtered categories from the database.
+ * @param {string} query - The search query.
+ * @param {number} currentPage - The current page number.
+ * @param {number} sizePage - The number of items per page.
+ * @returns {Promise<Array>} The filtered categories.
+ */
 export async function fetchFilteredCategories(
   query,
   currentPage,
@@ -82,6 +89,12 @@ export async function fetchFilteredCategories(
   }
 }
 
+/**
+ * Fetches the total number of pages for the filtered categories.
+ * @param {string} query - The search query.
+ * @param {number} sizePage - The number of items per page.
+ * @returns {Promise<number>} The total number of pages.
+ */
 export async function fetchCategoriesPages(query, sizePage) {
   const itemsPerPage = sizePage || ITEMS_PER_PAGE;
   try {
@@ -99,6 +112,11 @@ export async function fetchCategoriesPages(query, sizePage) {
   }
 }
 
+/**
+ * Fetches a category by its ID.
+ * @param {number} id - The category ID.
+ * @returns {Promise<object>} The category.
+ */
 export async function fetchCategoryById(id) {
   console.log(id);
   // noStore is used to prevent the response from being cached.

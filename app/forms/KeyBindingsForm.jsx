@@ -1,9 +1,15 @@
-import PropTypes from 'prop-types';
-
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
 import Form from '../ui/components/molecules/Form/Form';
 
+/**
+ * KeyBindingsForm component
+ * @param {object} props - Component properties
+ * @param {object} props.tempKeyBindings - Temporary key bindings
+ * @param {Function} props.handleKeyBindings - Function to handle form submission
+ * @param {Function} props.handleSetTempKeyBindings - Function to set temporary key bindings
+ * @returns {JSX.Element} The KeyBindingsForm component
+ */
 function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyBindings }) {
   return (
     <Form action={handleKeyBindings}>
@@ -54,16 +60,5 @@ function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyB
     </Form>
   );
 }
-
-KeyBindingsForm.propTypes = {
-  tempKeyBindings: PropTypes.shape({
-    up: PropTypes.string.isRequired,
-    right: PropTypes.string.isRequired,
-    down: PropTypes.string.isRequired,
-    left: PropTypes.string.isRequired,
-  }).isRequired,
-  handleKeyBindings: PropTypes.func.isRequired,
-  handleSetTempKeyBindings: PropTypes.func.isRequired,
-};
 
 export default KeyBindingsForm;

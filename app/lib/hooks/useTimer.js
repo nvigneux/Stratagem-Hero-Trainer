@@ -38,6 +38,13 @@ const timerReducer = (state, action) => {
   }
 };
 
+/**
+ * Custom hook for managing a timer.
+ * @param {number} initialProgress - Initial progress value.
+ * @param {number} total - Total time value.
+ * @param {Function} handleIsOver - Callback function when the timer is over.
+ * @returns {object} Timer state and control functions.
+ */
 const useTimer = (initialProgress, total, handleIsOver) => {
   const [state, dispatch] = useReducer(timerReducer, {
     ...initialState,
@@ -69,8 +76,14 @@ const useTimer = (initialProgress, total, handleIsOver) => {
 
   const startTimer = useCallback(() => dispatch({ type: 'START' }), []);
   const pauseTimer = useCallback(() => dispatch({ type: 'PAUSE' }), []);
-  const resetTimer = useCallback(() => dispatch({ type: 'RESET', payload: initialProgress }), [initialProgress]);
-  const addTime = useCallback((amount) => dispatch({ type: 'ADD_TIME', payload: amount, total }), [total]);
+  const resetTimer = useCallback(
+    () => dispatch({ type: 'RESET', payload: initialProgress }),
+    [initialProgress],
+  );
+  const addTime = useCallback(
+    (amount) => dispatch({ type: 'ADD_TIME', payload: amount, total }),
+    [total],
+  );
   const restartTimer = useCallback(() => dispatch({ type: 'RESTART' }), []);
 
   useEffect(() => {

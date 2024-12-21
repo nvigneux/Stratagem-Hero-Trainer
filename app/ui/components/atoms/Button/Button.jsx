@@ -1,12 +1,18 @@
-/* eslint-disable react/require-default-props */
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './Button.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * Button component
+ * @param {object} props - Component properties
+ * @param {boolean} [props.disabled=false] - Whether the button is disabled
+ * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} [props.className=''] - Additional class names
+ * @param {'button'|'submit'|'reset'} [props.type='button'] - Button type
+ * @returns {React.ReactElement} The rendered component.
+ */
 function Button({
   disabled = false, children, className = '', type = 'button',
 }) {
@@ -21,12 +27,5 @@ function Button({
     </button>
   );
 }
-
-Button.propTypes = {
-  disabled: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),
-};
 
 export default Button;

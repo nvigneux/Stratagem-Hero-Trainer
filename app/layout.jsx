@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
 import localFont from 'next/font/local';
-import { Analytics } from '@vercel/analytics/react';
+// eslint-disable-next-line import/no-unresolved
+import { Analytics } from '@vercel/analytics/next';
 
 import './globals.css';
 
@@ -25,9 +25,16 @@ const fsSinclair = localFont({
 
 export const metadata = {
   title: 'Stratagem Hero Trainer - Helldivers',
-  description: 'Turning Average Joes into Stratagem Superstars, Because Even Bugs Fear a Well-Placed Stratagem !',
+  // eslint-disable-next-line max-len
+  description: 'Turning Average Joes into Stratagem Superstars, Because Even Bugs Fear a Well-Placed Stratagem!',
 };
 
+/**
+ * RootLayout component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The RootLayout component
+ */
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -38,7 +45,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
-RootLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
