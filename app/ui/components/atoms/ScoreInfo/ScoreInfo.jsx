@@ -1,11 +1,21 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './ScoreInfo.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * ScoreInfo component
+ * @param {object} props - Component properties
+ * @param {number} props.score - The score value
+ * @param {number} props.bonusRound - The round bonus value
+ * @param {number} props.bonusRestingTime - The resting time bonus value
+ * @param {number} props.bonusPerfectRound - The perfect round bonus value
+ * @param {number} props.bestScore - The best score value
+ * @param {boolean} props.displayBonus - Whether to display the bonus
+ * @param {string} props.className - Additional class names
+ * @returns {JSX.Element} The ScoreInfo component
+ */
 function ScoreInfo({
   score, bonusRound, bonusRestingTime, bonusPerfectRound, bestScore, displayBonus, className,
 }) {
@@ -36,15 +46,5 @@ function ScoreInfo({
     </div>
   );
 }
-
-ScoreInfo.propTypes = {
-  score: PropTypes.number.isRequired,
-  bonusRound: PropTypes.number.isRequired,
-  bonusRestingTime: PropTypes.number.isRequired,
-  bonusPerfectRound: PropTypes.number.isRequired,
-  bestScore: PropTypes.number.isRequired,
-  displayBonus: PropTypes.bool.isRequired,
-  className: PropTypes.string.isRequired,
-};
 
 export default ScoreInfo;
