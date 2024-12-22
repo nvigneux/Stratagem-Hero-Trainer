@@ -1,17 +1,24 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './StratagemsCategories.module.css';
 
+/**
+ * StratagemsCategories component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsCategories component
+ */
 function StratagemsCategories({ children }) {
   return (
     <div className={styles.container}>{children}</div>
   );
 }
-StratagemsCategories.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * StratagemsCategoriesCategory component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsCategoriesCategory component
+ */
 StratagemsCategories.Category = function StratagemsCategoriesCategory({ children }) {
   return (
     <div className={styles.category}>
@@ -19,10 +26,14 @@ StratagemsCategories.Category = function StratagemsCategoriesCategory({ children
     </div>
   );
 };
-StratagemsCategories.Category.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * StratagemsCategoriesHead component
+ * @param {object} props - Component properties
+ * @param {string} props.category - The category name
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsCategoriesHead component
+ */
 StratagemsCategories.Head = function StratagemsCategoriesHead({ category, children }) {
   return (
     <div className={styles.head}>
@@ -33,11 +44,14 @@ StratagemsCategories.Head = function StratagemsCategoriesHead({ category, childr
     </div>
   );
 };
-StratagemsCategories.Head.propTypes = {
-  category: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * StratagemsCategoriesCards component
+ * @param {object} props - Component properties
+ * @param {Function} props.children - Function to render each stratagem
+ * @param {Array<{ id: string, name: string, description: string }>} props.stratagems - The stratagems to render
+ * @returns {JSX.Element} The StratagemsCategoriesCards component
+ */
 StratagemsCategories.Cards = function StratagemsCategoriesCards({ children, stratagems }) {
   return (
     <div className={styles.cards}>
@@ -46,14 +60,6 @@ StratagemsCategories.Cards = function StratagemsCategoriesCards({ children, stra
       ))}
     </div>
   );
-};
-StratagemsCategories.Cards.propTypes = {
-  children: PropTypes.func.isRequired,
-  stratagems: PropTypes.arrayOf(PropTypes.shape({
-    // id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  })).isRequired,
 };
 
 export default StratagemsCategories;
