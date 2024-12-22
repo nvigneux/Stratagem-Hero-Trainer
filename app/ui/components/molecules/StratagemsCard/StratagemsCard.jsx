@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-import PropTypes from 'prop-types';
 import Image from 'next/image';
 
 // Styles
@@ -8,6 +6,16 @@ import styles from './StratagemsCard.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * StratagemsCard component
+ * @param {object} props - Component properties
+ * @param {string} props.name - The name of the stratagem
+ * @param {Array<string>} props.code - The code of the stratagem
+ * @param {string} props.category - The category of the stratagem
+ * @param {boolean} [props.active=false] - Whether the stratagem is active
+ * @param {React.ReactNode} [props.children=null] - Child nodes
+ * @returns {JSX.Element} The StratagemsCard component
+ */
 function StratagemsCard({
   name, code, category, active = false, children = null,
 }) {
@@ -39,7 +47,10 @@ function StratagemsCard({
   };
 
   return (
-    <div className={cn([styles.card, active && styles.active])} title={`${name} - ${generateHtmlCodeArrow(code)}`}>
+    <div
+      className={cn([styles.card, active && styles.active])}
+      title={`${name} - ${generateHtmlCodeArrow(code)}`}
+    >
       <Image
         src={`/icons/stratagems/${category}/${name}.svg`}
         alt={name}
@@ -52,21 +63,16 @@ function StratagemsCard({
   );
 }
 
-StratagemsCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  category: PropTypes.string.isRequired,
-  active: PropTypes.bool,
-  children: PropTypes.node,
-};
-
-StratagemsCard.Wrapper = function Stratagems({ children }) {
+/**
+ * StratagemsCardWrapper component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsCardWrapper component
+ */
+StratagemsCard.Wrapper = function StratagemsCardWrapper({ children }) {
   return (
     <div className={styles.wrapper}>{children}</div>
   );
-};
-StratagemsCard.Wrapper.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default StratagemsCard;

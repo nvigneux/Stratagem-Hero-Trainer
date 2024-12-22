@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './StratagemsKeyboardMobile.module.css';
 
@@ -9,6 +7,10 @@ import cn from '../../../../lib/cn';
 // Components
 import { Picto } from '../../atoms/Picto/Picto';
 
+/**
+ * StratagemsKeyboardMobile component
+ * @returns {JSX.Element} The StratagemsKeyboardMobile component
+ */
 function StratagemsKeyboardMobile() {
   return (
     <div className={styles.keyboardContainer}>
@@ -28,6 +30,14 @@ function StratagemsKeyboardMobile() {
   );
 }
 
+/**
+ * StratagemsKeyboardMobileButton component
+ * @param {object} props - Component properties
+ * @param {object} props.keydownEvent - Keydown event
+ * @param {string} props.keyName - Key name
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsKeyboardMobileButton component
+ */
 StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
   { keydownEvent, keyName, children },
 ) {
@@ -43,13 +53,6 @@ StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
       {children}
     </button>
   );
-};
-StratagemsKeyboardMobile.Button.propTypes = {
-  keydownEvent: PropTypes.shape({
-    code: PropTypes.string.isRequired,
-  }).isRequired,
-  keyName: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default StratagemsKeyboardMobile;
