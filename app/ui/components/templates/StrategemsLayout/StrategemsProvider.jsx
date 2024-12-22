@@ -1,7 +1,5 @@
 'use client';
 
-import PropTypes from 'prop-types';
-
 import {
   createContext,
   useContext,
@@ -13,6 +11,14 @@ const StratagemsContext = createContext({
   setCheckedStratagem: () => {},
 });
 
+/**
+ * StratagemsProvider component
+ * @param {object} props - Component properties
+ * @param {object} props.checkedStratagems - Checked stratagems
+ * @param {Function} props.setCheckedStratagem - Function to set checked stratagem
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsProvider component
+ */
 export function StratagemsProvider({
   checkedStratagems = {},
   setCheckedStratagem = () => {},
@@ -31,11 +37,3 @@ export function StratagemsProvider({
 }
 
 export const useStratagems = () => useContext(StratagemsContext);
-
-StratagemsProvider.propTypes = {
-  checkedStratagems: PropTypes.shape({
-    [PropTypes.string]: PropTypes.bool,
-  }).isRequired,
-  setCheckedStratagem: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
