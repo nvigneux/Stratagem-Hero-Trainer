@@ -1,72 +1,72 @@
-/* eslint-disable react/require-default-props */
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './TableStats.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * TableStats component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStats component
+ */
 function TableStats({ children }) {
   return <div className={styles.table}>{children}</div>;
 }
 
-TableStats.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
 export default TableStats;
 
 /**
- * Table title component
- * @param {string} children
+ * TableStatsTitle component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsTitle component
  */
 export function TableStatsTitle({ children }) {
   return <div className={styles.title}>{children}</div>;
 }
-TableStatsTitle.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 /**
- * Table header component
- * @param {string} className
- * @param {node} children
+ * TableStatsHeader component
+ * @param {object} props - Component properties
+ * @param {string} [props.className] - Additional class names
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsHeader component
  */
 export function TableStatsHeader({ className = '', children }) {
   return <div className={cn([styles.header, className])}>{children}</div>;
 }
-TableStatsHeader.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
 
 /**
- * Table header cell component
- * @param {string} children
+ * TableStatsBody component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsBody component
  */
 export function TableStatsBody({ children }) {
   return <div className={styles.body}>{children}</div>;
 }
-TableStatsBody.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 /**
- * Table row component
- * @param {node} children
+ * TableStatsRow component
+ * @param {object} props - Component properties
+ * @param {string} [props.className] - Additional class names
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsRow component
  */
 export function TableStatsRow({ className = '', children }) {
   return <div className={cn([styles.row, className])}>{children}</div>;
 }
-TableStatsRow.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
 
 /**
- * Table cell component
- * @param {node} children
+ * TableStatsCell component
+ * @param {object} props - Component properties
+ * @param {string} props.name - The name of the cell
+ * @param {Function} [props.onClick] - Click handler function
+ * @param {boolean} [props.isActiveFilter] - Whether the cell is an active filter
+ * @param {string} [props.order] - The order of the cell
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsCell component
  */
 export function TableStatsCell({
   name,
@@ -96,14 +96,17 @@ export function TableStatsCell({
     </Tag>
   );
 }
-TableStatsCell.propTypes = {
-  name: PropTypes.string.isRequired,
-  onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  isActiveFilter: PropTypes.bool,
-  order: PropTypes.string,
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * TableStatsCellMobile component
+ * @param {object} props - Component properties
+ * @param {string} props.name - The name of the cell
+ * @param {Function} [props.onClick] - Click handler function
+ * @param {boolean} [props.isActiveFilter] - Whether the cell is an active filter
+ * @param {string} props.label - The label of the cell
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsCellMobile component
+ */
 export function TableStatsCellMobile({
   name,
   onClick = false,
@@ -129,10 +132,3 @@ export function TableStatsCellMobile({
     </button>
   );
 }
-TableStatsCellMobile.propTypes = {
-  name: PropTypes.string.isRequired,
-  onClick: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  isActiveFilter: PropTypes.bool,
-  label: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
