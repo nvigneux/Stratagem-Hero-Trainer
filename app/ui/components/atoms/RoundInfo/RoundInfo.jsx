@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './RoundInfo.module.css';
 
@@ -7,6 +5,14 @@ import styles from './RoundInfo.module.css';
 import cn from '../../../../lib/cn';
 import { Picto } from '../Picto/Picto';
 
+/**
+ * RoundInfo component
+ * @param {object} props - Component properties
+ * @param {number} props.roundNb - The round number
+ * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} props.className - Additional class names
+ * @returns {JSX.Element} The RoundInfo component
+ */
 function RoundInfo({ roundNb, children, className }) {
   return (
     <div className={styles.container}>
@@ -18,14 +24,13 @@ function RoundInfo({ roundNb, children, className }) {
   );
 }
 
-RoundInfo.propTypes = {
-  roundNb: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string.isRequired,
-};
-
-export default RoundInfo;
-
+/**
+ * RoundInfoButton component
+ * @param {object} props - Component properties
+ * @param {Function} props.onClick - Click handler function
+ * @param {boolean} props.disabled - Whether the button is disabled
+ * @returns {JSX.Element} The RoundInfoButton component
+ */
 export function RoundInfoButton({ onClick, disabled }) {
   return (
     <button
@@ -43,7 +48,5 @@ export function RoundInfoButton({ onClick, disabled }) {
     </button>
   );
 }
-RoundInfoButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool.isRequired,
-};
+
+export default RoundInfo;
