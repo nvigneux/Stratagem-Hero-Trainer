@@ -292,11 +292,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
     if (+timerDurationValue !== timerDuration) {
-      setTimeout(() => {
-        // fake loading ui
-        setTimerDuration(+timerDurationValue);
-        resetSeries();
-      }, 250);
+      setTimerDuration(+timerDurationValue);
+      resetSeries();
     }
   };
 
@@ -307,10 +304,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const handleSubmitGameSound = (formData) => {
     const gameSoundValue = formData.get('gameSound');
     if (!!gameSoundValue !== !!gameSound) {
-      setTimeout(() => {
-        // fake loading ui
-        setGameSound(!!gameSoundValue);
-      }, 250);
+      setGameSound(!!gameSoundValue);
     }
   };
 
@@ -318,10 +312,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the key bindings
    */
   const handleKeyBindings = () => {
-    setTimeout(() => {
-      // fake loading ui
-      applyTempKeyBindings();
-    }, 250);
+    applyTempKeyBindings();
   };
 
   /**

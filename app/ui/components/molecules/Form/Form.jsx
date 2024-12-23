@@ -1,3 +1,5 @@
+import Form from 'next/form';
+
 // Styles
 import styles from './Form.module.css';
 
@@ -11,9 +13,9 @@ import Button from '../../atoms/Button/Button';
  * @param {React.ReactNode} props.children - Child nodes
  * @returns {JSX.Element} The Form component
  */
-function Form({ action, children }) {
+function FormWrapper({ action, children }) {
   return (
-    <form
+    <Form
       className={styles.form}
       action={action}
     >
@@ -24,8 +26,8 @@ function Form({ action, children }) {
       >
         Apply
       </Button>
-    </form>
+    </Form>
   );
 }
 
-export default Form;
+export default FormWrapper;

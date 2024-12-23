@@ -1,6 +1,6 @@
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
-import Form from '../ui/components/molecules/Form/Form';
+import FormWrapper from '../ui/components/molecules/Form/Form';
 
 /**
  * TimerDurationForm component
@@ -11,7 +11,7 @@ import Form from '../ui/components/molecules/Form/Form';
  */
 function TimerDurationForm({ timerDuration, handleSubmitTimerDuration }) {
   return (
-    <Form action={handleSubmitTimerDuration}>
+    <FormWrapper action={handleSubmitTimerDuration}>
       <LabelInput htmlFor="timerDuration" label="Timer duration (sec)">
         <input
           id="timerDuration"
@@ -23,7 +23,7 @@ function TimerDurationForm({ timerDuration, handleSubmitTimerDuration }) {
           required
         />
       </LabelInput>
-    </Form>
+    </FormWrapper>
   );
 }
 

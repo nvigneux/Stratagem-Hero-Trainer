@@ -1,6 +1,6 @@
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
-import Form from '../ui/components/molecules/Form/Form';
+import FormWrapper from '../ui/components/molecules/Form/Form';
 
 /**
  * KeyBindingsForm component
@@ -12,7 +12,7 @@ import Form from '../ui/components/molecules/Form/Form';
  */
 function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyBindings }) {
   return (
-    <Form action={handleKeyBindings}>
+    <FormWrapper action={handleKeyBindings}>
       <LabelInput htmlFor="up" label="Key Up">
         <input
           id="up"
@@ -57,7 +57,7 @@ function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyB
           required
         />
       </LabelInput>
-    </Form>
+    </FormWrapper>
   );
 }
 
