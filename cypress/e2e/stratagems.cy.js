@@ -1,6 +1,9 @@
 describe("Stratagem Trainer - Gameplay and Settings", () => {
   it("Validates gameplay flow and settings adjustments", () => {
-    cy.visit("https://stratagem-hero-trainer.vercel.app/");
+    cy.visit("http://localhost:3000/");
+
+    // wait for StrategemsLayout_opened__ybJp_ to be visible
+    cy.get(".StrategemsLayout_opened__ybJp_").should("exist");
 
     cy.toggleCheckbox(
       ".StrategemsLayout_checkboxAll__ZLN7R > .Checkbox_checkbox-checkmark__kP1Gy",
@@ -53,13 +56,16 @@ describe("Stratagem Trainer - Gameplay and Settings", () => {
 
   it("Persists sound and timer settings after reload", () => {
     cy.setSettings(5);
-    cy.visit("https://stratagem-hero-trainer.vercel.app/");
+    cy.visit("http://localhost:3000/");
     cy.get(".StratagemsGame_buttonSettings__JIFMu").click();
     cy.get("#timerDuration").should("have.value", "5");
   });
 
   it("Allows selecting and displaying stratagems", () => {
-    cy.visit("https://stratagem-hero-trainer.vercel.app/");
+    cy.visit("http://localhost:3000/");
+
+    // wait for StrategemsLayout_opened__ybJp_ to be visible
+    cy.get(".StrategemsLayout_opened__ybJp_").should("exist");
 
     cy.toggleCheckbox(
       ".StrategemsLayout_checkboxAll__ZLN7R > .Checkbox_checkbox-checkmark__kP1Gy",
@@ -73,7 +79,10 @@ describe("Stratagem Trainer - Gameplay and Settings", () => {
   });
 
   it("Handles successful and failed combinations", () => {
-    cy.visit("https://stratagem-hero-trainer.vercel.app/");
+    cy.visit("http://localhost:3000/");
+
+    // wait for StrategemsLayout_opened__ybJp_ to be visible
+    cy.get(".StrategemsLayout_opened__ybJp_").should("exist");
 
     cy.toggleCheckbox(
       ".StrategemsLayout_checkboxAll__ZLN7R > .Checkbox_checkbox-checkmark__kP1Gy",
