@@ -15,7 +15,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', 'jsx-a11y', 'jsdoc', 'cypress'],
+  plugins: ['react', 'jsx-a11y', 'jsdoc'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-uses-react': 'off',
