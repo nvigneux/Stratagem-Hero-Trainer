@@ -16,12 +16,11 @@ Cypress.Commands.add('toggleCheckbox', (selector, shouldBeChecked) => {
  */
 Cypress.Commands.add('selectStratagem', (stratagemName) => {
   cy.get(
-    `[for="${stratagemName}"] > .StratagemsCard_card__sdnRd > .StratagemsCard_icon__bngXX`,
+    `[data-testid="stratagem-icon-${stratagemName}"]`,
   ).click();
   cy.get(`[id="${stratagemName}"]`).check({ force: true });
-  cy.get(
-    '.StratagemsGameCard_active__UNhvJ > .StratagemsGameCard_icon__yPyqA',
-  ).should('have.attr', 'alt', stratagemName);
+  cy.get(`[data-testid="stratagem-icon-${stratagemName}"]`)
+    .should('have.attr', 'alt', stratagemName);
 });
 
 /**
@@ -32,7 +31,7 @@ Cypress.Commands.add('selectStratagem', (stratagemName) => {
 Cypress.Commands.add('performKeyCombination', (keys, times = 1) => {
   for (let i = 0; i < times; i += 1) {
     keys.forEach((key) => {
-      cy.get('body').click().type(`{${key}arrow}`).wait(100);
+      cy.get('body').click().type(`{${key}arrow}`).wait(50);
     });
   }
 });
@@ -42,14 +41,14 @@ Cypress.Commands.add('setSettings', (timerDuration) => {
   cy.session('h2-settings', () => {
     cy.visit('http://localhost:3000/');
     // Change game sound settings
-    cy.get('.StratagemsGame_buttonSettings__JIFMu').click();
+    cy.get('[data-testid="button-settings"]').click();
     cy.wait(500);
-    cy.toggleCheckbox('#gameSound', true);
-    cy.get(':nth-child(1) > .Form_form__OfmeG > .Button_button__yboYn').click();
+    cy.toggleCheckbox('[data-testid="checkbox-game-sound"', true);
+    cy.get('[data-testid="save-game-sound"]').click();
 
     // Change timer settings
-    cy.get('#timerDuration').clear().type(timerDuration);
-    cy.get(':nth-child(2) > .Form_form__OfmeG > .Button_button__yboYn').click();
+    cy.get('[data-testid="timer-duration-input"]').clear().type(timerDuration);
+    cy.get('[data-testid="save-timer-duration"]').click();
     cy.wait(500);
   });
 });
