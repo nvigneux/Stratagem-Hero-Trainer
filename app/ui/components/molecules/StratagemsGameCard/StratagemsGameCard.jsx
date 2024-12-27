@@ -22,12 +22,13 @@ function StratagemsGameCard({
   return (
     <div className={cn([
       styles.container,
-      active && styles.active,
+      active && `${styles.active} game-card-is-active`,
       active && success && styles.success,
       className,
     ])}
     >
       <Image
+        data-testid={`stratagem-icon-${name}`}
         src={`/icons/stratagems/${category}/${name}.svg`}
         alt={name}
         width={55}
