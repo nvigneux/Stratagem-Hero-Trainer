@@ -13,7 +13,10 @@ import cn from '../../../../lib/cn';
  */
 function StratagemsName({ name, className = '' }) {
   return (
-    <div className={cn([styles.container, className])}>
+    <div
+      className={cn([styles.container, className])}
+      data-testid="stratagem-name"
+    >
       <span className={styles.name}>{name}</span>
     </div>
   );
