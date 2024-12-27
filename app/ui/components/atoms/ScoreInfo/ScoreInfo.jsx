@@ -24,18 +24,38 @@ function ScoreInfo({
       <div className={cn([styles.scoreDetails, displayBonus && styles.displayBonus])}>
         <div className={styles.bonus}>
           <span>Round Bonus</span>
-          <span className={styles.bonusValue}>{bonusRound}</span>
+          <span
+            data-testid="round-bonus"
+            className={styles.bonusValue}
+          >
+            {bonusRound}
+          </span>
         </div>
         <div className={styles.bonus}>
           <span>Time Bonus</span>
-          <span className={styles.bonusValue}>{bonusRestingTime}</span>
+          <span
+            data-testid="time-bonus"
+            className={styles.bonusValue}
+          >
+            {bonusRestingTime}
+          </span>
         </div>
         <div className={styles.bonus}>
           <span>Perfect Round</span>
-          <span className={styles.bonusValue}>{bonusPerfectRound}</span>
+          <span
+            data-testid="perfect-round"
+            className={styles.bonusValue}
+          >
+            {bonusPerfectRound}
+          </span>
         </div>
       </div>
-      <div className={cn([styles.score, className])}>{score}</div>
+      <div
+        className={cn([styles.score, className])}
+        data-testid="score"
+      >
+        {score}
+      </div>
       <div className={styles.label}>Score</div>
       {bestScore > 0 ? (
         <div className={styles.bestScore}>
