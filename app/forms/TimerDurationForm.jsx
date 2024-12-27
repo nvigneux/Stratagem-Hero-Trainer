@@ -11,10 +11,10 @@ import FormWrapper from '../ui/components/molecules/Form/Form';
  */
 function TimerDurationForm({ timerDuration, handleSubmitTimerDuration }) {
   return (
-    <FormWrapper action={handleSubmitTimerDuration}>
+    <FormWrapper name="save-timer-duration" action={handleSubmitTimerDuration}>
       <LabelInput htmlFor="timerDuration" label="Timer duration (sec)">
         <input
-          id="timerDuration"
+          data-testid="timer-duration-input"
           name="timerDuration"
           type="number"
           min={1}
