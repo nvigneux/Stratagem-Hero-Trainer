@@ -28,7 +28,7 @@ function Arrow({
         styles.icon,
         styles[direction],
         styles[size],
-        active && styles.active,
+        active && `${styles.active} arrow-is-active`,
         error && styles.error,
       ])}
     />
