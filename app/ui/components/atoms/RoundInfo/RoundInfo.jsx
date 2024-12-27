@@ -19,7 +19,12 @@ function RoundInfo({ roundNb, children, className }) {
       <div className={styles.labelContainer}>
         {children}
       </div>
-      <div className={cn([styles.round, className])}>{roundNb}</div>
+      <div
+        data-testid="round-info"
+        className={cn([styles.round, className])}
+      >
+        {roundNb}
+      </div>
     </div>
   );
 }
