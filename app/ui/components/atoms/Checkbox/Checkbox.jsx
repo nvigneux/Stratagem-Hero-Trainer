@@ -37,6 +37,7 @@ const Checkbox = forwardRef(({
       <input
         name={props.id}
         ref={ref}
+        data-testid={props.id}
         type="checkbox"
         className={styles['checkbox-input']}
         {...props}
@@ -52,6 +53,7 @@ const Checkbox = forwardRef(({
         <input
           name={props.id}
           ref={ref}
+          data-testid={props.id}
           type="checkbox"
           className={styles['checkbox-input']}
           {...props}
