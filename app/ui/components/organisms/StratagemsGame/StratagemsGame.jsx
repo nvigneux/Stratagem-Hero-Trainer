@@ -413,6 +413,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           type="button"
           onClick={() => setOpenSettings(!openSettings)}
           className={styles.buttonSettings}
+          data-testid="button-settings"
           aria-label="Settings"
         >
           <span className={styles.buttonLabelDesktop}>Settings</span>
@@ -426,6 +427,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             styles.settingsOverlay,
             openSettings ? styles.openedSettings : styles.closedSettings,
           ])}
+          data-testid="settings-overlay"
           aria-label="Close settings"
         />
 
@@ -506,7 +508,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             </Arrow.List>
           </div>
         ) : (
-          <StratagemsName name="Traitor detected !" className="" />
+          <StratagemsName name="Traitor detected !" className="traitor" />
         )}
 
         {series?.length ? (
