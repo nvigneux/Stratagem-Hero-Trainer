@@ -10,12 +10,17 @@ import FormWrapper from '../ui/components/molecules/Form/Form';
  * @param {Function} props.handleSetTempKeyBindings - Function to set temporary key bindings
  * @returns {JSX.Element} The KeyBindingsForm component
  */
-function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyBindings }) {
+function KeyBindingsForm({
+  tempKeyBindings,
+  handleKeyBindings,
+  handleSetTempKeyBindings,
+}) {
   return (
-    <FormWrapper action={handleKeyBindings}>
+    <FormWrapper name="save-key-bindings" action={handleKeyBindings}>
       <LabelInput htmlFor="up" label="Key Up">
         <input
           id="up"
+          data-testid="key-up"
           name="up"
           type="text"
           value={tempKeyBindings.up}
@@ -27,6 +32,7 @@ function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyB
       <LabelInput htmlFor="down" label="Key Down">
         <input
           id="down"
+          data-testid="key-down"
           name="down"
           type="text"
           value={tempKeyBindings.down}
@@ -38,6 +44,7 @@ function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyB
       <LabelInput htmlFor="left" label="Key Left">
         <input
           id="left"
+          data-testid="key-left"
           name="left"
           type="text"
           value={tempKeyBindings.left}
@@ -49,6 +56,7 @@ function KeyBindingsForm({ tempKeyBindings, handleKeyBindings, handleSetTempKeyB
       <LabelInput htmlFor="right" label="Key Right">
         <input
           id="right"
+          data-testid="key-right"
           name="right"
           type="text"
           value={tempKeyBindings.right}

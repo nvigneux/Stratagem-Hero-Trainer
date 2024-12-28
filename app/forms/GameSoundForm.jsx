@@ -12,13 +12,9 @@ import Checkbox from '../ui/components/atoms/Checkbox/Checkbox';
  */
 function GameSoundForm({ gameSound, handleSubmitGameSound }) {
   return (
-    <FormWrapper action={handleSubmitGameSound}>
+    <FormWrapper name="save-game-sound" action={handleSubmitGameSound}>
       <LabelInput htmlFor="gameSound" label="Game sound">
-        <Checkbox
-          id="gameSound"
-          name="gameSound"
-          defaultChecked={gameSound}
-        />
+        <Checkbox id="checkbox-game-sound" name="gameSound" defaultChecked={gameSound} />
       </LabelInput>
     </FormWrapper>
   );

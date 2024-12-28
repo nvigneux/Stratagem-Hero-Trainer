@@ -9,7 +9,8 @@
     "lint:next": "next lint",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:style": "npx stylelint \"**/*.css\"",
-    "seed": "node -r dotenv/config ./scripts/seed.js"
+    "seed": "node -r dotenv/config ./scripts/seed.js",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
@@ -18,7 +19,7 @@
     "bcrypt": "^5.1.1",
     "cookies-next": "^4.1.1",
     "file-loader": "^6.2.0",
-    "next": "^15.1.1-canary.16",
+    "next": "^15.1.1-canary.17",
     "next-auth": "^5.0.0-beta.13",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -27,6 +28,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "cypress": "^13.17.0",
     "dotenv": "^16.4.5",
     "eslint": "^8",
     "eslint-config-airbnb": "^19.0.4",

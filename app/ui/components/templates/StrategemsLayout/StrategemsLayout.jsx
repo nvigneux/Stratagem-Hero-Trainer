@@ -69,7 +69,10 @@ function StrategemsLayout({
   };
 
   return (
-    <main className={cn([styles.container, openStratagems ? styles.opened : styles.closed])}>
+    <main className={cn([styles.container,
+      `${openStratagems ? `${styles.opened} container-is-opened`
+        : `${styles.closed} container-is-closed`}`])}
+    >
       <div className={styles.buttonSide}>
         <ButtonSideStratagems
           onClick={() => setOpenStratagems(!openStratagems)}
@@ -79,7 +82,7 @@ function StrategemsLayout({
       <div className={styles.side}>
         <StratagemsCategories>
           <Checkbox
-            id="all"
+            id="checkbox-all"
             checked={checkboxesAreChecked}
             onChange={handleChangeAllCheckbox}
             label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}

@@ -48,7 +48,7 @@ function StratagemsCard({
 
   return (
     <div
-      className={cn([styles.card, active && styles.active])}
+      className={cn([styles.card, active && `${styles.active} card-is-active`])}
       title={`${name} - ${generateHtmlCodeArrow(code)}`}
     >
       <Image
@@ -57,6 +57,7 @@ function StratagemsCard({
         width={55}
         height={55}
         className={styles.icon}
+        data-testid={`stratagem-icon-${name}`}
       />
       {children}
     </div>
