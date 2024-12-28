@@ -20,7 +20,7 @@ function KeyBindingsForm({
       <LabelInput htmlFor="up" label="Key Up">
         <input
           id="up"
-          data-testid="up"
+          data-testid="key-up"
           name="up"
           type="text"
           value={tempKeyBindings.up}
@@ -32,7 +32,7 @@ function KeyBindingsForm({
       <LabelInput htmlFor="down" label="Key Down">
         <input
           id="down"
-          data-testid="down"
+          data-testid="key-down"
           name="down"
           type="text"
           value={tempKeyBindings.down}
@@ -44,7 +44,7 @@ function KeyBindingsForm({
       <LabelInput htmlFor="left" label="Key Left">
         <input
           id="left"
-          data-testid="left"
+          data-testid="key-left"
           name="left"
           type="text"
           value={tempKeyBindings.left}
@@ -56,7 +56,7 @@ function KeyBindingsForm({
       <LabelInput htmlFor="right" label="Key Right">
         <input
           id="right"
-          data-testid="right"
+          data-testid="key-right"
           name="right"
           type="text"
           value={tempKeyBindings.right}

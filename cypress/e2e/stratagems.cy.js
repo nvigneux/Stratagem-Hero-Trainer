@@ -18,7 +18,7 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
     cy.selectStratagem('Machine Gun');
 
     // Perform a correct combination
-    cy.performKeyCombination(['down', 'left', 'down', 'up', 'right'], 6);
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'downarrow', 'uparrow', 'rightarrow'], 6);
 
     // Check if the round is incremented
     cy.get('[data-testid="round-info"]').should('have.text', '2');
@@ -65,12 +65,32 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
     cy.selectStratagem('Machine Gun');
 
     // Perform a correct combination
-    cy.performKeyCombination(['down', 'left', 'down', 'up', 'right'], 1);
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'downarrow', 'uparrow', 'rightarrow'], 1);
     cy.get('[data-testid="score"]').should('have.text', '25');
 
     // Perform an incorrect combination
-    cy.performKeyCombination(['down', 'left', 'up', 'up', 'right'], 1);
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'uparrow', 'uparrow', 'rightarrow'], 1);
     cy.get('[data-testid="score"]').should('have.text', '25');
     cy.get('.arrow-is-active').should('not.exist');
+  });
+
+  it('Handles update key bindings settings', () => {
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+    cy.get('[data-testid="button-settings"]').click();
+
+    cy.get('[data-testid="key-up"]').clear().type('{c}');
+    cy.get('[data-testid="key-down"]').clear().type('{v}');
+    cy.get('[data-testid="key-left"]').clear().type('{b}');
+    cy.get('[data-testid="key-right"]').clear().type('{n}');
+    cy.get('[data-testid="save-key-bindings"]').click();
+
+    cy.get('[data-testid="settings-overlay"]').click();
+
+    cy.selectStratagem('Machine Gun');
+    cy.performKeyCombination(
+      ['keyv', 'keyb', 'keyv', 'keyc', 'keyn'],
+      1,
+      { parseSpecialCharSequences: false },
+    );
   });
 });

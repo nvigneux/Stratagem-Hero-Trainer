@@ -27,11 +27,14 @@ Cypress.Commands.add('selectStratagem', (stratagemName) => {
  * Perform a series of key presses
  * @param {string[]} keys - The keys to press
  * @param {number} [times=1] - The number of times to press the keys
+ * @param {object} [options] - Options for the type command
  */
-Cypress.Commands.add('performKeyCombination', (keys, times = 1) => {
+Cypress.Commands.add('performKeyCombination', (keys, times = 1, options = {}) => {
   for (let i = 0; i < times; i += 1) {
     keys.forEach((key) => {
-      cy.get('body').click().type(`{${key}arrow}`).wait(50);
+      cy.get('body').click().type(`{${key}}`, {
+        ...options,
+      });
     });
   }
 });
