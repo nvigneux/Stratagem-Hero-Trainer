@@ -98,6 +98,11 @@ const PATRIOTIC_ADMINISTRATION_CENTER = [
     code: ['down', 'down', 'up', 'down', 'down'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   },
+  {
+    name: 'StA-X3 W.A.S.P. Launcher',
+    code: ['down', 'down', 'up', 'down', 'right'],
+    category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
+  },
 ];
 
 const ORBITAL_CANNONS = [
