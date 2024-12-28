@@ -1,8 +1,5 @@
-/* eslint-disable react/require-default-props */
-
 'use client';
 
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
@@ -12,6 +9,12 @@ import { generatePagination } from '../../../../lib/utils';
 // Styles
 import styles from './Pagination.module.css';
 
+/**
+ * Pagination component
+ * @param {object} props
+ * @param {number} props.totalPages - Total number of pages
+ * @returns {JSX.Element}
+ */
 export default function Pagination({ totalPages }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -63,10 +66,15 @@ export default function Pagination({ totalPages }) {
   );
 }
 
-Pagination.propTypes = {
-  totalPages: PropTypes.number.isRequired,
-};
-
+/**
+ * PaginationNumber component
+ * @param {object} props
+ * @param {number|string} props.page - Page number or ellipsis
+ * @param {string} props.href - URL for the page
+ * @param {boolean} props.isActive - Whether the page is the current page
+ * @param {'first'|'last'|'middle'|'single'} [props.position='single'] - Position of the page number
+ * @returns {JSX.Element}
+ */
 function PaginationNumber({
   page,
   href,
@@ -82,13 +90,14 @@ function PaginationNumber({
   );
 }
 
-PaginationNumber.propTypes = {
-  page: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  href: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  position: PropTypes.oneOf(['first', 'last', 'middle', 'single']),
-};
-
+/**
+ * PaginationArrow component
+ * @param {object} props
+ * @param {string} props.href - URL for the arrow
+ * @param {'left'|'right'} props.direction - Direction of the arrow
+ * @param {boolean} [props.isDisabled=false] - Whether the arrow is disabled
+ * @returns {JSX.Element}
+ */
 function PaginationArrow({
   href,
   direction,
@@ -108,9 +117,3 @@ function PaginationArrow({
     </Link>
   );
 }
-
-PaginationArrow.propTypes = {
-  href: PropTypes.string.isRequired,
-  direction: PropTypes.oneOf(['left', 'right']).isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-};

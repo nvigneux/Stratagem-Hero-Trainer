@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './Table.module.css';
 
+/**
+ * Table component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The Table component
+ */
 function Table({ children }) {
   return (
     <table className={styles.table}>
@@ -10,8 +14,13 @@ function Table({ children }) {
     </table>
   );
 }
-Table.propTypes = { children: PropTypes.node.isRequired };
 
+/**
+ * TableAction component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableAction component
+ */
 Table.Action = function TableAction({ children }) {
   return (
     <div className={styles.action}>
@@ -19,8 +28,14 @@ Table.Action = function TableAction({ children }) {
     </div>
   );
 };
-Table.Action.propTypes = { children: PropTypes.node.isRequired };
 
+/**
+ * TableHead component
+ * @param {object} props - Component properties
+ * @param {Array<{ id: string, title: string }>} props.columns - Array of column objects
+ * @param {Function} props.children - Function to render each column
+ * @returns {JSX.Element} The TableHead component
+ */
 Table.Head = function TableHead({ columns, children }) {
   return (
     <thead className={styles.head}>
@@ -30,23 +45,26 @@ Table.Head = function TableHead({ columns, children }) {
     </thead>
   );
 };
-Table.Head.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-  children: PropTypes.func.isRequired,
-};
 
-Table.HeaderCell = function TableStatsHeaderCell({ width, children }) {
+/**
+ * TableHeaderCell component
+ * @param {object} props - Component properties
+ * @param {string} props.width - Width of the header cell
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableHeaderCell component
+ */
+Table.HeaderCell = function TableHeaderCell({ width, children }) {
   return <th width={width} className={styles.headerCell}>{children}</th>;
 };
-Table.HeaderCell.propTypes = {
-  width: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
-Table.Body = function TableStatsBody({ data, children }) {
+/**
+ * TableBody component
+ * @param {object} props - Component properties
+ * @param {Array<object>} props.data - Array of data objects
+ * @param {Function} props.children - Function to render each row
+ * @returns {JSX.Element} The TableBody component
+ */
+Table.Body = function TableBody({ data, children }) {
   return (
     <tbody className={styles.body}>
       {data.map((row) => (
@@ -57,12 +75,14 @@ Table.Body = function TableStatsBody({ data, children }) {
     </tbody>
   );
 };
-Table.Body.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  children: PropTypes.func.isRequired,
-};
 
-Table.Cell = function TableStatsCell({ children }) {
+/**
+ * TableCell component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableCell component
+ */
+Table.Cell = function TableCell({ children }) {
   return (
     <td className={styles.cell}>
       <div className={styles.cellContainer}>
@@ -71,6 +91,5 @@ Table.Cell = function TableStatsCell({ children }) {
     </td>
   );
 };
-Table.Cell.propTypes = { children: PropTypes.node.isRequired };
 
 export default Table;

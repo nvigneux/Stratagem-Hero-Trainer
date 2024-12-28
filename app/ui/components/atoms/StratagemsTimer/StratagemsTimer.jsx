@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import PropTypes from 'prop-types';
 
 // Styles
 import styles from './StratagemsTimer.module.css';
@@ -7,6 +6,14 @@ import styles from './StratagemsTimer.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * StratagemsTimer component
+ * @param {object} props - Component properties
+ * @param {number} props.progress - The current progress value
+ * @param {number} props.total - The total value
+ * @param {string} [props.className=''] - Additional class names
+ * @returns {JSX.Element} The StratagemsTimer component
+ */
 function StratagemsTimer({
   progress = 10000, total = 10000, className = '',
 }) {
@@ -16,11 +23,5 @@ function StratagemsTimer({
     </div>
   );
 }
-
-StratagemsTimer.propTypes = {
-  progress: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  className: PropTypes.string.isRequired,
-};
 
 export default StratagemsTimer;

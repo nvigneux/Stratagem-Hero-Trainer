@@ -1,7 +1,7 @@
 /* eslint-disable quote-props */
 import React from 'react';
-import PropTypes from 'prop-types';
 
+// Assets
 import ArrowIcon from '../../../../../public/icons/arrow.svg';
 import SettingsIcon from '../../../../../public/icons/settings.svg';
 import CloseIcon from '../../../../../public/icons/close.svg';
@@ -21,6 +21,12 @@ export const availablePictos = {
   'coffee': CoffeeIcon,
 };
 
+/**
+ * Picto component
+ * @param {object} props - Component props
+ * @param {string} props.icon - Icon name
+ * @returns {React.Element|null} The icon component or null if not found
+ */
 export function Picto({ icon, ...props }) {
   if (availablePictos[icon]) {
     try {
@@ -33,7 +39,3 @@ export function Picto({ icon, ...props }) {
 
   return null;
 }
-
-Picto.propTypes = {
-  icon: PropTypes.oneOf(Object.keys(availablePictos)).isRequired,
-};

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Image from 'next/image';
 
 // Styles
@@ -7,18 +6,29 @@ import styles from './StratagemsGameCard.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * StratagemsGameCard component
+ * @param {object} props - Component properties
+ * @param {string} props.name - The name of the stratagem
+ * @param {string} props.category - The category of the stratagem
+ * @param {boolean} [props.active=false] - Whether the stratagem is active
+ * @param {boolean} [props.success=false] - Whether the stratagem is successful
+ * @param {string} [props.className=''] - Additional class names
+ * @returns {JSX.Element} The StratagemsGameCard component
+ */
 function StratagemsGameCard({
   name, category, active = false, success = false, className = '',
 }) {
   return (
     <div className={cn([
       styles.container,
-      active && styles.active,
+      active && `${styles.active} game-card-is-active`,
       active && success && styles.success,
       className,
     ])}
     >
       <Image
+        data-testid={`stratagem-icon-${name}`}
         src={`/icons/stratagems/${category}/${name}.svg`}
         alt={name}
         width={55}
@@ -31,21 +41,16 @@ function StratagemsGameCard({
   );
 }
 
-StratagemsGameCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-  success: PropTypes.bool.isRequired,
-  className: PropTypes.string.isRequired,
-};
-
+/**
+ * StratagemsGameCardList component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StratagemsGameCardList component
+ */
 StratagemsGameCard.List = function StratagemsGameCardList({ children }) {
   return (
     <div className={styles.list}>{children}</div>
   );
-};
-StratagemsGameCard.List.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default StratagemsGameCard;

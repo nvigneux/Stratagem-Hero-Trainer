@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './StratagemsLoadoutList.module.css';
 
+/**
+ * StratagemsLoadoutList component
+ * @param {object} props - Component properties
+ * @param {Array<{ id: string, name: string, code: string[] }>} props.stratagems - Array of stratagem objects
+ * @param {Function} props.children - Function to render each stratagem
+ * @returns {JSX.Element} The StratagemsLoadoutList component
+ */
 function StratagemsLoadoutList({ stratagems, children }) {
   return (
     <div className={styles.list}>
@@ -15,14 +20,5 @@ function StratagemsLoadoutList({ stratagems, children }) {
     </div>
   );
 }
-
-StratagemsLoadoutList.propTypes = {
-  stratagems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  })).isRequired,
-  children: PropTypes.func.isRequired,
-};
 
 export default StratagemsLoadoutList;

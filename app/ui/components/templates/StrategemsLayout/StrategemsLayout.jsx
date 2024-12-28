@@ -1,6 +1,5 @@
 'use client';
 
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 // Styles
@@ -19,6 +18,15 @@ import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
 // Provider
 import { StratagemsProvider } from './StrategemsProvider';
 
+/**
+ * StrategemsLayout component
+ * @param {object} props - Component properties
+ * @param {Array<{id: string, name: string, code: string[], category: { name: string } }>} props.stratagems - List of stratagems
+ * @param {object} props.stratagemsByCategories - Stratagems grouped by categories
+ * @param {boolean} [props.defaultCheckValue=true] - Default check value for checkboxes
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StrategemsLayout component
+ */
 function StrategemsLayout({
   stratagems,
   stratagemsByCategories,
@@ -52,16 +60,19 @@ function StrategemsLayout({
   };
 
   /**
-     * Handle the change of all checkboxes in a category
-     * @param {string} category
-     * @param {boolean} value
-     */
+   * Handle the change of all checkboxes in a category
+   * @param {string} category
+   * @param {boolean} value
+   */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
   };
 
   return (
-    <main className={cn([styles.container, openStratagems ? styles.opened : styles.closed])}>
+    <main className={cn([styles.container,
+      `${openStratagems ? `${styles.opened} container-is-opened`
+        : `${styles.closed} container-is-closed`}`])}
+    >
       <div className={styles.buttonSide}>
         <ButtonSideStratagems
           onClick={() => setOpenStratagems(!openStratagems)}
@@ -71,7 +82,7 @@ function StrategemsLayout({
       <div className={styles.side}>
         <StratagemsCategories>
           <Checkbox
-            id="all"
+            id="checkbox-all"
             checked={checkboxesAreChecked}
             onChange={handleChangeAllCheckbox}
             label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}
@@ -130,23 +141,5 @@ function StrategemsLayout({
     </main>
   );
 }
-
-StrategemsLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-  stratagems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-    category: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  })).isRequired,
-  stratagemsByCategories: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }))).isRequired,
-  defaultCheckValue: PropTypes.bool.isRequired,
-};
 
 export default StrategemsLayout;

@@ -1,7 +1,19 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@/*": ["./*"]
-    }
-  }
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "maxNodeModuleJsDepth": 0, // To avoid typing check from node_modules
+    "jsx": "react-jsx",
+    "module": "ESNext", // ESNext est plus courant pour les projets modernes
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "strict": true, // Renforcer la vérification des types
+    "types": ["node"],
+    "lib": ["dom", "esnext"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
