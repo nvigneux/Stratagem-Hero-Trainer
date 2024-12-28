@@ -1,11 +1,19 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './StatsButton.module.css';
 
 // Utils
 import cn from '../../../../lib/cn';
 
+/**
+ * StatsButton component
+ * @param {object} props - Component properties
+ * @param {Function} props.onClick - Click handler function
+ * @param {boolean} props.active - Whether the button is active
+ * @param {string|number} props.small - Small value
+ * @param {boolean} props.disabled - Whether the button is disabled
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StatsButton component
+ */
 function StatsButton({
   onClick, active, small, disabled, children,
 }) {
@@ -29,16 +37,15 @@ function StatsButton({
   );
 }
 
-StatsButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  active: PropTypes.bool.isRequired,
-  small: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  disabled: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
 export default StatsButton;
 
+/**
+ * StatsButtonWrapper component
+ * @param {object} props - Component properties
+ * @param {string} props.className - Additional class names
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StatsButtonWrapper component
+ */
 export function StatsButtonWrapper({ className, children }) {
   return (
     <div className={cn([styles.wrapper, className])}>
@@ -48,11 +55,14 @@ export function StatsButtonWrapper({ className, children }) {
     </div>
   );
 }
-StatsButtonWrapper.propTypes = {
-  className: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * StatsButtonClose component
+ * @param {object} props - Component properties
+ * @param {boolean} props.disabled - Whether the button is disabled
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The StatsButtonClose component
+ */
 export function StatsButtonClose({ disabled, children }) {
   return (
     <div className={cn([styles.close, disabled && styles.disabledClose])}>
@@ -60,11 +70,14 @@ export function StatsButtonClose({ disabled, children }) {
     </div>
   );
 }
-StatsButtonClose.propTypes = {
-  disabled: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
+/**
+ * StatsButtonLabel component
+ * @param {object} props - Component properties
+ * @param {string} props.mobile - Mobile label
+ * @param {string} props.desktop - Desktop label
+ * @returns {JSX.Element} The StatsButtonLabel component
+ */
 export function StatsButtonLabel({ mobile, desktop }) {
   return (
     <div className={styles.label}>
@@ -77,7 +90,3 @@ export function StatsButtonLabel({ mobile, desktop }) {
     </div>
   );
 }
-StatsButtonLabel.propTypes = {
-  mobile: PropTypes.string.isRequired,
-  desktop: PropTypes.string.isRequired,
-};

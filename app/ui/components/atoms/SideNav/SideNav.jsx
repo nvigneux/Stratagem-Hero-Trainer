@@ -3,6 +3,10 @@ import Link from 'next/link';
 // Styles
 import styles from './SideNav.module.css';
 
+/**
+ * SideNav component
+ * @returns {JSX.Element} The SideNav component
+ */
 function SideNav() {
   return (
     <div className={styles.container}>
@@ -25,7 +29,5 @@ function SideNav() {
     </div>
   );
 }
-
-SideNav.propTypes = {};
 
 export default SideNav;

@@ -2,7 +2,6 @@
 
 'use client';
 
-import PropTypes from 'prop-types';
 import {
   useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
@@ -16,7 +15,8 @@ import styles from './StratagemsGame.module.css';
 // Components
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
-import StratagemsKeyboardMobile from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
+import StratagemsKeyboardMobile
+  from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo, { RoundInfoButton } from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
@@ -60,6 +60,14 @@ import cn from '../../../../lib/cn';
 // Constants
 import { CONTACT_LINK } from '../../../../lib/constants';
 
+/**
+ * StratagemsGame Component
+ * @param {object} props Component properties
+ * @param {Array<{id: string, name: string, code: string[]}>} props.stratagems List of stratagems.
+ * @param {number} props.bestScoreStored Best score stored.
+ * @param {{timerDuration: number, keyBindings: {up: string, down: string, left: string, right: string}, gameSound: boolean}} props.settingsStored Settings stored.
+ * @returns {JSX.Element} The StratagemsGame component.
+ */
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const [openSettings, setOpenSettings] = useState(false);
   const { checkedStratagems = {} } = useStratagems();
@@ -146,7 +154,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
   /**
    * Handle the stats panel
-   * @param {string} panel
+   * @param {string} panel Panel name.
+   * @param {string} type Action type.
    * @returns {void}
    */
   const handleStatsPanel = (panel, type) => {
@@ -184,19 +193,17 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       resetTimer();
       handleStatsPanel('', 'close');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedStratagems]);
 
-  // TODO build an historic of time the player take to make the entire code
-  // to build an history for the player
+  // TODO build a history of the time the player takes to complete the entire code
+
   /**
    * Check if the active serie code is correct
-   * @param {string} direction
+   * @param {string} direction The direction to check.
    */
   const checkActiveSerieCode = (direction) => {
     const serieDirection = series[0].code[stateSerie.index];
     if (direction === serieDirection) {
-      // direction is correct
       if (!isRunning) startTimer();
       const playSound = Math.random() < 0.75 ? playPress2 : playPress1;
       playSound();
@@ -224,13 +231,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       }
 
       setTimeout(() => {
-        // wait for the last code arrow to be seen correctly
         const percentOfProgress = Math.round((progress / timerDuration) * 100);
         handleSuccessStratagem(percentOfProgress);
         if (series.length !== 1) {
-          // play sound of finished stratagem if there is more than one
           playFinish();
-
           dispatchStateSerie({
             type: 'endTime',
             payload: { date: Date.now(), stratagem: series[0] },
@@ -243,7 +247,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
   /**
    * Handle the keydown event
-   * @param {KeyboardEvent} event
+   * @param {KeyboardEvent} event The keydown event.
    */
   function keydownDirectionHandler(event) {
     if (
@@ -276,6 +280,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         break;
     }
   }
+
   useEventListener('keydown', keydownDirectionHandler);
   const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
@@ -287,11 +292,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const handleSubmitTimerDuration = (formData) => {
     const timerDurationValue = formData.get('timerDuration');
     if (+timerDurationValue !== timerDuration) {
-      setTimeout(() => {
-        // fake loading ui
-        setTimerDuration(+timerDurationValue);
-        resetSeries();
-      }, 250);
+      setTimerDuration(+timerDurationValue);
+      resetSeries();
     }
   };
 
@@ -302,10 +304,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   const handleSubmitGameSound = (formData) => {
     const gameSoundValue = formData.get('gameSound');
     if (!!gameSoundValue !== !!gameSound) {
-      setTimeout(() => {
-        // fake loading ui
-        setGameSound(!!gameSoundValue);
-      }, 250);
+      setGameSound(!!gameSoundValue);
     }
   };
 
@@ -313,10 +312,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * Handle the key bindings
    */
   const handleKeyBindings = () => {
-    setTimeout(() => {
-      // fake loading ui
-      applyTempKeyBindings();
-    }, 250);
+    applyTempKeyBindings();
   };
 
   /**
@@ -417,6 +413,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           type="button"
           onClick={() => setOpenSettings(!openSettings)}
           className={styles.buttonSettings}
+          data-testid="button-settings"
           aria-label="Settings"
         >
           <span className={styles.buttonLabelDesktop}>Settings</span>
@@ -430,6 +427,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             styles.settingsOverlay,
             openSettings ? styles.openedSettings : styles.closedSettings,
           ])}
+          data-testid="settings-overlay"
           aria-label="Close settings"
         />
 
@@ -510,7 +508,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             </Arrow.List>
           </div>
         ) : (
-          <StratagemsName name="Traitor detected !" className="" />
+          <StratagemsName name="Traitor detected !" className="traitor" />
         )}
 
         {series?.length ? (
@@ -634,7 +632,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                             <TableStatsCell name="name">
                               <>
                                 <Image
-                                  src={`/icons/stratagems/${stat.stratagem.category?.name}/${stat.stratagem.name}.svg`}
+                                  src={`/icons/stratagems/${stat.stratagem.category?.name}/
+${stat.stratagem.name}.svg`}
                                   alt={stat.stratagem.name}
                                   width={55}
                                   height={55}
@@ -659,7 +658,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                             {/* Mobile */}
                             <TableStatsCellMobile name="img">
                               <Image
-                                src={`/icons/stratagems/${stat.stratagem.category?.name}/${stat.stratagem.name}.svg`}
+                                src={`/icons/stratagems/${stat.stratagem.category?.name}/
+${stat.stratagem.name}.svg`}
                                 alt={stat.stratagem.name}
                                 width={55}
                                 height={55}
@@ -740,7 +740,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                               <TableStatsCell name="name">
                                 <>
                                   <Image
-                                    src={`/icons/stratagems/${item.stratagem.category?.name}/${item.stratagem.name}.svg`}
+                                    src={`/icons/stratagems/${item.stratagem.category?.name}/
+${item.stratagem.name}.svg`}
                                     alt={item.stratagem.name}
                                     width={55}
                                     height={55}
@@ -759,7 +760,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                               {/* Mobile */}
                               <TableStatsCellMobile name="img">
                                 <Image
-                                  src={`/icons/stratagems/${item.stratagem.category?.name}/${item.stratagem.name}.svg`}
+                                  src={`/icons/stratagems/${item.stratagem.category?.name}/
+${item.stratagem.name}.svg`}
                                   alt={item.stratagem.name}
                                   width={55}
                                   height={55}
@@ -844,26 +846,5 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     </div>
   );
 }
-
-StratagemsGame.propTypes = {
-  stratagems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      code: PropTypes.arrayOf(PropTypes.string).isRequired,
-    }),
-  ).isRequired,
-  bestScoreStored: PropTypes.number.isRequired,
-  settingsStored: PropTypes.shape({
-    gameSound: PropTypes.bool.isRequired,
-    timerDuration: PropTypes.number.isRequired,
-    keyBindings: PropTypes.shape({
-      up: PropTypes.string.isRequired,
-      down: PropTypes.string.isRequired,
-      left: PropTypes.string.isRequired,
-      right: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default StratagemsGame;

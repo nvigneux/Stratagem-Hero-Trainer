@@ -1,11 +1,21 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './ScoreInfo.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 
+/**
+ * ScoreInfo component
+ * @param {object} props - Component properties
+ * @param {number} props.score - The score value
+ * @param {number} props.bonusRound - The round bonus value
+ * @param {number} props.bonusRestingTime - The resting time bonus value
+ * @param {number} props.bonusPerfectRound - The perfect round bonus value
+ * @param {number} props.bestScore - The best score value
+ * @param {boolean} props.displayBonus - Whether to display the bonus
+ * @param {string} props.className - Additional class names
+ * @returns {JSX.Element} The ScoreInfo component
+ */
 function ScoreInfo({
   score, bonusRound, bonusRestingTime, bonusPerfectRound, bestScore, displayBonus, className,
 }) {
@@ -14,18 +24,38 @@ function ScoreInfo({
       <div className={cn([styles.scoreDetails, displayBonus && styles.displayBonus])}>
         <div className={styles.bonus}>
           <span>Round Bonus</span>
-          <span className={styles.bonusValue}>{bonusRound}</span>
+          <span
+            data-testid="round-bonus"
+            className={styles.bonusValue}
+          >
+            {bonusRound}
+          </span>
         </div>
         <div className={styles.bonus}>
           <span>Time Bonus</span>
-          <span className={styles.bonusValue}>{bonusRestingTime}</span>
+          <span
+            data-testid="time-bonus"
+            className={styles.bonusValue}
+          >
+            {bonusRestingTime}
+          </span>
         </div>
         <div className={styles.bonus}>
           <span>Perfect Round</span>
-          <span className={styles.bonusValue}>{bonusPerfectRound}</span>
+          <span
+            data-testid="perfect-round"
+            className={styles.bonusValue}
+          >
+            {bonusPerfectRound}
+          </span>
         </div>
       </div>
-      <div className={cn([styles.score, className])}>{score}</div>
+      <div
+        className={cn([styles.score, className])}
+        data-testid="score"
+      >
+        {score}
+      </div>
       <div className={styles.label}>Score</div>
       {bestScore > 0 ? (
         <div className={styles.bestScore}>
@@ -36,15 +66,5 @@ function ScoreInfo({
     </div>
   );
 }
-
-ScoreInfo.propTypes = {
-  score: PropTypes.number.isRequired,
-  bonusRound: PropTypes.number.isRequired,
-  bonusRestingTime: PropTypes.number.isRequired,
-  bonusPerfectRound: PropTypes.number.isRequired,
-  bestScore: PropTypes.number.isRequired,
-  displayBonus: PropTypes.bool.isRequired,
-  className: PropTypes.string.isRequired,
-};
 
 export default ScoreInfo;

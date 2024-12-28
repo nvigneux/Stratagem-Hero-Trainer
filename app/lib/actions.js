@@ -8,7 +8,6 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import { setCookie } from 'cookies-next';
 
 // Constants
 import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from './constants';
@@ -30,9 +29,10 @@ const CreateInvoice = FormSchema.omit({ id: true, date: true });
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 /**
- * @description Create a new invoice
- * @param {FormData} formData
- * @returns {Promise<void>}
+ * Create a new invoice
+ * @param {object} prevState - Previous state
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
  */
 export async function createInvoice(prevState, formData) {
   const validatedFields = CreateInvoice.safeParse({
@@ -68,10 +68,10 @@ export async function createInvoice(prevState, formData) {
 }
 
 /**
- * @description Update an invoice
- * @param {string} id
- * @param {FormData} formData
- * @returns {Promise<void>}
+ * Update an invoice
+ * @param {string} id - Invoice ID
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
  */
 export async function updateInvoice(id, formData) {
   const { customerId, amount, status } = UpdateInvoice.parse({
@@ -99,8 +99,9 @@ export async function updateInvoice(id, formData) {
 }
 
 /**
- * @description Delete an invoice
- * @param {string} id
+ * Delete an invoice
+ * @param {string} id - Invoice ID
+ * @returns {Promise<object>} Result of the operation
  */
 export async function deleteInvoice(id) {
   try {
@@ -113,24 +114,45 @@ export async function deleteInvoice(id) {
 }
 
 /**
- * @description Set the best score in a cookie
- * @param {number} bestScore
+ * Sets a cookie with the given name and value, and optional settings.
+ * @param {string} name - The name of the cookie.
+ * @param {string} value - The value of the cookie.
+ * @param {object} [options] - Optional settings for the cookie.
+ * @returns {Promise<void>} A promise that resolves when the cookie is set.
  */
-export async function setCookieBestScore(bestScore) {
-  setCookie(COOKIE_BEST_SCORE, `${bestScore}`, { cookies, maxAge: 60 * 60 * 24 * 365 });
+export async function setCookie(name, value, options) {
+  const cookiesStore = await cookies();
+  return cookiesStore.set(name, value, {
+    maxAge: 60 * 60 * 24 * 365,
+    ...options,
+  });
 }
 
 /**
- * @description Set the cookie settings
- * @param {Object} value
- * @param {boolean} value.timerDuration
- * @param {boolean} value.keyBindings
+ * Set the best score in a cookie
+ * @param {number} bestScore - Best score
+ * @returns {Promise<void>}
  */
-export async function setCookieSettings(value) {
-  setCookie(COOKIE_SETTINGS, JSON.stringify(value), { cookies, maxAge: 60 * 60 * 24 * 365 });
+export async function setCookieBestScore(bestScore) {
+  await setCookie(COOKIE_BEST_SCORE, `${bestScore}`, {});
 }
 
-// POKEMON
+/**
+ * Set the cookie settings
+ * @param {object} value - Settings value
+ * @param {boolean} value.timerDuration - Timer duration
+ * @param {boolean} value.keyBindings - Key bindings
+ * @returns {Promise<void>}
+ */
+export async function setCookieSettings(value) {
+  await setCookie(COOKIE_SETTINGS, JSON.stringify(value), {});
+}
+
+/**
+ * Revalidate by tag
+ * @param {string} tags - Tags to revalidate
+ * @returns {Promise<void>}
+ */
 export const revalidateByTag = async (tags) => {
   revalidateTag(tags);
 };
@@ -139,7 +161,6 @@ export const revalidateByTag = async (tags) => {
  * CATEGORIES
  */
 
-// name required with zod
 const FormCategorySchema = z.object({
   id: z.string(),
   name: z.string({
@@ -149,6 +170,12 @@ const FormCategorySchema = z.object({
 const CreateCategory = FormCategorySchema.omit({ id: true, date: true });
 const UpdateCategory = FormCategorySchema.omit({ id: true, date: true });
 
+/**
+ * Create a new category
+ * @param {object} prevState - Previous state
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
+ */
 export async function createCategory(prevState, formData) {
   const validatedFields = CreateCategory.safeParse({
     name: formData.get('name'),
@@ -179,10 +206,10 @@ export async function createCategory(prevState, formData) {
 }
 
 /**
- * @description Update an invoice
- * @param {string} id
- * @param {FormData} formData
- * @returns {Promise<void>}
+ * Update a category
+ * @param {string} id - Category ID
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
  */
 export async function updateCategory(id, formData) {
   const { name } = UpdateCategory.parse({
@@ -197,7 +224,7 @@ export async function updateCategory(id, formData) {
   `;
   } catch (error) {
     return {
-      message: 'Failed to update invoice',
+      message: 'Failed to update category',
     };
   }
 
@@ -206,8 +233,9 @@ export async function updateCategory(id, formData) {
 }
 
 /**
- * @description Delete an invoice
- * @param {string} id
+ * Delete a category
+ * @param {string} id - Category ID
+ * @returns {Promise<object>} Result of the operation
  */
 export async function deleteCategory(id) {
   console.log(id);
@@ -224,18 +252,24 @@ export async function deleteCategory(id) {
  * STRATAGEMS
  */
 
-// TODO add an order to the stratagems to sort them by order in the category
-
-// name required with zod
 const FormStratagemSchema = z.object({
   id: z.string(),
-  name: z.string({ required_error: 'Please enter a stratagem name.' }).min(1, { message: 'Please enter a stratagem name.' }),
-  code: z.string({ required_error: 'Please enter a stratagem code.' }).min(1, { message: 'Please enter a stratagem name.' }),
-  category_id: z.string({ required_error: 'Please select a category.' }).min(1, { message: 'Please enter a stratagem name.' }),
+  name: z.string({ required_error: 'Please enter a stratagem name.' })
+    .min(1, { message: 'Please enter a stratagem name.' }),
+  code: z.string({ required_error: 'Please enter a stratagem code.' })
+    .min(1, { message: 'Please enter a stratagem code.' }),
+  category_id: z.string({ required_error: 'Please select a category.' })
+    .min(1, { message: 'Please select a category.' }),
 });
 const CreateStratagem = FormStratagemSchema.omit({ id: true, date: true });
 const UpdateStratagem = FormStratagemSchema.omit({ id: true, date: true });
 
+/**
+ * Create a new stratagem
+ * @param {object} prevState - Previous state
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
+ */
 export async function createStratagem(prevState, formData) {
   const validatedFields = CreateStratagem.safeParse({
     name: formData.get('name'),
@@ -270,10 +304,10 @@ export async function createStratagem(prevState, formData) {
 }
 
 /**
- * @description Update a stratagem
- * @param {string} id
- * @param {FormData} formData
- * @returns {Promise<void>}
+ * Update a stratagem
+ * @param {string} id - Stratagem ID
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object | void>} Result of the operation
  */
 export async function updateStratagem(id, formData) {
   const { name, code, category_id } = UpdateStratagem.parse({
@@ -302,8 +336,10 @@ export async function updateStratagem(id, formData) {
 }
 
 /**
- * @description Delete a stratagem
- * @param {string} id
+ * Delete a stratagem
+ * @param {string} id - Stratagem ID
+ * @param {FormData} formData - Form data
+ * @returns {Promise<object>} Result of the operation
  */
 export async function deleteStratagem(id, formData) {
   const categoryId = formData.get('category_id');

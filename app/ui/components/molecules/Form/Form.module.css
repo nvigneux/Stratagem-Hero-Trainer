@@ -5,7 +5,7 @@
 }
 
 .button {
-  display: flex;
-  width: max-content;
-  align-self: flex-end;
+  display: flex !important; 
+  width: max-content !important;
+  align-self: flex-end !important;
 }

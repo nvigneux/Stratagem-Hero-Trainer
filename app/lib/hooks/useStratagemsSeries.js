@@ -20,9 +20,10 @@ const initialStateSerie = {
 };
 
 /**
- * @param {Object} initialState
- * @param {number} maxLength
- * @returns {Object}
+ * Reducer function for managing the state of the series.
+ * @param {object} state - Current state.
+ * @param {object} action - Action to perform.
+ * @returns {object} Updated state.
  */
 function reducerStateSerie(state, action) {
   switch (action.type) {
@@ -84,15 +85,12 @@ function reducerStateSerie(state, action) {
 }
 
 /**
- * @param {Object} initialState
- * @param {number} maxLength
- * @returns {Object}
- * @property {Object[]} series
- * @property {function} resetSeries
- * @property {function} handleSuccessStratagem
- * @property {Object} stateSerie
- * @property {function} dispatchStateSerie
- * @property {Object} stateSerie
+ * Custom hook for managing the series of stratagems.
+ * @param {object} props - Properties.
+ * @param {Array} props.initialState - Initial state of the stratagems.
+ * @param {number} props.maxLength - Maximum length of the series.
+ * @param {number} props.bestScoreStored - Best score stored.
+ * @returns {object} Series state and control functions.
  */
 function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 0 }) {
   const [stateSerie, dispatchStateSerie] = useReducer(
@@ -103,6 +101,7 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
 
   /**
    * Reset the stratagems array with random stratagems from the initial state
+   * @returns {Array} Reset stratagems array.
    */
   const resetStratagemsArray = () => {
     if (!initialState.length) return [];
@@ -130,7 +129,7 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
 
   /**
    * Add a stratagem to the series
-   * @param {Number} bonusRestingTime
+   * @param {number} bonusRestingTime - Bonus resting time.
    * @returns {void}
    */
   const handleSuccessStratagem = (bonusRestingTime) => {

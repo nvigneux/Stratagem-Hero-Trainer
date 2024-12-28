@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './TableStatsWrapper.module.css';
 
+/**
+ * TableStatsWrapper component
+ * @param {object} props - Component properties
+ * @param {string} props.title - The title of the wrapper
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The TableStatsWrapper component
+ */
 function TableStatsWrapper({ title, children }) {
   return (
     <div className={styles.wrapper}>
@@ -17,10 +22,5 @@ function TableStatsWrapper({ title, children }) {
     </div>
   );
 }
-
-TableStatsWrapper.propTypes = {
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-};
 
 export default TableStatsWrapper;

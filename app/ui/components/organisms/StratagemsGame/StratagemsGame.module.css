@@ -242,23 +242,23 @@
 }
 
 .historyGrid {
-  display: grid;
+  display: grid !important;
   grid-template-columns:
     minmax(25px, 30px)
     2fr
     minmax(90px, 1fr)
-    minmax(80px, 0fr);
+    minmax(80px, 0fr) !important;
 }
 
 .statsGrid {
-  display: grid;
+  display: grid !important;
   grid-template-columns:
     2fr
     minmax(25px, 1fr)
     minmax(90px, 1fr)
     minmax(90px, 1fr)
     minmax(90px, 1fr)
-    minmax(80px, 0fr);
+    minmax(80px, 0fr) !important;
 }
 
 .gridRow {
@@ -300,8 +300,9 @@
 }
 
 @media (width <= 1024px) {
-  .historyGrid, .statsGrid {
-    grid-template-columns: minmax(60px, 0fr) 1fr;
+  .historyGrid,
+  .statsGrid {
+    grid-template-columns: minmax(60px, 0fr) 1fr !important;
   }
 
   .main::before {

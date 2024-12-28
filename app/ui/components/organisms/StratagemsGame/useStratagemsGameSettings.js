@@ -42,6 +42,16 @@ const settingsReducer = (state, action) => {
   }
 };
 
+/**
+ * Custom hook for managing stratagems game settings.
+ * @param {object} params - Parameters.
+ * @param {boolean} params.defaultGameSound - Default game sound state.
+ * @param {number} params.defaultDuration - Default timer duration.
+ * @param {number} params.defaultBonus - Default time bonus.
+ * @param {object} params.defaultKeyBindings - Default key bindings.
+ * @param {object} params.defaultTempKeyBindings - Default temporary key bindings.
+ * @returns {object} Game settings state and control functions.
+ */
 const useStratagemsGameSettings = ({
   defaultGameSound = initialState.gameSound,
   defaultDuration = initialState.timerDuration,
@@ -74,12 +84,14 @@ const useStratagemsGameSettings = ({
   /**
    * Check if the duration is valid
    * @param {number} duration
+   * @returns {boolean}
    */
   const isValidDuration = (duration) => typeof duration === 'number' && duration > 0;
 
   /**
    * Set the timer duration
    * @param {number} timerDuration
+   * @returns {void}
    */
   const setTimerDuration = (timerDuration) => {
     if (isValidDuration(timerDuration)) {
@@ -95,6 +107,7 @@ const useStratagemsGameSettings = ({
   /**
    * Set the time bonus
    * @param {number} timeBonus
+   * @returns {void}
    */
   const setTimeBonus = (timeBonus) => {
     if (isValidDuration(timeBonus)) {
@@ -104,11 +117,9 @@ const useStratagemsGameSettings = ({
 
   /**
    * Set the key bindings
-   * @param {Object} keyBindings
-   * @param {string} keyBindings.up
-   * @param {string} keyBindings.right
-   * @param {string} keyBindings.down
-   * @param {string} keyBindings.left
+   * @param {string} key - Key to set.
+   * @param {string} value - Value to set for the key.
+   * @returns {void}
    */
   const setTempKeyBinding = (key, value) => {
     dispatch({ type: 'SET_TEMP_KEY_BINDING', payload: { [key]: value } });

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import Form from 'next/form';
 
 // Styles
 import styles from './Form.module.css';
@@ -6,26 +6,30 @@ import styles from './Form.module.css';
 // Components
 import Button from '../../atoms/Button/Button';
 
-function Form({ action, children }) {
+/**
+ * Form component
+ * @param {object} props - Component properties
+ * @param {string} props.name - The form name
+ * @param {Function} props.action - The form action function
+ * @param {React.ReactNode} props.children - Child nodes
+ * @returns {JSX.Element} The Form component
+ */
+function FormWrapper({ name, action, children }) {
   return (
-    <form
+    <Form
       className={styles.form}
       action={action}
     >
       {children}
       <Button
+        id={name}
         type="submit"
         className={styles.button}
       >
         Apply
       </Button>
-    </form>
+    </Form>
   );
 }
 
-Form.propTypes = {
-  action: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
-export default Form;
+export default FormWrapper;

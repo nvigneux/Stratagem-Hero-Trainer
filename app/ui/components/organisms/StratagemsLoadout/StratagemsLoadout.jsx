@@ -1,6 +1,5 @@
 'use client';
 
-import PropTypes from 'prop-types';
 import { useEffect, useReducer } from 'react';
 
 // Styles
@@ -14,7 +13,12 @@ import StratagemsLoadoutCard from '../../molecules/StratagemsLoadoutCard/Stratag
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
 
-// Define reducer function
+/**
+ * Reducer function for stratagems
+ * @param {Array} state - Current state of stratagems
+ * @param {object} action - Action to perform on the state
+ * @returns {Array} Updated state of stratagems
+ */
 function stratagemsReducer(state, action) {
   switch (action.type) {
     case 'ADD_STRATAGEM':
@@ -34,6 +38,12 @@ function stratagemsReducer(state, action) {
   }
 }
 
+/**
+ * StratagemsLoadout component
+ * @param {object} props - Component properties
+ * @param {Array<{id: string, name: string, code: string[]}>} props.stratagems - List of stratagems
+ * @returns {JSX.Element} The StratagemsLoadout component
+ */
 function StratagemsLoadout({ stratagems }) {
   const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
   const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
@@ -52,7 +62,10 @@ function StratagemsLoadout({ stratagems }) {
 
     if (stratagemsArray.length && !diffArray.length) {
       const diffArrayStratagems = findDiffArray(stratagemsArray, checkedStratagemsData);
-      dispatch({ type: 'DELETE_MANY_STRATAGEM', payload: diffArrayStratagems.map((stratagem) => stratagem.code) });
+      dispatch({
+        type: 'DELETE_MANY_STRATAGEM',
+        payload: diffArrayStratagems.map((stratagem) => stratagem.code),
+      });
     }
   }, [checkedStratagems]);
 
@@ -77,13 +90,5 @@ function StratagemsLoadout({ stratagems }) {
     </div>
   );
 }
-
-StratagemsLoadout.propTypes = {
-  stratagems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    code: PropTypes.arrayOf(PropTypes.string).isRequired,
-  })).isRequired,
-};
 
 export default StratagemsLoadout;

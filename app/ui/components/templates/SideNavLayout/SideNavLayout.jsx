@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
-
 // Styles
 import styles from './SideNavLayout.module.css';
 
+/**
+ * SideNavLayout component
+ * @param {object} props - Component properties
+ * @param {React.ReactNode} props.sidebar - Sidebar content
+ * @param {React.ReactNode} props.children - Main content
+ * @returns {JSX.Element} The SideNavLayout component
+ */
 function SideNavLayout({ sidebar, children }) {
   return (
     <div className={styles.container}>
@@ -11,10 +16,5 @@ function SideNavLayout({ sidebar, children }) {
     </div>
   );
 }
-
-SideNavLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-  sidebar: PropTypes.node.isRequired,
-};
 
 export default SideNavLayout;
