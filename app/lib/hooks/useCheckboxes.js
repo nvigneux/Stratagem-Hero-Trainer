@@ -43,6 +43,8 @@ function useCheckboxes({ initialState, key, defaultValue }) {
     });
   };
 
+  // TODO handleChangeMany
+
   return {
     checkboxes,
     handleChange,
