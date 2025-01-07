@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
 // Styles
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './StratagemsLoadout.module.css';
 
 // Components
@@ -12,6 +13,10 @@ import StratagemsLoadoutCard from '../../molecules/StratagemsLoadoutCard/Stratag
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
+
+// Hooks
+import { useEncodeStratagems } from '../../../../lib/hooks/useEncodeStratagems';
+import { areStratagemsEqual, findDiffArray } from '../../../../lib/stratagems';
 
 /**
  * Reducer function for stratagems
@@ -27,12 +32,12 @@ function stratagemsReducer(state, action) {
       return [...state, ...action.payload];
     case 'UPDATE_STRATAGEM':
       return state.map(
-        (stratagem) => (stratagem.code === action.payload.code ? action.payload : stratagem),
+        (stratagem) => (stratagem.name === action.payload.name ? action.payload : stratagem),
       );
     case 'DELETE_STRATAGEM':
-      return state.filter((stratagem) => stratagem.code !== action.payload);
+      return state.filter((stratagem) => stratagem.name !== action.payload);
     case 'DELETE_MANY_STRATAGEM':
-      return state.filter((stratagem) => !action.payload.includes(stratagem.code));
+      return state.filter((stratagem) => !action.payload.includes(stratagem.name));
     default:
       return state;
   }
@@ -45,27 +50,65 @@ function stratagemsReducer(state, action) {
  * @returns {JSX.Element} The StratagemsLoadout component
  */
 function StratagemsLoadout({ stratagems }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const { decode, encode } = useEncodeStratagems();
+
   const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
   const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
 
+  /**
+   * On component mount, parse `?stratagems=` from the URL if present,
+   * then convert them back to stratagem objects and update local state.
+   */
+  const paramCodes = searchParams.get('stratagems');
+  const ref = useRef('');
   useEffect(() => {
-    const findDiffArray = (arr1, arr2) => arr1.filter((x) => !arr2.includes(x));
+    if (paramCodes && paramCodes !== ref.current) {
+      ref.current = paramCodes;
+      const nameArray = decode(paramCodes);
+      const matchedStratagems = stratagems.filter((s) => nameArray.includes(s.name));
+
+      if (matchedStratagems.length !== stratagemsArray.length) {
+        const checked = matchedStratagems.reduce((acc, stratagem) => {
+          acc[stratagem.name] = true;
+          return acc;
+        }, {});
+        setCheckedStratagem({ ...checkedStratagems, ...checked });
+      }
+    }
+  }, [paramCodes]);
+
+  useEffect(() => {
     const checkedStratagemsData = stratagems.filter(
       (stratagem) => !!checkedStratagems[stratagem.name],
     );
 
-    const diffArray = findDiffArray(checkedStratagemsData, stratagemsArray);
+    const diffArray = findDiffArray(
+      checkedStratagemsData,
+      stratagemsArray,
+      areStratagemsEqual,
+    );
 
     if (diffArray.length) {
       dispatch({ type: 'ADD_MANY_STRATAGEM', payload: diffArray });
+      const encodedStratagems = encode(checkedStratagemsData);
+      router.push(`?stratagems=${encodedStratagems}`);
     }
 
     if (stratagemsArray.length && !diffArray.length) {
-      const diffArrayStratagems = findDiffArray(stratagemsArray, checkedStratagemsData);
+      const diffArrayStratagems = findDiffArray(
+        stratagemsArray,
+        checkedStratagemsData,
+        areStratagemsEqual,
+      );
       dispatch({
         type: 'DELETE_MANY_STRATAGEM',
-        payload: diffArrayStratagems.map((stratagem) => stratagem.code),
+        payload: diffArrayStratagems.map((stratagem) => stratagem.name),
       });
+      const encodedStratagems = encode(checkedStratagemsData);
+      router.push(`?stratagems=${encodedStratagems}`);
     }
   }, [checkedStratagems]);
 
