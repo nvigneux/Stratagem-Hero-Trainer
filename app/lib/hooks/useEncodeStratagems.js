@@ -33,6 +33,10 @@ export function useEncodeStratagems() {
    * @returns {Array<string>} An array of stratagem codes
    */
   function decodeStratagemCodes(encodedString) {
+    if (!encodedString) {
+      return [];
+    }
+
     try {
       const decoded = decodeURIComponent(encodedString);
 
