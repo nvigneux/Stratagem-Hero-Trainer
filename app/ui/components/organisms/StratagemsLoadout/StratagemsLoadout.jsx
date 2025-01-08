@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useReducer, useRef } from 'react';
+import {
+  useEffect, useMemo, useRef,
+} from 'react';
 
 // Styles
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -16,32 +18,6 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Hooks
 import { useEncodeStratagems } from '../../../../lib/hooks/useEncodeStratagems';
-import { areStratagemsEqual, findDiffArray } from '../../../../lib/stratagems';
-
-/**
- * Reducer function for stratagems
- * @param {Array} state - Current state of stratagems
- * @param {object} action - Action to perform on the state
- * @returns {Array} Updated state of stratagems
- */
-function stratagemsReducer(state, action) {
-  switch (action.type) {
-    case 'ADD_STRATAGEM':
-      return [...state, action.payload];
-    case 'ADD_MANY_STRATAGEM':
-      return [...state, ...action.payload];
-    case 'UPDATE_STRATAGEM':
-      return state.map(
-        (stratagem) => (stratagem.name === action.payload.name ? action.payload : stratagem),
-      );
-    case 'DELETE_STRATAGEM':
-      return state.filter((stratagem) => stratagem.name !== action.payload);
-    case 'DELETE_MANY_STRATAGEM':
-      return state.filter((stratagem) => !action.payload.includes(stratagem.name));
-    default:
-      return state;
-  }
-}
 
 /**
  * StratagemsLoadout component
@@ -56,7 +32,6 @@ function StratagemsLoadout({ stratagems }) {
   const { decode, encode } = useEncodeStratagems();
 
   const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
-  const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
 
   /**
    * On component mount, parse `?stratagems=` from the URL if present,
@@ -70,53 +45,39 @@ function StratagemsLoadout({ stratagems }) {
       const nameArray = decode(paramCodes);
       const matchedStratagems = stratagems.filter((s) => nameArray.includes(s.name));
 
-      if (matchedStratagems.length !== stratagemsArray.length) {
-        const checked = matchedStratagems.reduce((acc, stratagem) => {
-          acc[stratagem.name] = true;
-          return acc;
-        }, {});
-        setCheckedStratagem({ ...checkedStratagems, ...checked });
-      }
+      const checked = matchedStratagems.reduce((acc, stratagem) => {
+        acc[stratagem.name] = true;
+        return acc;
+      }, {});
+      setCheckedStratagem({ ...checked });
     }
   }, [paramCodes]);
 
   useEffect(() => {
-    const checkedStratagemsData = stratagems.filter(
-      (stratagem) => !!checkedStratagems[stratagem.name],
+    const selectedStratagems = stratagems.filter(
+      (stratagem) => checkedStratagems[stratagem.name],
     );
+    const encodedStratagems = encode(selectedStratagems);
 
-    const diffArray = findDiffArray(
-      checkedStratagemsData,
-      stratagemsArray,
-      areStratagemsEqual,
-    );
+    console.log('encodedStratagems', encodedStratagems, ref.current);
 
-    if (diffArray.length) {
-      dispatch({ type: 'ADD_MANY_STRATAGEM', payload: diffArray });
-      const encodedStratagems = encode(checkedStratagemsData);
-      router.push(`?stratagems=${encodedStratagems}`);
-    }
-
-    if (stratagemsArray.length && !diffArray.length) {
-      const diffArrayStratagems = findDiffArray(
-        stratagemsArray,
-        checkedStratagemsData,
-        areStratagemsEqual,
-      );
-      dispatch({
-        type: 'DELETE_MANY_STRATAGEM',
-        payload: diffArrayStratagems.map((stratagem) => stratagem.name),
-      });
-      const encodedStratagems = encode(checkedStratagemsData);
+    if (encodedStratagems !== ref.current) {
+      ref.current = encodedStratagems;
       router.push(`?stratagems=${encodedStratagems}`);
     }
   }, [checkedStratagems]);
 
+  const array = useMemo(() => {
+    const nameArray = decode(paramCodes);
+    const matchedStratagems = stratagems.filter((s) => nameArray.includes(s.name));
+    return matchedStratagems;
+  }, [paramCodes]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.main}>
-        {stratagemsArray?.length ? (
-          <StratagemsLoadoutList stratagems={stratagemsArray}>
+        {array?.length ? (
+          <StratagemsLoadoutList stratagems={array}>
             {(stratagem) => (
               <StratagemsLoadoutCard
                 stratagem={stratagem}
