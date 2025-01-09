@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useReducer, useRef } from 'react';
+import {
+  useCallback, useEffect, useReducer, useRef,
+} from 'react';
 
 // Styles
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -52,34 +54,45 @@ function stratagemsReducer(state, action) {
 function StratagemsLoadout({ stratagems }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const paramCodes = searchParams.get('stratagems');
 
   const { decode, encode } = useEncodeStratagems();
 
+  const initStratagemsArray = useCallback(() => {
+    const nameArray = decode(paramCodes);
+    const matchedStratagems = nameArray.map((name) => stratagems
+      .find((s) => s.name === name)).filter(Boolean);
+    return matchedStratagems;
+  }, [paramCodes]);
+
   const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
-  const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
+  const [stratagemsArray, dispatch] = useReducer(
+    stratagemsReducer,
+    initStratagemsArray(paramCodes),
+  );
 
   /**
    * On component mount, parse `?stratagems=` from the URL if present,
    * then convert them back to stratagem objects and update local state.
    */
-  const paramCodes = searchParams.get('stratagems');
   const ref = useRef('');
+  // init state with stratagems from URL
   useEffect(() => {
     if (paramCodes && paramCodes !== ref.current) {
       ref.current = paramCodes;
       const nameArray = decode(paramCodes);
-      const matchedStratagems = stratagems.filter((s) => nameArray.includes(s.name));
+      const matchedStratagems = nameArray.map((name) => stratagems
+        .find((s) => s.name === name)).filter(Boolean);
 
-      if (matchedStratagems.length !== stratagemsArray.length) {
-        const checked = matchedStratagems.reduce((acc, stratagem) => {
-          acc[stratagem.name] = true;
-          return acc;
-        }, {});
-        setCheckedStratagem({ ...checkedStratagems, ...checked });
-      }
+      const checked = matchedStratagems.reduce((acc, stratagem) => {
+        acc[stratagem.name] = true;
+        return acc;
+      }, {});
+      setCheckedStratagem({ ...checked });
     }
-  }, [paramCodes]);
+  }, []);
 
+  // update stratagemsArray when checkedStratagems changes
   useEffect(() => {
     const checkedStratagemsData = stratagems.filter(
       (stratagem) => !!checkedStratagems[stratagem.name],
@@ -90,27 +103,29 @@ function StratagemsLoadout({ stratagems }) {
       stratagemsArray,
       areStratagemsEqual,
     );
+    const diffArrayStratagems = findDiffArray(
+      stratagemsArray,
+      checkedStratagemsData,
+      areStratagemsEqual,
+    );
 
     if (diffArray.length) {
       dispatch({ type: 'ADD_MANY_STRATAGEM', payload: diffArray });
-      const encodedStratagems = encode(checkedStratagemsData);
-      router.push(`?stratagems=${encodedStratagems}`);
     }
 
-    if (stratagemsArray.length && !diffArray.length) {
-      const diffArrayStratagems = findDiffArray(
-        stratagemsArray,
-        checkedStratagemsData,
-        areStratagemsEqual,
-      );
+    if (diffArrayStratagems.length) {
       dispatch({
         type: 'DELETE_MANY_STRATAGEM',
         payload: diffArrayStratagems.map((stratagem) => stratagem.name),
       });
-      const encodedStratagems = encode(checkedStratagemsData);
-      router.push(`?stratagems=${encodedStratagems}`);
     }
   }, [checkedStratagems]);
+
+  // update URL when stratagemsArray changes
+  useEffect(() => {
+    const encoded = encode(stratagemsArray);
+    router.replace(`?stratagems=${encoded}`);
+  }, [stratagemsArray]);
 
   return (
     <div className={styles.wrapper}>
