@@ -33,13 +33,13 @@ function stratagemsReducer(state, action) {
     case 'ADD_MANY_STRATAGEM':
       return [...state, ...action.payload];
     case 'UPDATE_STRATAGEM':
-      return state.map(
-        (stratagem) => (stratagem.name === action.payload.name ? action.payload : stratagem),
-      );
+      return state.map((stratagem) => (stratagem.name === action.payload.name ? action.payload : stratagem));
     case 'DELETE_STRATAGEM':
       return state.filter((stratagem) => stratagem.name !== action.payload);
     case 'DELETE_MANY_STRATAGEM':
-      return state.filter((stratagem) => !action.payload.includes(stratagem.name));
+      return state.filter(
+        (stratagem) => !action.payload.includes(stratagem.name),
+      );
     default:
       return state;
   }
@@ -60,8 +60,9 @@ function StratagemsLoadout({ stratagems }) {
 
   const initStratagemsArray = useCallback(() => {
     const nameArray = decode(paramCodes);
-    const matchedStratagems = nameArray.map((name) => stratagems
-      .find((s) => s.name === name)).filter(Boolean);
+    const matchedStratagems = nameArray
+      .map((name) => stratagems.find((s) => s.name === name))
+      .filter(Boolean);
     return matchedStratagems;
   }, [paramCodes]);
 
@@ -76,13 +77,15 @@ function StratagemsLoadout({ stratagems }) {
    * then convert them back to stratagem objects and update local state.
    */
   const ref = useRef('');
+  const refChecked = useRef(false);
   // init state with stratagems from URL
   useEffect(() => {
     if (paramCodes && paramCodes !== ref.current) {
       ref.current = paramCodes;
       const nameArray = decode(paramCodes);
-      const matchedStratagems = nameArray.map((name) => stratagems
-        .find((s) => s.name === name)).filter(Boolean);
+      const matchedStratagems = nameArray
+        .map((name) => stratagems.find((s) => s.name === name))
+        .filter(Boolean);
 
       const checked = matchedStratagems.reduce((acc, stratagem) => {
         acc[stratagem.name] = true;
@@ -97,6 +100,11 @@ function StratagemsLoadout({ stratagems }) {
     const checkedStratagemsData = stratagems.filter(
       (stratagem) => !!checkedStratagems[stratagem.name],
     );
+    if (
+      !checkedStratagemsData.length
+      && stratagemsArray.length
+      && !refChecked.current
+    ) return;
 
     const diffArray = findDiffArray(
       checkedStratagemsData,
@@ -119,6 +127,7 @@ function StratagemsLoadout({ stratagems }) {
         payload: diffArrayStratagems.map((stratagem) => stratagem.name),
       });
     }
+    refChecked.current = true;
   }, [checkedStratagems]);
 
   // update URL when stratagemsArray changes
