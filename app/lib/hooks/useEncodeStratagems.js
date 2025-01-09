@@ -24,7 +24,7 @@ export function useEncodeStratagems() {
 
     const compressed = LZString.compressToBase64(jsonData);
 
-    return encodeURIComponent(compressed);
+    return encodeURIComponent(compressed).replace(/%20/g, '+');
   }
 
   /**
