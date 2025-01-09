@@ -33,7 +33,8 @@ function stratagemsReducer(state, action) {
     case 'ADD_MANY_STRATAGEM':
       return [...state, ...action.payload];
     case 'UPDATE_STRATAGEM':
-      return state.map((stratagem) => (stratagem.name === action.payload.name ? action.payload : stratagem));
+      return state.map((stratagem) => (stratagem.name === action.payload.name
+        ? action.payload : stratagem));
     case 'DELETE_STRATAGEM':
       return state.filter((stratagem) => stratagem.name !== action.payload);
     case 'DELETE_MANY_STRATAGEM':
