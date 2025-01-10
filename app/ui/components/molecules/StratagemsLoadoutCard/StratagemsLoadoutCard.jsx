@@ -20,7 +20,7 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
   return (
     <button
       type="button"
-      onClick={() => setCheckedStratagem(stratagem.name)}
+      onClick={() => setCheckedStratagem({ [stratagem.name]: undefined })}
       className={styles.card}
     >
       <StratagemsLoadoutCard.Icon type={stratagem.category.name}>

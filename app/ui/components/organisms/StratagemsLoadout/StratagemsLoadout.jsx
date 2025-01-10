@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect, useReducer } from 'react';
+import {
+  useCallback, useEffect, useReducer, useRef,
+} from 'react';
 
 // Styles
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './StratagemsLoadout.module.css';
 
 // Components
@@ -12,6 +15,10 @@ import StratagemsLoadoutCard from '../../molecules/StratagemsLoadoutCard/Stratag
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
+
+// Hooks
+import { useEncodeStratagems } from '../../../../lib/hooks/useEncodeStratagems';
+import { areStratagemsEqual, findDiffArray } from '../../../../lib/stratagems';
 
 /**
  * Reducer function for stratagems
@@ -26,13 +33,14 @@ function stratagemsReducer(state, action) {
     case 'ADD_MANY_STRATAGEM':
       return [...state, ...action.payload];
     case 'UPDATE_STRATAGEM':
-      return state.map(
-        (stratagem) => (stratagem.code === action.payload.code ? action.payload : stratagem),
-      );
+      return state.map((stratagem) => (stratagem.name === action.payload.name
+        ? action.payload : stratagem));
     case 'DELETE_STRATAGEM':
-      return state.filter((stratagem) => stratagem.code !== action.payload);
+      return state.filter((stratagem) => stratagem.name !== action.payload);
     case 'DELETE_MANY_STRATAGEM':
-      return state.filter((stratagem) => !action.payload.includes(stratagem.code));
+      return state.filter(
+        (stratagem) => !action.payload.includes(stratagem.name),
+      );
     default:
       return state;
   }
@@ -45,29 +53,89 @@ function stratagemsReducer(state, action) {
  * @returns {JSX.Element} The StratagemsLoadout component
  */
 function StratagemsLoadout({ stratagems }) {
-  const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
-  const [stratagemsArray, dispatch] = useReducer(stratagemsReducer, []);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const paramCodes = searchParams.get('stratagems');
 
+  const { decode, encode } = useEncodeStratagems();
+
+  const initStratagemsArray = useCallback(() => {
+    const nameArray = decode(paramCodes);
+    const matchedStratagems = nameArray
+      .map((name) => stratagems.find((s) => s.name === name))
+      .filter(Boolean);
+    return matchedStratagems;
+  }, [paramCodes]);
+
+  const { checkedStratagems = {}, setCheckedStratagem = () => {} } = useStratagems();
+  const [stratagemsArray, dispatch] = useReducer(
+    stratagemsReducer,
+    initStratagemsArray(paramCodes),
+  );
+
+  /**
+   * On component mount, parse `?stratagems=` from the URL if present,
+   * then convert them back to stratagem objects and update local state.
+   */
+  const ref = useRef('');
+  const refChecked = useRef(false);
+  // init state with stratagems from URL
   useEffect(() => {
-    const findDiffArray = (arr1, arr2) => arr1.filter((x) => !arr2.includes(x));
+    if (paramCodes && paramCodes !== ref.current) {
+      ref.current = paramCodes;
+      const nameArray = decode(paramCodes);
+      const matchedStratagems = nameArray
+        .map((name) => stratagems.find((s) => s.name === name))
+        .filter(Boolean);
+
+      const checked = matchedStratagems.reduce((acc, stratagem) => {
+        acc[stratagem.name] = true;
+        return acc;
+      }, {});
+      setCheckedStratagem({ ...checked });
+    }
+  }, []);
+
+  // update stratagemsArray when checkedStratagems changes
+  useEffect(() => {
     const checkedStratagemsData = stratagems.filter(
       (stratagem) => !!checkedStratagems[stratagem.name],
     );
+    if (
+      !checkedStratagemsData.length
+      && stratagemsArray.length
+      && !refChecked.current
+    ) return;
 
-    const diffArray = findDiffArray(checkedStratagemsData, stratagemsArray);
+    const diffArray = findDiffArray(
+      checkedStratagemsData,
+      stratagemsArray,
+      areStratagemsEqual,
+    );
+    const diffArrayStratagems = findDiffArray(
+      stratagemsArray,
+      checkedStratagemsData,
+      areStratagemsEqual,
+    );
 
     if (diffArray.length) {
       dispatch({ type: 'ADD_MANY_STRATAGEM', payload: diffArray });
     }
 
-    if (stratagemsArray.length && !diffArray.length) {
-      const diffArrayStratagems = findDiffArray(stratagemsArray, checkedStratagemsData);
+    if (diffArrayStratagems.length) {
       dispatch({
         type: 'DELETE_MANY_STRATAGEM',
-        payload: diffArrayStratagems.map((stratagem) => stratagem.code),
+        payload: diffArrayStratagems.map((stratagem) => stratagem.name),
       });
     }
+    refChecked.current = true;
   }, [checkedStratagems]);
+
+  // update URL when stratagemsArray changes
+  useEffect(() => {
+    const encoded = encode(stratagemsArray);
+    router.replace(`?stratagems=${encoded}`);
+  }, [stratagemsArray]);
 
   return (
     <div className={styles.wrapper}>

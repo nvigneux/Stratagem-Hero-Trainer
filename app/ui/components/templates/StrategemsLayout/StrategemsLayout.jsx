@@ -51,7 +51,7 @@ function StrategemsLayout({
    * @param {string} name
    */
   const handleChangeCheckbox = (name) => {
-    handleChange(name);
+    handleChange({ [name]: undefined });
   };
 
   // Reset the series when the all checkboxes change
@@ -65,7 +65,9 @@ function StrategemsLayout({
    * @param {boolean} value
    */
   const handleChangeCategoriesCheckbox = (category, value) => {
-    stratagemsByCategories[category].forEach((stratagem) => handleChange(stratagem.name, value));
+    stratagemsByCategories[category].forEach(
+      (stratagem) => handleChange({ [stratagem.name]: value }),
+    );
   };
 
   return (

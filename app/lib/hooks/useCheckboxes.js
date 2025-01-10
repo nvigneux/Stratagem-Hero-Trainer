@@ -19,14 +19,19 @@ function useCheckboxes({ initialState, key, defaultValue }) {
   const checkboxesAreChecked = Object.values(checkboxes).every((value) => value);
 
   /**
-   * Handle the change of a single checkbox
-   * @param {string} keyValue - Key of the checkbox.
-   * @param {boolean} [value] - Value to set for the checkbox.
+   * Handle the change of multiple checkboxes
+   * @param {{[key: string]: boolean}} keyValues - Key-value pairs to update
    */
-  const handleChange = (keyValue, value) => {
+  const handleChange = (keyValues) => {
     setCheckboxes((prevState) => ({
       ...prevState,
-      [keyValue]: value || !prevState[keyValue],
+      ...Object.keys(keyValues).reduce((
+        acc,
+        name,
+      ) => {
+        acc[name] = keyValues[name] !== undefined ? keyValues[name] : !prevState[name];
+        return acc;
+      }, {}),
     }));
   };
 
