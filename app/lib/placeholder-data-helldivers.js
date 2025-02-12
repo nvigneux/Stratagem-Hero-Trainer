@@ -32,6 +32,10 @@ const CATEGORIES = [
     name: 'Urban Legends',
   },
   {
+    id: 'f701e133-1fff-466c-8c84-3e99154ff778',
+    name: 'Servants of Freedom',
+  },
+  {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
@@ -371,6 +375,14 @@ const URBAN_LEGENDS = [
   },
 ];
 
+const SERVANTS_OF_FREEDOM = [
+  {
+    name: 'Hellbomb Portable',
+    code: ['down', 'right', 'up', 'up', 'up'],
+    category_id: 'f701e133-1fff-466c-8c84-3e99154ff778',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -443,6 +455,7 @@ const STRATAGEMS = [
   ...ROBOTICS_WORKSHOP,
   ...CHEMICAL_AGENTS,
   ...URBAN_LEGENDS,
+  ...SERVANTS_OF_FREEDOM,
   ...GENERAL_STRATEGEMS,
 ];
 
