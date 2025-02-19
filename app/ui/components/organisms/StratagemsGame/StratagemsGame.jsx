@@ -246,6 +246,35 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   };
 
   /**
+   * Takes the input code and check if it's correct
+   * @param {string} code code of the input
+   * @returns {boolean} true if the input is arrow key or bound input, false otherwise
+   */
+  function input(code) {
+    switch (code) {
+      case 'ArrowUp':
+      case keyBindings.up:
+        checkActiveSerieCode('up');
+        break;
+      case 'ArrowDown':
+      case keyBindings.down:
+        checkActiveSerieCode('down');
+        break;
+      case 'ArrowLeft':
+      case keyBindings.left:
+        checkActiveSerieCode('left');
+        break;
+      case 'ArrowRight':
+      case keyBindings.right:
+        checkActiveSerieCode('right');
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
+
+  /**
    * Handle the keydown event
    * @param {KeyboardEvent} event The keydown event.
    */
@@ -255,33 +284,41 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       || openSettings
       || statsPanel.type === 'open'
     ) return;
-    switch (event.code) {
-      case 'ArrowUp':
-      case keyBindings.up:
-        event.preventDefault();
-        checkActiveSerieCode('up');
-        break;
-      case 'ArrowDown':
-      case keyBindings.down:
-        event.preventDefault();
-        checkActiveSerieCode('down');
-        break;
-      case 'ArrowLeft':
-      case keyBindings.left:
-        event.preventDefault();
-        checkActiveSerieCode('left');
-        break;
-      case 'ArrowRight':
-      case keyBindings.right:
-        event.preventDefault();
-        checkActiveSerieCode('right');
-        break;
-      default:
-        break;
-    }
+    const inputPress = input(event.code);
+    if (inputPress) event.preventDefault();
+  }
+
+  /**
+   * Handle the mousedown event
+   * @param {KeyboardEvent} event The keydown event.
+   */
+  function mousedownDirectionHandler(event) {
+    if (
+      event.target.tagName === 'INPUT'
+      || openSettings
+      || statsPanel.type === 'open'
+    ) return;
+    const inputPress = input(`Mouse ${event.button + 1}`);
+    if (inputPress) event.preventDefault();
+  }
+
+  /**
+   * Handle the keydown event
+   * @param {KeyboardEvent} event The keydown event.
+   */
+  function mouseWheelDirectionHandler(event) {
+    if (
+      event.target.tagName === 'INPUT'
+      || openSettings
+      || statsPanel.type === 'open'
+    ) return;
+    const inputPress = input(event.deltaY > 0 ? 'Mouse Wheel Down' : 'Mouse Wheel Up');
+    if (inputPress) event.preventDefault();
   }
 
   useEventListener('keydown', keydownDirectionHandler);
+  useEventListener('mousedown', mousedownDirectionHandler);
+  useEventListener('wheel', mouseWheelDirectionHandler);
   const { gamepadConnected } = useGamepad(checkActiveSerieCode);
 
   // FORM ACTIONS
