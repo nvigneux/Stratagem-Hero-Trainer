@@ -35,6 +35,7 @@ Cypress.Commands.add('performKeyCombination', (keys, times = 1, options = {}) =>
       cy.get('body').click().type(`{${key}}`, {
         ...options,
       });
+      cy.wait(100);
     });
   }
 });
