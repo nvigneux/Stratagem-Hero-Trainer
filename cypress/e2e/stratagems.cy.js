@@ -92,5 +92,8 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
       1,
       { parseSpecialCharSequences: false },
     );
+
+    // Vérifier que la combinaison a bien fonctionné
+    cy.get('[data-testid="score"]').should('have.text', '25');
   });
 });
