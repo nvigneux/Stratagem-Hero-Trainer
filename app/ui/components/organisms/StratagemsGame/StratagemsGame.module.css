@@ -147,6 +147,8 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  transform: rotate(0deg);
+  transform-origin: center;
 }
 
 .buttonSettings svg {
@@ -164,6 +166,11 @@
 
 .opened .buttonSettings {
   right: calc(var(--width-settings) + 1.15rem);
+  animation: settings-rotate-open 0.3s ease-out forwards;
+}
+
+.closed .buttonSettings {
+  animation: settings-rotate-close 0.3s ease-out forwards;
 }
 
 .opened .settingsOverlay {
@@ -364,4 +371,24 @@
 .activePanel {
   position: relative;
   top: -100dvh;
+}
+
+@keyframes settings-rotate-open {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes settings-rotate-close {
+  from {
+    transform: rotate(-360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
 }

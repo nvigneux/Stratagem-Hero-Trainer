@@ -1,7 +1,7 @@
 /* Container
 ----------------------------------------- */
 .dpadContainer {
-  --dpad-size: 160px;
+  --dpad-size: 142px;
   --button-width: calc(var(--dpad-size) * 0.333);
   --button-height: calc(var(--dpad-size) * 0.43);
   
