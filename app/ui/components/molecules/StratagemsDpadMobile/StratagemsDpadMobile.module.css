@@ -1,123 +1,125 @@
+/* Container
+----------------------------------------- */
 .dpadContainer {
+  --dpad-size: 160px;
+  --button-width: calc(var(--dpad-size) * 0.333);
+  --button-height: calc(var(--dpad-size) * 0.43);
+  
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  width: 160px;
-  height: 160px;
-  padding: 10px;
-  background: #333;
-  border-radius: 50%;
+  width: var(--dpad-size);
+  height: var(--dpad-size);
 }
 
+/* Base button styles
+----------------------------------------- */
 .button {
-  --bg-color: #222;
-  --box-color: #111;
-  --color: #fff;
-
+  position: absolute;
+  width: var(--button-width);
+  height: var(--button-height);
+  border: none;
+  background: var(--white);
+  color: var(--blue-night);
+  transition: all 0.08s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  background: var(--bg-color);
-  color: var(--color);
-  position: relative;
-  transition: all 0.08s ease;
-  height: 45px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
-.button:active {
-  background: var(--box-color);
-  transform: translateY(2px);
-  box-shadow: inset 0 2px 4px rgb(0 0 0 / 30%);
-}
-
+/* Icon styles
+----------------------------------------- */
 .icon {
   --rotate: 0deg;
+  --color: #525252;
 
-  width: 20px;
-  height: 20px;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
   transform: rotate(var(--rotate));
-  opacity: 0.9;
+  transition: transform 0.08s ease;
+  color: var(--color);
 }
 
 .button:active .icon {
-  transform: scale(0.95) rotate(var(--rotate));
-  opacity: 1;
+  transform: scale(0.99) rotate(var(--rotate));
 }
 
-.up {
-  --rotate: 0deg;
+/* Icon rotation angles
+----------------------------------------- */
+.up { --rotate: 0deg; }
+.left { --rotate: -90deg; }
+.right { --rotate: 90deg; }
+.down { --rotate: 180deg; }
+
+/* Button dimensions
+----------------------------------------- */
+.key-up,
+.key-down {
+  width: var(--button-width);
+  height: var(--button-height);
 }
 
-.left {
-  --rotate: -90deg;
+.key-left,
+.key-right {
+  width: var(--button-height);
+  height: var(--button-width);
 }
 
-.right {
-  --rotate: 90deg;
-}
-
-.down {
-  --rotate: 180deg;
-}
-
+/* Button positioning and shape
+----------------------------------------- */
 .key-up {
-  grid-column: 2;
-  grid-row: 1;
-  border-radius: 8px 8px 0 0;
-  border-top: 1px solid #444;
+  top: calc(var(--spacing-4) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8% 8% 65% 65%;
 }
 
 .key-down {
-  grid-column: 2;
-  grid-row: 3;
-  border-radius: 0 0 8px 8px;
-  border-bottom: 1px solid #444;
+  bottom: calc(var(--spacing-4) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 65% 65% 8% 8%;
 }
 
 .key-left {
-  grid-column: 1;
-  grid-row: 2;
-  border-radius: 8px 0 0 8px;
-  border-left: 1px solid #444;
+  left: calc(var(--spacing-4) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 8% 65% 65% 8%;
 }
 
 .key-right {
-  grid-column: 3;
-  grid-row: 2;
-  border-radius: 0 8px 8px 0;
-  border-right: 1px solid #444;
-}
-
-/* Center circle decoration */
-.dpadContainer::after {
-  content: '';
-  position: absolute;
+  right: calc(var(--spacing-4) * -1);
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 35px;
-  height: 35px;
-  background: #2b2b2b;
-  border-radius: 50%;
-  pointer-events: none;
-  box-shadow: inset 0 2px 4px rgb(0 0 0 / 20%);
-  border: 1px solid #444;
+  transform: translateY(-50%);
+  border-radius: 65% 8% 8% 65%;
 }
 
+/* Active states
+----------------------------------------- */
+.key-up:active {
+  transform: translateX(-50%) translateY(-2px) scale(0.98);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+}
+
+.key-down:active {
+  transform: translateX(-50%) translateY(2px) scale(0.98);
+  box-shadow: 0 -1px 2px rgb(0 0 0 / 15%);
+}
+
+.key-left:active {
+  transform: translateY(-50%) translateX(-2px) scale(0.98);
+  box-shadow: -1px 0 2px rgb(0 0 0 / 15%);
+}
+
+.key-right:active {
+  transform: translateY(-50%) translateX(2px) scale(0.98);
+  box-shadow: 1px 0 2px rgb(0 0 0 / 15%);
+}
+
+/* Responsive
+----------------------------------------- */
 @media (width <= 340px) {
   .dpadContainer {
-    width: 140px;
-    height: 140px;
+    --dpad-size: 140px;
   }
-
-  .button {
-    height: 40px;
-  }
-
-  .icon {
-    width: 18px;
-    height: 18px;
-  }
-} 
+}
