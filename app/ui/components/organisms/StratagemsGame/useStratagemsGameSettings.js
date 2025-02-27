@@ -3,6 +3,7 @@ import { setCookieSettings } from '../../../../lib/actions';
 
 const initialState = {
   gameSound: false,
+  layout: 'keyboard',
   timerDuration: 10,
   timeBonus: 1,
   keyBindings: {
@@ -31,6 +32,8 @@ const settingsReducer = (state, action) => {
       return { ...state, tempKeyBindings: { ...state.tempKeyBindings, ...action.payload } };
     case 'APPLY_TEMP_KEY_BINDINGS':
       return { ...state, keyBindings: { ...state.tempKeyBindings } };
+    case 'SET_LAYOUT':
+      return { ...state, layout: action.payload };
     case 'RESET_KEY_BINDINGS':
       return {
         ...state,
@@ -50,6 +53,7 @@ const settingsReducer = (state, action) => {
  * @param {number} params.defaultBonus - Default time bonus.
  * @param {object} params.defaultKeyBindings - Default key bindings.
  * @param {object} params.defaultTempKeyBindings - Default temporary key bindings.
+ * @param {string} params.defaultLayout - Default layout.
  * @returns {object} Game settings state and control functions.
  */
 const useStratagemsGameSettings = ({
@@ -58,6 +62,7 @@ const useStratagemsGameSettings = ({
   defaultBonus = initialState.timeBonus,
   defaultKeyBindings = { ...initialState.keyBindings },
   defaultTempKeyBindings = { ...initialState.keyBindings },
+  defaultLayout = initialState.layout,
 }) => {
   const [state, dispatch] = useReducer(settingsReducer, {
     ...initialState,
@@ -66,6 +71,7 @@ const useStratagemsGameSettings = ({
     timeBonus: defaultBonus,
     keyBindings: defaultKeyBindings,
     tempKeyBindings: defaultTempKeyBindings,
+    layout: defaultLayout,
   });
 
   /**
@@ -137,6 +143,10 @@ const useStratagemsGameSettings = ({
     });
   };
 
+  const setLayout = (layout) => {
+    dispatch({ type: 'SET_LAYOUT', payload: layout });
+  };
+
   return {
     gameSound: state.gameSound,
     timerDuration: state.timerDuration,
@@ -148,6 +158,7 @@ const useStratagemsGameSettings = ({
     tempKeyBindings: state.tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
+    setLayout,
   };
 };
 

@@ -81,11 +81,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
+    layout,
+    setLayout,
   } = useStratagemsGameSettings({
     defaultDuration: settingsStored.timerDuration,
     defaultKeyBindings: settingsStored.keyBindings,
     defaultTempKeyBindings: settingsStored.keyBindings,
     defaultGameSound: settingsStored.gameSound,
+    defaultLayout: settingsStored.layout,
   });
 
   const [playPress1] = useSound('/sounds/stratagem-code-press-1.mp3', {
@@ -520,7 +523,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
         {series?.length ? (
           <div className={styles.mobileKeyboard}>
-            <MobileControls />
+            <MobileControls layout={layout} setLayout={setLayout} />
           </div>
         ) : null}
       </div>

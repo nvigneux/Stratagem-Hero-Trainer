@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Components
 import { Picto } from '../../atoms/Picto/Picto';
 import StratagemsKeyboardMobile from '../StratagemsKeyboardMobile/StratagemsKeyboardMobile';
@@ -13,29 +11,30 @@ import styles from './MobileControls.module.css';
 
 /**
  * MobileControls component
+ * @param {object} props - The props
+ * @param {'keyboard' | 'dpad'} props.layout - The layout
+ * @param {Function} props.setLayout - The setLayout function
  * @returns {JSX.Element} The MobileControls component
  */
-function MobileControls() {
-  const [controlType, setControlType] = React.useState('keyboard');
-
+function MobileControls({ layout, setLayout }) {
   return (
     <div className={styles.container}>
       <div className={styles.controlsSelector}>
-        {controlType === 'dpad' && (
+        {layout === 'dpad' && (
           <button
             type="button"
             className={cn([styles.selectorButton, styles.keyboardButton])}
-            onClick={() => setControlType('keyboard')}
+            onClick={() => setLayout('keyboard')}
             aria-label="Switch to keyboard controls"
           >
             <Picto icon="keypad" />
           </button>
         )}
-        {controlType === 'keyboard' && (
+        {layout === 'keyboard' && (
           <button
             type="button"
             className={cn([styles.selectorButton, styles.dpadButton])}
-            onClick={() => setControlType('dpad')}
+            onClick={() => setLayout('dpad')}
             aria-label="Switch to D-pad controls"
           >
             <Picto icon="dpad" />
@@ -43,8 +42,8 @@ function MobileControls() {
         )}
       </div>
 
-      <div key={controlType} className={styles.layoutContainer}>
-        {controlType === 'keyboard' ? <StratagemsKeyboardMobile /> : <StratagemsDpadMobile />}
+      <div key={layout} className={styles.layoutContainer}>
+        {layout === 'keyboard' ? <StratagemsKeyboardMobile /> : <StratagemsDpadMobile />}
       </div>
     </div>
   );
