@@ -15,8 +15,7 @@ import styles from './StratagemsGame.module.css';
 // Components
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
-import StratagemsKeyboardMobile
-  from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
+import MobileControls from '../../molecules/MobileControls/MobileControls';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo, { RoundInfoButton } from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
@@ -521,7 +520,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
         {series?.length ? (
           <div className={styles.mobileKeyboard}>
-            <StratagemsKeyboardMobile />
+            <MobileControls />
           </div>
         ) : null}
       </div>
