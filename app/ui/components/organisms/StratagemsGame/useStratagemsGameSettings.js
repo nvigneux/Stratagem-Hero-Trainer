@@ -145,12 +145,19 @@ const useStratagemsGameSettings = ({
 
   const setLayout = (layout) => {
     dispatch({ type: 'SET_LAYOUT', payload: layout });
+    setCookieSettings({
+      timerDuration: state.timerDuration,
+      keyBindings: state.keyBindings,
+      gameSound: state.gameSound,
+      layout,
+    });
   };
 
   return {
     gameSound: state.gameSound,
     timerDuration: state.timerDuration,
     timeBonus: state.timeBonus,
+    layout: state.layout,
     setGameSound,
     setTimerDuration,
     setTimeBonus,
