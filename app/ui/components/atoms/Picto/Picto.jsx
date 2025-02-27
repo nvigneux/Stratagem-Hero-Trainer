@@ -7,6 +7,8 @@ import SettingsIcon from '../../../../../public/icons/settings.svg';
 import CloseIcon from '../../../../../public/icons/close.svg';
 import HistoryIcon from '../../../../../public/icons/history.svg';
 import CoffeeIcon from '../../../../../public/assets/bmec_logo.svg';
+import KeypadIcon from '../../../../../public/assets/keypad_icon.svg';
+import DpadIcon from '../../../../../public/assets/dpad_icon.svg';
 
 export const availablePictos = {
   // Arrow
@@ -19,6 +21,10 @@ export const availablePictos = {
   'history': HistoryIcon,
   // Coffee
   'coffee': CoffeeIcon,
+  // Keypad
+  'keypad': KeypadIcon,
+  // D-pad
+  'dpad': DpadIcon,
 };
 
 /**
