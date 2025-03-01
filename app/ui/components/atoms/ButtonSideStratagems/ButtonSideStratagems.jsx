@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import PropTypes from 'prop-types';
 
 // Styles
 import styles from './ButtonSideStratagems.module.css';
@@ -17,15 +16,17 @@ const svgPaths = {
  * @param {object} props - Component properties
  * @param {boolean} props.isOpened - Whether the button is opened
  * @param {Function} props.onClick - Click handler function
+ * @param {string} props.testId - Test ID
  * @returns {JSX.Element} The ButtonSideStratagems component
  */
-function ButtonSideStratagems({ isOpened, onClick }) {
+function ButtonSideStratagems({ isOpened, onClick, testId }) {
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn([styles.button, styles.burger, isOpened ? styles.cross : ''])}
       aria-label="Open side stratagems"
+      data-testid={testId}
     >
       <svg width="100" height="100" viewBox="0 0 100 100">
         <path className={cn([styles.line, styles.line1])} d={svgPaths.line1} />
@@ -35,10 +36,5 @@ function ButtonSideStratagems({ isOpened, onClick }) {
     </button>
   );
 }
-
-ButtonSideStratagems.propTypes = {
-  isOpened: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default ButtonSideStratagems;

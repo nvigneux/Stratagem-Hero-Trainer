@@ -562,11 +562,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           <ButtonSideStratagems
             isOpened
             onClick={() => handleStatsPanel('', 'close')}
+            testId="stats-button-close"
           />
         </StatsButtonClose>
       </StatsButtonWrapper>
 
-      {/* TODO faire un affichage special pour le mobile les tableaux c'est pas fou */}
       {/* STATS PANEL */}
       <div
         className={cn([
