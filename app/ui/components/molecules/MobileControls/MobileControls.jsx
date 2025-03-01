@@ -18,12 +18,13 @@ import styles from './MobileControls.module.css';
  */
 function MobileControls({ layout, setLayout }) {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="mobile-controls">
       <div className={styles.controlsSelector}>
         {layout === 'dpad' && (
           <button
             type="button"
             className={cn([styles.selectorButton, styles.keyboardButton])}
+            data-testid="keyboard-button"
             onClick={() => setLayout('keyboard')}
             aria-label="Switch to keyboard controls"
           >
@@ -34,6 +35,7 @@ function MobileControls({ layout, setLayout }) {
           <button
             type="button"
             className={cn([styles.selectorButton, styles.dpadButton])}
+            data-testid="dpad-button"
             onClick={() => setLayout('dpad')}
             aria-label="Switch to D-pad controls"
           >
@@ -42,7 +44,7 @@ function MobileControls({ layout, setLayout }) {
         )}
       </div>
 
-      <div key={layout} className={styles.layoutContainer}>
+      <div key={layout} className={styles.layoutContainer} data-testid={`mobile-${layout}`}>
         {layout === 'keyboard' ? <StratagemsKeyboardMobile /> : <StratagemsDpadMobile />}
       </div>
     </div>
