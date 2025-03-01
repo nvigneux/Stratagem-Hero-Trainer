@@ -794,7 +794,7 @@ ${item.stratagem.name}.svg`}
       </div>
 
       {/* SETTINGS PANEL */}
-      <div className={cn([styles.settings])}>
+      <div className={cn([styles.settings])} data-testid="settings-panel">
         <div className={styles.settingsTop}>
           <div className={styles.settingsSection}>
             <HeadingForm title="Audio" />
