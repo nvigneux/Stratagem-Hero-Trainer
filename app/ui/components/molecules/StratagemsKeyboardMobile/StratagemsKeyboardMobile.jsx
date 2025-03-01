@@ -17,28 +17,28 @@ function StratagemsKeyboardMobile() {
       <StratagemsKeyboardMobile.Button
         keyName="up"
         keydownEvent={{ code: 'ArrowUp' }}
-        data-testid="keyboard-up"
+        testId="keyboard-up"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.up])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button
         keyName="left"
         keydownEvent={{ code: 'ArrowLeft' }}
-        data-testid="keyboard-left"
+        testId="keyboard-left"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.left])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button
         keyName="down"
         keydownEvent={{ code: 'ArrowDown' }}
-        data-testid="keyboard-down"
+        testId="keyboard-down"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.down])} />
       </StratagemsKeyboardMobile.Button>
       <StratagemsKeyboardMobile.Button
         keyName="right"
         keydownEvent={{ code: 'ArrowRight' }}
-        data-testid="keyboard-right"
+        testId="keyboard-right"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.right])} />
       </StratagemsKeyboardMobile.Button>
@@ -52,10 +52,13 @@ function StratagemsKeyboardMobile() {
  * @param {object} props.keydownEvent - Keydown event
  * @param {string} props.keyName - Key name
  * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} props.testId - Test ID
  * @returns {JSX.Element} The StratagemsKeyboardMobileButton component
  */
 StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
-  { keydownEvent, keyName, children },
+  {
+    keydownEvent, keyName, testId, children,
+  },
 ) {
   return (
     <button
@@ -65,6 +68,7 @@ StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
         const event = new KeyboardEvent('keydown', { ...keydownEvent });
         window.dispatchEvent(event);
       }}
+      data-testid={testId}
     >
       {children}
     </button>

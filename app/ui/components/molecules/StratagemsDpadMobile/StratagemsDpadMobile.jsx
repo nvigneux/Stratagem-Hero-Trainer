@@ -17,28 +17,28 @@ function StratagemsDpadMobile() {
       <StratagemsDpadMobile.Button
         keyName="up"
         keydownEvent={{ code: 'ArrowUp' }}
-        data-testid="dpad-up"
+        testId="dpad-up"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.up])} />
       </StratagemsDpadMobile.Button>
       <StratagemsDpadMobile.Button
         keyName="left"
         keydownEvent={{ code: 'ArrowLeft' }}
-        data-testid="dpad-left"
+        testId="dpad-left"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.left])} />
       </StratagemsDpadMobile.Button>
       <StratagemsDpadMobile.Button
         keyName="down"
         keydownEvent={{ code: 'ArrowDown' }}
-        data-testid="dpad-down"
+        testId="dpad-down"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.down])} />
       </StratagemsDpadMobile.Button>
       <StratagemsDpadMobile.Button
         keyName="right"
         keydownEvent={{ code: 'ArrowRight' }}
-        data-testid="dpad-right"
+        testId="dpad-right"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.right])} />
       </StratagemsDpadMobile.Button>
@@ -52,10 +52,13 @@ function StratagemsDpadMobile() {
  * @param {object} props.keydownEvent - Keydown event
  * @param {string} props.keyName - Key name
  * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} props.testId - Test ID
  * @returns {JSX.Element} The StratagemsDpadMobileButton component
  */
 StratagemsDpadMobile.Button = function StratagemsDpadMobileButton(
-  { keydownEvent, keyName, children },
+  {
+    keydownEvent, keyName, children, testId,
+  },
 ) {
   return (
     <button
@@ -65,6 +68,7 @@ StratagemsDpadMobile.Button = function StratagemsDpadMobileButton(
         const event = new KeyboardEvent('keydown', { ...keydownEvent });
         window.dispatchEvent(event);
       }}
+      data-testid={testId}
     >
       {children}
     </button>
