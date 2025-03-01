@@ -14,16 +14,32 @@ import { Picto } from '../../atoms/Picto/Picto';
 function StratagemsKeyboardMobile() {
   return (
     <div className={styles.keyboardContainer}>
-      <StratagemsKeyboardMobile.Button keyName="up" keydownEvent={{ code: 'ArrowUp' }}>
+      <StratagemsKeyboardMobile.Button
+        keyName="up"
+        keydownEvent={{ code: 'ArrowUp' }}
+        data-testid="keyboard-up"
+      >
         <Picto icon="arrow" className={cn([styles.icon, styles.up])} />
       </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button keyName="left" keydownEvent={{ code: 'ArrowLeft' }}>
+      <StratagemsKeyboardMobile.Button
+        keyName="left"
+        keydownEvent={{ code: 'ArrowLeft' }}
+        data-testid="keyboard-left"
+      >
         <Picto icon="arrow" className={cn([styles.icon, styles.left])} />
       </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button keyName="down" keydownEvent={{ code: 'ArrowDown' }}>
+      <StratagemsKeyboardMobile.Button
+        keyName="down"
+        keydownEvent={{ code: 'ArrowDown' }}
+        data-testid="keyboard-down"
+      >
         <Picto icon="arrow" className={cn([styles.icon, styles.down])} />
       </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button keyName="right" keydownEvent={{ code: 'ArrowRight' }}>
+      <StratagemsKeyboardMobile.Button
+        keyName="right"
+        keydownEvent={{ code: 'ArrowRight' }}
+        data-testid="keyboard-right"
+      >
         <Picto icon="arrow" className={cn([styles.icon, styles.right])} />
       </StratagemsKeyboardMobile.Button>
     </div>
