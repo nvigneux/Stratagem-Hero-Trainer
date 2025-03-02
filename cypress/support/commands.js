@@ -56,3 +56,13 @@ Cypress.Commands.add('setSettings', (timerDuration) => {
     cy.wait(500);
   });
 });
+
+// Perform a series of click on buttons
+Cypress.Commands.add('performClickCombination', (buttons, times = 1) => {
+  for (let i = 0; i < times; i += 1) {
+    buttons.forEach((button) => {
+      cy.get(`[data-testid="${button}"]`).click();
+      cy.wait(200);
+    });
+  }
+});
