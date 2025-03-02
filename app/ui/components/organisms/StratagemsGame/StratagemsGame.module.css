@@ -88,6 +88,8 @@
   display: flex;
   flex-flow: column wrap;
   gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .opened {
@@ -224,6 +226,7 @@
   flex-flow: column nowrap;
   gap: 0.5rem;
   flex: 0 0 auto;
+  width: 100%;
 }
 
 .panicMode {
