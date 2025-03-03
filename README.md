@@ -13,7 +13,6 @@ Stratagem Hero Trainer is an advanced web application designed to enhance strate
 - **Interactive Training Modules**: Engage in dynamic and interactive sessions designed to boost strategic thinking.
 - **Real-time Feedback**: Receive instant feedback on your performance to aid continuous improvement.
 - **Customizable Training Plans**: Tailor your training schedule to fit your personal goals and progress.
-- **Leaderboards**: Compete with others and see where you rank among the top performers.
 - **User-friendly Interface**: Navigate the application with ease thanks to an intuitive and streamlined design.
 
 
