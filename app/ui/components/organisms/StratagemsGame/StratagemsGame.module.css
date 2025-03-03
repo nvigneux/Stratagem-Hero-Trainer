@@ -88,6 +88,8 @@
   display: flex;
   flex-flow: column wrap;
   gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .opened {
@@ -147,6 +149,8 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  transform: rotate(0deg);
+  transform-origin: center;
 }
 
 .buttonSettings svg {
@@ -164,6 +168,10 @@
 
 .opened .buttonSettings {
   right: calc(var(--width-settings) + 1.15rem);
+}
+
+.closed .buttonSettings {
+  animation: settings-rotate-close 0.3s ease-out forwards;
 }
 
 .opened .settingsOverlay {
@@ -218,6 +226,7 @@
   flex-flow: column nowrap;
   gap: 0.5rem;
   flex: 0 0 auto;
+  width: 100%;
 }
 
 .panicMode {
@@ -327,6 +336,7 @@
     justify-content: center;
     width: 100%;
     margin-top: 2rem;
+    overflow: visible
   }
 
   .opened {
@@ -336,6 +346,34 @@
   .buttonWrapper {
     width: 100% !important;
     transition: all 0.5s !important;
+  }
+
+  .opened .buttonSettings {
+    animation: settings-rotate-open 0.3s ease-out forwards;
+  }
+
+  .closed .buttonSettings {
+    animation: settings-rotate-close 0.3s ease-out forwards;
+  }
+
+  @keyframes settings-rotate-open {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  @keyframes settings-rotate-close {
+    from {
+      transform: rotate(-360deg);
+    }
+
+    to {
+      transform: rotate(0deg);
+    }
   }
 }
 

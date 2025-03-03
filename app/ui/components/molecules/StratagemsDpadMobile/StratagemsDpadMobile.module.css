@@ -1,0 +1,125 @@
+/* Container
+----------------------------------------- */
+.dpadContainer {
+  --dpad-size: 142px;
+  --button-width: calc(var(--dpad-size) * 0.333);
+  --button-height: calc(var(--dpad-size) * 0.43);
+  
+  position: relative;
+  width: var(--dpad-size);
+  height: var(--dpad-size);
+}
+
+/* Base button styles
+----------------------------------------- */
+.button {
+  position: absolute;
+  width: var(--button-width);
+  height: var(--button-height);
+  border: none;
+  background: var(--white);
+  color: var(--blue-night);
+  transition: all 0.08s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+/* Icon styles
+----------------------------------------- */
+.icon {
+  --rotate: 0deg;
+  --color: #525252;
+
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  transform: rotate(var(--rotate));
+  transition: transform 0.08s ease;
+  color: var(--color);
+}
+
+.button:active .icon {
+  transform: scale(0.99) rotate(var(--rotate));
+}
+
+/* Icon rotation angles
+----------------------------------------- */
+.up { --rotate: 0deg; }
+.left { --rotate: -90deg; }
+.right { --rotate: 90deg; }
+.down { --rotate: 180deg; }
+
+/* Button dimensions
+----------------------------------------- */
+.key-up,
+.key-down {
+  width: var(--button-width);
+  height: var(--button-height);
+}
+
+.key-left,
+.key-right {
+  width: var(--button-height);
+  height: var(--button-width);
+}
+
+/* Button positioning and shape
+----------------------------------------- */
+.key-up {
+  top: calc(var(--spacing-4) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8% 8% 65% 65%;
+}
+
+.key-down {
+  bottom: calc(var(--spacing-4) * -1);
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 65% 65% 8% 8%;
+}
+
+.key-left {
+  left: calc(var(--spacing-4) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 8% 65% 65% 8%;
+}
+
+.key-right {
+  right: calc(var(--spacing-4) * -1);
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 65% 8% 8% 65%;
+}
+
+/* Active states
+----------------------------------------- */
+.key-up:active {
+  transform: translateX(-50%) translateY(-2px) scale(0.98);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 15%);
+}
+
+.key-down:active {
+  transform: translateX(-50%) translateY(2px) scale(0.98);
+  box-shadow: 0 -1px 2px rgb(0 0 0 / 15%);
+}
+
+.key-left:active {
+  transform: translateY(-50%) translateX(-2px) scale(0.98);
+  box-shadow: -1px 0 2px rgb(0 0 0 / 15%);
+}
+
+.key-right:active {
+  transform: translateY(-50%) translateX(2px) scale(0.98);
+  box-shadow: 1px 0 2px rgb(0 0 0 / 15%);
+}
+
+/* Responsive
+----------------------------------------- */
+@media (width <= 340px) {
+  .dpadContainer {
+    --dpad-size: 140px;
+  }
+}

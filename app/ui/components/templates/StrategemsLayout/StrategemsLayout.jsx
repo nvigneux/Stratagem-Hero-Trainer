@@ -79,6 +79,7 @@ function StrategemsLayout({
         <ButtonSideStratagems
           onClick={() => setOpenStratagems(!openStratagems)}
           isOpened={openStratagems}
+          testId="button-side-stratagems"
         />
       </div>
       <div className={styles.side}>

@@ -20,6 +20,8 @@ export default async function Page() {
   const bestScoreStored = cookieStore.get(COOKIE_BEST_SCORE)?.value || 0;
   const settingsStored = cookieStore.get(COOKIE_SETTINGS)?.value || {};
 
+  console.log(settingsStored);
+
   const stratagems = await fetchStratagems();
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
 

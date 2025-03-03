@@ -15,8 +15,7 @@ import styles from './StratagemsGame.module.css';
 // Components
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsGameCard from '../../molecules/StratagemsGameCard/StratagemsGameCard';
-import StratagemsKeyboardMobile
-  from '../../molecules/StratagemsKeyboardMobile/StratagemsKeyboardMobile';
+import MobileControls from '../../molecules/MobileControls/MobileControls';
 import StratagemsTimer from '../../atoms/StratagemsTimer/StratagemsTimer';
 import RoundInfo, { RoundInfoButton } from '../../atoms/RoundInfo/RoundInfo';
 import ScoreInfo from '../../atoms/ScoreInfo/ScoreInfo';
@@ -82,11 +81,14 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     tempKeyBindings,
     setTempKeyBinding,
     applyTempKeyBindings,
+    layout,
+    setLayout,
   } = useStratagemsGameSettings({
     defaultDuration: settingsStored.timerDuration,
     defaultKeyBindings: settingsStored.keyBindings,
     defaultTempKeyBindings: settingsStored.keyBindings,
     defaultGameSound: settingsStored.gameSound,
+    defaultLayout: settingsStored.layout,
   });
 
   const [playPress1] = useSound('/sounds/stratagem-code-press-1.mp3', {
@@ -521,7 +523,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
         {series?.length ? (
           <div className={styles.mobileKeyboard}>
-            <StratagemsKeyboardMobile />
+            <MobileControls layout={layout} setLayout={setLayout} />
           </div>
         ) : null}
       </div>
@@ -560,11 +562,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           <ButtonSideStratagems
             isOpened
             onClick={() => handleStatsPanel('', 'close')}
+            testId="stats-button-close"
           />
         </StatsButtonClose>
       </StatsButtonWrapper>
 
-      {/* TODO faire un affichage special pour le mobile les tableaux c'est pas fou */}
       {/* STATS PANEL */}
       <div
         className={cn([
@@ -792,7 +794,7 @@ ${item.stratagem.name}.svg`}
       </div>
 
       {/* SETTINGS PANEL */}
-      <div className={cn([styles.settings])}>
+      <div className={cn([styles.settings])} data-testid="settings-panel">
         <div className={styles.settingsTop}>
           <div className={styles.settingsSection}>
             <HeadingForm title="Audio" />

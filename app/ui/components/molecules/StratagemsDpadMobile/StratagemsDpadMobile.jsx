@@ -1,5 +1,5 @@
 // Styles
-import styles from './StratagemsKeyboardMobile.module.css';
+import styles from './StratagemsDpadMobile.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
@@ -8,56 +8,56 @@ import cn from '../../../../lib/cn';
 import { Picto } from '../../atoms/Picto/Picto';
 
 /**
- * StratagemsKeyboardMobile component
- * @returns {JSX.Element} The StratagemsKeyboardMobile component
+ * StratagemsDpadMobile component
+ * @returns {JSX.Element} The StratagemsDpadMobile component
  */
-function StratagemsKeyboardMobile() {
+function StratagemsDpadMobile() {
   return (
-    <div className={styles.keyboardContainer}>
-      <StratagemsKeyboardMobile.Button
+    <div className={styles.dpadContainer}>
+      <StratagemsDpadMobile.Button
         keyName="up"
         keydownEvent={{ code: 'ArrowUp' }}
-        testId="keyboard-up"
+        testId="dpad-up"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.up])} />
-      </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button
+      </StratagemsDpadMobile.Button>
+      <StratagemsDpadMobile.Button
         keyName="left"
         keydownEvent={{ code: 'ArrowLeft' }}
-        testId="keyboard-left"
+        testId="dpad-left"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.left])} />
-      </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button
+      </StratagemsDpadMobile.Button>
+      <StratagemsDpadMobile.Button
         keyName="down"
         keydownEvent={{ code: 'ArrowDown' }}
-        testId="keyboard-down"
+        testId="dpad-down"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.down])} />
-      </StratagemsKeyboardMobile.Button>
-      <StratagemsKeyboardMobile.Button
+      </StratagemsDpadMobile.Button>
+      <StratagemsDpadMobile.Button
         keyName="right"
         keydownEvent={{ code: 'ArrowRight' }}
-        testId="keyboard-right"
+        testId="dpad-right"
       >
         <Picto icon="arrow" className={cn([styles.icon, styles.right])} />
-      </StratagemsKeyboardMobile.Button>
+      </StratagemsDpadMobile.Button>
     </div>
   );
 }
 
 /**
- * StratagemsKeyboardMobileButton component
+ * StratagemsDpadMobileButton component
  * @param {object} props - Component properties
  * @param {object} props.keydownEvent - Keydown event
  * @param {string} props.keyName - Key name
  * @param {React.ReactNode} props.children - Child nodes
  * @param {string} props.testId - Test ID
- * @returns {JSX.Element} The StratagemsKeyboardMobileButton component
+ * @returns {JSX.Element} The StratagemsDpadMobileButton component
  */
-StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
+StratagemsDpadMobile.Button = function StratagemsDpadMobileButton(
   {
-    keydownEvent, keyName, testId, children,
+    keydownEvent, keyName, children, testId,
   },
 ) {
   return (
@@ -75,4 +75,4 @@ StratagemsKeyboardMobile.Button = function StratagemsKeyboardMobileButton(
   );
 };
 
-export default StratagemsKeyboardMobile;
+export default StratagemsDpadMobile;
