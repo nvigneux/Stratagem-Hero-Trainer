@@ -65,4 +65,11 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.get('[data-testid="round-bonus"]').should('have.text', '75');
     cy.get('[data-testid="perfect-round"]').should('have.text', '100');
   });
+
+  it('Persists sound and timer settings after reload', () => {
+    cy.setSettings(5);
+    cy.visit('http://localhost:3000/');
+    cy.get('[data-testid="button-settings"]').click();
+    cy.get('[data-testid="timer-duration-input"]').should('have.value', '5');
+  });
 });
