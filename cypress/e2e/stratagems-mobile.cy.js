@@ -72,4 +72,13 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.get('[data-testid="button-settings"]').click();
     cy.get('[data-testid="timer-duration-input"]').should('have.value', '5');
   });
+
+  it('Allows selecting and displaying stratagems', () => {
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+    cy.get('.card-is-active').should('exist').and('have.length', 1);
+  });
 });
