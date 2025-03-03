@@ -81,4 +81,21 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.selectStratagem('Machine Gun');
     cy.get('.card-is-active').should('exist').and('have.length', 1);
   });
+
+  it('Validates mobile layout switching and persistence', () => {
+    // Check default keyboard layout
+    cy.get('[data-testid="mobile-keyboard"]').should('be.visible');
+
+    // Switch to D-pad layout
+    cy.get('[data-testid="dpad-button"]').click();
+    cy.get('[data-testid="mobile-dpad"]').should('be.visible');
+
+    // Reload page and check if layout persists
+    cy.reload();
+    cy.get('[data-testid="mobile-dpad"]').should('be.visible');
+
+    // Switch back to keyboard
+    cy.get('[data-testid="keyboard-button"]').click();
+    cy.get('[data-testid="mobile-keyboard"]').should('be.visible');
+  });
 });
