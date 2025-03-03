@@ -46,4 +46,23 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     // Check if the game is lost
     cy.get('[data-testid="round-bonus"]').should('have.text', '0');
   });
+
+  it('Validates mobile gameplay flow with D-pad layout', () => {
+    // Switch to D-pad layout
+    cy.get('[data-testid="dpad-button"]').click();
+
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+
+    // Use D-pad controls
+    cy.performClickCombination(['dpad-down', 'dpad-left', 'dpad-down', 'dpad-up', 'dpad-right'], 6);
+
+    // Check if the round is incremented
+    cy.get('[data-testid="round-info"]').should('have.text', '2');
+    cy.get('[data-testid="round-bonus"]').should('have.text', '75');
+    cy.get('[data-testid="perfect-round"]').should('have.text', '100');
+  });
 });
