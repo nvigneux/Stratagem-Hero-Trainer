@@ -298,6 +298,11 @@ const ENGINEERING_BAY = [
     code: ['down', 'up', 'left', 'right', 'left', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
+  {
+    name: 'Gas Mines',
+    code: ['down', 'left', 'left', 'right'],
+    category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
+  },
 ];
 
 const ROBOTICS_WORKSHOP = [
