@@ -36,6 +36,10 @@ const CATEGORIES = [
     name: 'Servants of Freedom',
   },
   {
+    id: 'ee78a618-c92b-48e4-a514-b849a8ad0859',
+    name: 'Borderline Justice',
+  },
+  {
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
@@ -383,6 +387,14 @@ const SERVANTS_OF_FREEDOM = [
   },
 ];
 
+const BORDERLINE_JUSTICE = [
+  {
+    name: 'Hover Pack',
+    code: ['down', 'up', 'up', 'left', 'right'],
+    category_id: 'ee78a618-c92b-48e4-a514-b849a8ad0859',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -456,6 +468,7 @@ const STRATAGEMS = [
   ...CHEMICAL_AGENTS,
   ...URBAN_LEGENDS,
   ...SERVANTS_OF_FREEDOM,
+  ...BORDERLINE_JUSTICE,
   ...GENERAL_STRATEGEMS,
 ];
 
