@@ -245,6 +245,11 @@ const BRIDGE = [
     code: ['down', 'up', 'right', 'up', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
+  {
+    name: 'Grenadier Battlement',
+    code: ['down', 'right', 'down', 'left', 'right'],
+    category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
+  },
 ];
 
 const ENGINEERING_BAY = [
