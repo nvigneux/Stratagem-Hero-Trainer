@@ -118,7 +118,6 @@ export async function fetchCategoriesPages(query, sizePage) {
  * @returns {Promise<object>} The category.
  */
 export async function fetchCategoryById(id) {
-  console.log(id);
   // noStore is used to prevent the response from being cached.
   noStore();
 
