@@ -45,7 +45,7 @@ const CATEGORIES = [
   },
   {
     id: '86a708cf-8def-4244-a86a-7e7680632807',
-    name: 'Masters Of Ceremony',
+    name: 'Masters of Ceremony',
   },
 ];
 
