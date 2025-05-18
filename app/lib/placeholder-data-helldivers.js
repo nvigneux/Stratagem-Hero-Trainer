@@ -43,6 +43,10 @@ const CATEGORIES = [
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
+  {
+    id: '86a708cf-8def-4244-a86a-7e7680632807',
+    name: 'Masters Of Ceremony',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
