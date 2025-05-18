@@ -43,6 +43,10 @@ const CATEGORIES = [
     id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
     name: 'General Stratagems',
   },
+  {
+    id: '86a708cf-8def-4244-a86a-7e7680632807',
+    name: 'Masters Of Ceremony',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -245,6 +249,11 @@ const BRIDGE = [
     code: ['down', 'up', 'right', 'up', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
+  {
+    name: 'Grenadier Battlement',
+    code: ['down', 'right', 'down', 'left', 'right'],
+    category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
+  },
 ];
 
 const ENGINEERING_BAY = [
@@ -400,6 +409,14 @@ const BORDERLINE_JUSTICE = [
   },
 ];
 
+const MASTERS_OF_CEREMONY = [
+  {
+    name: 'One True Flag',
+    code: ['down', 'left', 'right', 'right', 'up'],
+    category_id: '86a708cf-8def-4244-a86a-7e7680632807',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -474,6 +491,7 @@ const STRATAGEMS = [
   ...URBAN_LEGENDS,
   ...SERVANTS_OF_FREEDOM,
   ...BORDERLINE_JUSTICE,
+  ...MASTERS_OF_CEREMONY,
   ...GENERAL_STRATEGEMS,
 ];
 
