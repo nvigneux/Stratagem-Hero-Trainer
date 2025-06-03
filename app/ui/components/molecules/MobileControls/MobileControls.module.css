@@ -16,6 +16,12 @@
   height: var(--selector-size);
 }
 
+@media (width <= 980px) and (orientation: landscape) {
+  .controlsSelector {
+    top: calc(var(--spacing-8) * -1);
+  }
+}
+
 .selectorButton {
   --selector-size: 30px;
 
