@@ -6,6 +6,7 @@
 
 .button {
   --button-size: 75px;
+  --button-height: 65px;
   --bg-color: #f1f1f1;
   --box-color: #e2e2e2;
   --color: #525252;
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: center;
   width: var(--button-size);
-  height: 65px;
+  height: var(--button-height);
   border-radius: 8px;
   border: none;
   box-shadow: 0 5px 0 0 var(--box-color);
@@ -30,18 +31,32 @@
   transform: translateY(2px);
 }
 
+@media (width <= 980px) and (orientation: landscape) {
+  .button {
+    --button-size: 60px;
+    --button-height: 50px;
+  }
+}
+
 .icon {
+  --size-icon: 30px;
   --rotate: 0deg;
 
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: var(--size-icon);
+  height: var(--size-icon);
   transform: rotate(var(--rotate));
 }
 
 .button:active .icon {
   top: 3px;
   transform: scale(0.98) rotate(var(--rotate));
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .icon {
+    --size-icon: 25px;
+  }
 }
 
 .up {
