@@ -34,3 +34,13 @@
     font-size: 1.25rem;
   }
 }
+
+@media (width <= 980px) and (orientation: landscape) {
+  .container {
+    height: 30px;
+  }
+
+  .name {
+    font-size: 1rem;
+  }
+}
