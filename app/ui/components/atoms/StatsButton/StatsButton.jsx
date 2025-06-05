@@ -12,10 +12,11 @@ import cn from '../../../../lib/cn';
  * @param {string|number} props.small - Small value
  * @param {boolean} props.disabled - Whether the button is disabled
  * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} props.testId - Button test id
  * @returns {JSX.Element} The StatsButton component
  */
 function StatsButton({
-  onClick, active, small, disabled, children,
+  onClick, active, small, disabled, children, testId,
 }) {
   return (
     <button
@@ -23,6 +24,7 @@ function StatsButton({
       onClick={onClick}
       disabled={disabled}
       className={cn([styles.button, active && styles.active, disabled && styles.disabled])}
+      data-testid={testId}
     >
       <div className={styles.label}>
         {children}
@@ -30,7 +32,7 @@ function StatsButton({
       <div className={styles.smallBorder}>
         <span className={styles.smallValue}>{small}</span>
       </div>
-      <div className={styles.small}>
+      <div className={styles.small} data-testid={`${testId}-small`}>
         <span className={styles.smallValue}>{small}</span>
       </div>
     </button>
@@ -76,15 +78,16 @@ export function StatsButtonClose({ disabled, children }) {
  * @param {object} props - Component properties
  * @param {string} props.mobile - Mobile label
  * @param {string} props.desktop - Desktop label
+ * @param {string} props.testId - Button test id
  * @returns {JSX.Element} The StatsButtonLabel component
  */
-export function StatsButtonLabel({ mobile, desktop }) {
+export function StatsButtonLabel({ mobile, desktop, testId }) {
   return (
-    <div className={styles.label}>
-      <span className={styles.mobile}>
+    <div className={styles.label} data-testid={testId}>
+      <span className={styles.mobile} data-testid={`${testId}-mobile`}>
         {mobile}
       </span>
-      <span className={styles.desktop}>
+      <span className={styles.desktop} data-testid={`${testId}-desktop`}>
         {desktop}
       </span>
     </div>
