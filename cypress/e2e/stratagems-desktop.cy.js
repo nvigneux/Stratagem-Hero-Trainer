@@ -93,7 +93,55 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
       { parseSpecialCharSequences: false },
     );
 
-    // Vérifier que la combinaison a bien fonctionné
+    // Check if the combination worked
     cy.get('[data-testid="score"]').should('have.text', '25');
+  });
+
+  it('Display round history', () => {
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Check the message and round information
+    cy.get('[data-testid="stratagem-name"]').should('have.text', 'Traitor detected !');
+    cy.get('[data-testid="round-info"]').should('have.text', '1');
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+
+    // Perform a correct combination
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'downarrow', 'uparrow', 'rightarrow'], 6);
+
+    // Check round history
+    cy.get('[data-testid="round-history"]').should('exist');
+    cy.get('[data-testid="round-history"]').click();
+    cy.get('[data-testid="stats-button-history-label-desktop"]')
+      .should('have.text', 'Round history');
+    cy.get('[data-testid="stats-button-history-small"]').should('have.text', '1');
+    cy.get('[data-testid="round-history-title"]').should('have.text', 'Round 1');
+    cy.get('[data-testid="round-history-row"]').should('have.length', 6);
+  });
+
+  it('Display stratagem stats', () => {
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Check the message and round information
+    cy.get('[data-testid="stratagem-name"]').should('have.text', 'Traitor detected !');
+    cy.get('[data-testid="round-info"]').should('have.text', '1');
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+
+    // Perform a correct combination
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'downarrow', 'uparrow', 'rightarrow'], 6);
+
+    // Check stratagem stats
+    cy.get('[data-testid="round-history"]').should('exist');
+    cy.get('[data-testid="round-history"]').click();
+    cy.get('[data-testid="stats-button-stats-label-desktop"]')
+      .should('have.text', 'Stratagem stats');
+    cy.get('[data-testid="stats-button-stats-small"]').should('have.text', '1');
+    cy.get('[data-testid="stats-button-stats"]').click();
+    cy.get('[data-testid="round-stats-row"]').should('have.length', 1);
   });
 });
