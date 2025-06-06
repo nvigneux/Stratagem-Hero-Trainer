@@ -52,10 +52,18 @@ export function TableStatsBody({ children }) {
  * @param {object} props - Component properties
  * @param {string} [props.className] - Additional class names
  * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} [props.testId] - The test id of the row
  * @returns {JSX.Element} The TableStatsRow component
  */
-export function TableStatsRow({ className = '', children }) {
-  return <div className={cn([styles.row, className])}>{children}</div>;
+export function TableStatsRow({ className = '', children, testId }) {
+  return (
+    <div
+      className={cn([styles.row, className])}
+      data-testid={testId}
+    >
+      {children}
+    </div>
+  );
 }
 
 /**

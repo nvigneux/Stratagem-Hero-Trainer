@@ -540,16 +540,26 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           active={statsPanel.panel === 'history'}
           small={stateSerie.round - 1 || 0}
           onClick={() => handleStatsPanel('history')}
+          testId="stats-button-history"
         >
-          <StatsButtonLabel mobile="History" desktop="Round history" />
+          <StatsButtonLabel
+            mobile="History"
+            desktop="Round history"
+            testId="stats-button-history-label"
+          />
         </StatsButton>
         <StatsButton
           disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
           active={statsPanel.panel === 'stats'}
           small={Object.keys(stats)?.length}
           onClick={() => handleStatsPanel('stats')}
+          testId="stats-button-stats"
         >
-          <StatsButtonLabel mobile="Stats" desktop="Stratagem stats" />
+          <StatsButtonLabel
+            mobile="Stats"
+            desktop="Stratagem stats"
+            testId="stats-button-stats-label"
+          />
         </StatsButton>
         <StatsButtonClose
           disabled={
@@ -630,7 +640,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                           key={stat.stratagem.name}
                           className={styles.gridRow}
                         >
-                          <TableStatsRow className={styles.statsGrid}>
+                          <TableStatsRow
+                            className={styles.statsGrid}
+                            testId="round-stats-row"
+                          >
                             <TableStatsCell name="name">
                               <>
                                 <Image
@@ -707,7 +720,7 @@ ${stat.stratagem.name}.svg`}
                         <TableStatsTitle>
                           {round ? (
                             <>
-                              <div>{`Round ${round}`}</div>
+                              <div data-testid="round-history-title">{`Round ${round}`}</div>
                               <span>
                                 {`${
                                   stateSerie.history[round]
@@ -734,6 +747,7 @@ ${stat.stratagem.name}.svg`}
                             <TableStatsRow
                               key={`${round} - ${item.startTime} - ${item.stratagem.name}`}
                               className={styles.historyGrid}
+                              testId="round-history-row"
                             >
                               {/* Desktop */}
                               <TableStatsCell name="index">

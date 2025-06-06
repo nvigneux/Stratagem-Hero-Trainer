@@ -32,7 +32,7 @@
   .container {
     --size-card: 146px;
   }
-  
+
   .icon {
     --size-icon: 90px;
   }
@@ -43,6 +43,24 @@
 
   .active .icon {
     --size-icon: 150px;
+  }
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .container {
+    --size-card: 50px !important;
+  }
+
+  .icon {
+    --size-icon: 35px !important;
+  }
+
+  .active {
+    --size-card: 60px !important;
+  }
+
+  .active .icon {
+    --size-icon: 40px !important;
   }
 }
 
@@ -59,6 +77,12 @@
 @media (width > 1920px) {
   .list {
     max-width: 1000px;
+  }
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .list {
+    max-width: 375px;
   }
 }
 

@@ -86,3 +86,9 @@
     margin: var(--spacing-24) var(--spacing-8);
   }
 }
+
+@media (width <= 980px) and (orientation: landscape) {
+  .container {
+    height: auto;
+  }
+}
