@@ -115,7 +115,6 @@
   grid-column: 2;
   background: var(--blue-night);
   color: var(--white);
-  min-height: 100dvh;
   position: relative;
   min-width: var(--width-side);
 }

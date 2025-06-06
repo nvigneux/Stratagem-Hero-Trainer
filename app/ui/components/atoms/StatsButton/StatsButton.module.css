@@ -5,7 +5,7 @@
   border-bottom: 0;
   border-top: 0;
   padding: var(--spacing-4) var(--spacing-56) 20px 26px;
-  background: transparent;
+  background: rgb(19 20 26 / 50%);
   color: var(--grey);
   cursor: pointer;
   font-size: 1.25rem;

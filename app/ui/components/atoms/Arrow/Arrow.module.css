@@ -80,6 +80,20 @@
   }
 }
 
+@media (width <= 980px) and (orientation: landscape) {
+  .list {
+    padding: var(--spacing-12) 0;
+  }
+
+  .large {
+    --size-icon: 25px;
+  }
+
+  .small {
+    --size-icon: 15px;
+  }
+}
+
 /* ANIMATION */
 @keyframes blink-error {
   0% {

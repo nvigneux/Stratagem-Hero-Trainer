@@ -10,6 +10,12 @@
   height: var(--dpad-size);
 }
 
+@media (width <= 980px) and (orientation: landscape) {
+  .dpadContainer {
+    --dpad-size: 120px;
+  }
+}
+
 /* Base button styles
 ----------------------------------------- */
 .button {

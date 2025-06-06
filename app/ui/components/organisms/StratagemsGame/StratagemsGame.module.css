@@ -9,6 +9,12 @@
   position: relative;
 }
 
+@media (width > 680px) and (orientation: landscape) {
+  .wrapper {
+    padding: var(--spacing-24) 0;
+  }
+}
+
 .main {
   position: relative;
   display: flex;
@@ -194,7 +200,13 @@
 @media (width > 1920px) {
   .roundScoreContainer {
     max-width: 1000px;
-    margin-bottom: 5rem;
+    margin-bottom: var(--spacing-80);
+  }
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .roundScoreContainer {
+    margin-bottom: 0 !important;
   }
 }
 
@@ -219,6 +231,12 @@
   display: none;
   overflow: hidden;
   padding: 0 1rem 0.3rem;
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .mobileKeyboard {
+    margin-top: var(--spacing-16) !important;
+  }
 }
 
 .settingsSection {
@@ -397,6 +415,13 @@
   height: 100dvh;
   overflow: hidden;
 }
+
+@media (width <= 980px) and (orientation: landscape) {
+  .modalStats.activeModal {
+    overflow: auto;
+  }
+}
+
 
 .activePanel {
   position: relative;

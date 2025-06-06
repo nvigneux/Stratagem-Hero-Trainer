@@ -17,6 +17,12 @@
   }
 }
 
+@media (width <= 980px) and (orientation: landscape) {
+  .timer {
+    height: 20px;
+  }
+}
+
 .inner {
   display: flex;
   align-items: center;

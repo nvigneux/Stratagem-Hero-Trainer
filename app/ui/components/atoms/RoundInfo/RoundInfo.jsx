@@ -45,6 +45,7 @@ export function RoundInfoButton({ onClick, disabled }) {
       aria-label="Show history"
       title="Round History & Stats"
       disabled={disabled}
+      data-testid="round-history"
     >
       <div className={styles.label}>Round</div>
       <div className={styles.historyIcon}>
