@@ -28,7 +28,7 @@ function MobileControls({ layout, setLayout }) {
             onClick={() => setLayout('keyboard')}
             aria-label="Switch to keyboard controls"
           >
-            <Picto icon="keypad" />
+            <Picto icon="keypad" className={styles.selectorIcon} />
           </button>
         )}
         {layout === 'keyboard' && (
@@ -39,7 +39,7 @@ function MobileControls({ layout, setLayout }) {
             onClick={() => setLayout('dpad')}
             aria-label="Switch to D-pad controls"
           >
-            <Picto icon="dpad" />
+            <Picto icon="dpad" className={styles.selectorIcon} />
           </button>
         )}
       </div>

@@ -65,7 +65,7 @@
   height: 100%;
   object-fit: contain;
   position: absolute;
-  bottom: 4px;
+  top: 0;
   left: 0;
 }
 

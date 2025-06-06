@@ -238,7 +238,6 @@ export async function updateCategory(id, formData) {
  * @returns {Promise<object>} Result of the operation
  */
 export async function deleteCategory(id) {
-  console.log(id);
   try {
     await sql`DELETE FROM categories WHERE id = ${id}`;
     revalidatePath('/stratagems-admin');
