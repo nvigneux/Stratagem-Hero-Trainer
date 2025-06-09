@@ -3,9 +3,7 @@ const nextConfig = {
   experimental: {
     ppr: 'incremental',
   },
-  // Optimisation pour le mode hors ligne
   output: 'standalone',
-  // Configuration des en-têtes pour le caching
   async headers() {
     return [
       {
