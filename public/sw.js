@@ -161,7 +161,6 @@ addEventListener('fetch', (event) => {
           return response;
         }
 
-        // otherwise, fetch the resource
         return fetch(event.request)
           .then((networkResponse) => {
             // if the request is not a GET, return the network response
@@ -172,7 +171,6 @@ addEventListener('fetch', (event) => {
             // clone the response to be able to return it and cache it
             const responseToCache = networkResponse.clone();
 
-            // cache the new resource
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
@@ -185,7 +183,7 @@ addEventListener('fetch', (event) => {
             if (event.request.mode === 'navigate') {
               return caches.match('/');
             }
-            // for other types of resources (images, etc.), we can't do anything
+
             return new Response('Resource not available offline', {
               status: 408,
               headers: { 'Content-Type': 'text/plain' },
@@ -200,7 +198,7 @@ addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => Promise.all(
       cacheNames
-        .filter((cacheName) => cacheName !== CACHE_NAME) // delete caches that don't match the current version
+        .filter((cacheName) => cacheName !== CACHE_NAME)
         .map((cacheName) => caches.delete(cacheName)),
     )),
   );
