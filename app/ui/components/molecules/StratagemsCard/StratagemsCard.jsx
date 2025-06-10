@@ -5,6 +5,7 @@ import styles from './StratagemsCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
+import { generateHtmlCodeArrow } from '../../../../lib/stratagems';
 
 /**
  * StratagemsCard component
@@ -19,33 +20,6 @@ import cn from '../../../../lib/cn';
 function StratagemsCard({
   name, code, category, active = false, children = null,
 }) {
-  /**
-   * Generate the HTML code for the arrow
-   * @param {string[]} codeArray
-   * @returns {string[]}
-   */
-  const generateHtmlCodeArrow = (codeArray) => {
-    const left = '←';
-    const right = '→';
-    const up = '↑';
-    const down = '↓';
-
-    return codeArray.map((item) => {
-      switch (item) {
-        case 'left':
-          return left;
-        case 'right':
-          return right;
-        case 'up':
-          return up;
-        case 'down':
-          return down;
-        default:
-          return item;
-      }
-    });
-  };
-
   return (
     <div
       className={cn([styles.card, active && `${styles.active} card-is-active`])}
@@ -58,6 +32,9 @@ function StratagemsCard({
         height={55}
         className={styles.icon}
         data-testid={`stratagem-icon-${name}`}
+        onError={(e) => {
+          e.target.src = '/icons/question-mark.svg';
+        }}
       />
       {children}
     </div>

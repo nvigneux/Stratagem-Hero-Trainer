@@ -5,11 +5,13 @@ import styles from './StratagemsGameCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
+import { generateHtmlCodeArrow } from '../../../../lib/stratagems';
 
 /**
  * StratagemsGameCard component
  * @param {object} props - Component properties
  * @param {string} props.name - The name of the stratagem
+ * @param {string[]} props.code - The code of the stratagem
  * @param {string} props.category - The category of the stratagem
  * @param {boolean} [props.active=false] - Whether the stratagem is active
  * @param {boolean} [props.success=false] - Whether the stratagem is successful
@@ -17,15 +19,17 @@ import cn from '../../../../lib/cn';
  * @returns {JSX.Element} The StratagemsGameCard component
  */
 function StratagemsGameCard({
-  name, category, active = false, success = false, className = '',
+  name, code, category, active = false, success = false, className = '',
 }) {
   return (
-    <div className={cn([
-      styles.container,
-      active && `${styles.active} game-card-is-active`,
-      active && success && styles.success,
-      className,
-    ])}
+    <div
+      className={cn([
+        styles.container,
+        active && `${styles.active} game-card-is-active`,
+        active && success && styles.success,
+        className,
+      ])}
+      title={`${name} - ${generateHtmlCodeArrow(code)}`}
     >
       <Image
         data-testid={`stratagem-icon-${name}`}
@@ -36,6 +40,9 @@ function StratagemsGameCard({
         className={styles.icon}
         loading="eager"
         priority
+        onError={(e) => {
+          e.target.src = '/icons/question-mark.svg';
+        }}
       />
     </div>
   );
