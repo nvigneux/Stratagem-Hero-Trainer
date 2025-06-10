@@ -653,6 +653,9 @@ ${stat.stratagem.name}.svg`}
                                   alt={stat.stratagem.name}
                                   width={55}
                                   height={55}
+                                  onError={(e) => {
+                                    e.target.src = '/icons/question-mark.svg';
+                                  }}
                                 />
                                 {` ${stat.stratagem.name}`}
                               </>
@@ -679,6 +682,9 @@ ${stat.stratagem.name}.svg`}
                                 alt={stat.stratagem.name}
                                 width={55}
                                 height={55}
+                                onError={(e) => {
+                                  e.target.src = '/icons/question-mark.svg';
+                                }}
                               />
                             </TableStatsCellMobile>
                             <TableStatsCellMobile name="name" label="Name">
@@ -762,6 +768,9 @@ ${item.stratagem.name}.svg`}
                                     alt={item.stratagem.name}
                                     width={55}
                                     height={55}
+                                    onError={(e) => {
+                                      e.target.src = '/icons/question-mark.svg';
+                                    }}
                                   />
                                   {` ${item.stratagem.name}`}
                                 </>
@@ -782,6 +791,9 @@ ${item.stratagem.name}.svg`}
                                   alt={item.stratagem.name}
                                   width={55}
                                   height={55}
+                                  onError={(e) => {
+                                    e.target.src = '/icons/question-mark.svg';
+                                  }}
                                 />
                               </TableStatsCellMobile>
                               <TableStatsCellMobile name="name" label="Name">
