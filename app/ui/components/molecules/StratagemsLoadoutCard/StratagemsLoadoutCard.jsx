@@ -29,6 +29,9 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
           alt={stratagem.name}
           width={55}
           height={55}
+          onError={(e) => {
+            e.target.src = '/icons/question-mark.svg';
+          }}
         />
       </StratagemsLoadoutCard.Icon>
       <div className={styles.info}>
