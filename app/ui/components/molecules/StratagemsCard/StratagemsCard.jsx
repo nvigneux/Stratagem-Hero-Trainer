@@ -1,10 +1,12 @@
-import Image from 'next/image';
-
 // Styles
 import styles from './StratagemsCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
+import { generateHtmlCodeArrow } from '../../../../lib/stratagems';
+
+// Components
+import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 
 /**
  * StratagemsCard component
@@ -19,45 +21,16 @@ import cn from '../../../../lib/cn';
 function StratagemsCard({
   name, code, category, active = false, children = null,
 }) {
-  /**
-   * Generate the HTML code for the arrow
-   * @param {string[]} codeArray
-   * @returns {string[]}
-   */
-  const generateHtmlCodeArrow = (codeArray) => {
-    const left = '←';
-    const right = '→';
-    const up = '↑';
-    const down = '↓';
-
-    return codeArray.map((item) => {
-      switch (item) {
-        case 'left':
-          return left;
-        case 'right':
-          return right;
-        case 'up':
-          return up;
-        case 'down':
-          return down;
-        default:
-          return item;
-      }
-    });
-  };
-
   return (
     <div
       className={cn([styles.card, active && `${styles.active} card-is-active`])}
       title={`${name} - ${generateHtmlCodeArrow(code)}`}
     >
-      <Image
+      <StratagemImage
         src={`/icons/stratagems/${category}/${name}.svg`}
-        alt={name}
-        width={55}
-        height={55}
+        name={name}
         className={styles.icon}
-        data-testid={`stratagem-icon-${name}`}
+        testId={`stratagem-icon-${name}`}
       />
       {children}
     </div>

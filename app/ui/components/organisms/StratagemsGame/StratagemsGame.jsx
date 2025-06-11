@@ -5,7 +5,6 @@
 import {
   useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import useSound from 'use-sound';
 
@@ -42,6 +41,7 @@ import StatsButton, {
 } from '../../atoms/StatsButton/StatsButton';
 import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 import ButtonBuyMeACoffee from '../../atoms/ButtonBuyMeACoffee/ButtonBuyMeACoffee';
+import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
@@ -477,6 +477,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                     // eslint-disable-next-line react/no-array-index-key
                     key={`${stratagem.code}-${index}`}
                     name={stratagem.name}
+                    code={stratagem.code}
                     category={stratagem.category.name}
                     active={index === 0}
                     success={stateSerie.success}
@@ -646,12 +647,10 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                           >
                             <TableStatsCell name="name">
                               <>
-                                <Image
+                                <StratagemImage
                                   src={`/icons/stratagems/${stat.stratagem.category?.name}/
 ${stat.stratagem.name}.svg`}
-                                  alt={stat.stratagem.name}
-                                  width={55}
-                                  height={55}
+                                  name={stat.stratagem.name}
                                 />
                                 {` ${stat.stratagem.name}`}
                               </>
@@ -672,12 +671,10 @@ ${stat.stratagem.name}.svg`}
 
                             {/* Mobile */}
                             <TableStatsCellMobile name="img">
-                              <Image
+                              <StratagemImage
                                 src={`/icons/stratagems/${stat.stratagem.category?.name}/
 ${stat.stratagem.name}.svg`}
-                                alt={stat.stratagem.name}
-                                width={55}
-                                height={55}
+                                name={stat.stratagem.name}
                               />
                             </TableStatsCellMobile>
                             <TableStatsCellMobile name="name" label="Name">
@@ -755,12 +752,10 @@ ${stat.stratagem.name}.svg`}
                               </TableStatsCell>
                               <TableStatsCell name="name">
                                 <>
-                                  <Image
+                                  <StratagemImage
                                     src={`/icons/stratagems/${item.stratagem.category?.name}/
 ${item.stratagem.name}.svg`}
-                                    alt={item.stratagem.name}
-                                    width={55}
-                                    height={55}
+                                    name={item.stratagem.name}
                                   />
                                   {` ${item.stratagem.name}`}
                                 </>
@@ -775,12 +770,10 @@ ${item.stratagem.name}.svg`}
 
                               {/* Mobile */}
                               <TableStatsCellMobile name="img">
-                                <Image
+                                <StratagemImage
                                   src={`/icons/stratagems/${item.stratagem.category?.name}/
 ${item.stratagem.name}.svg`}
-                                  alt={item.stratagem.name}
-                                  width={55}
-                                  height={55}
+                                  name={item.stratagem.name}
                                 />
                               </TableStatsCellMobile>
                               <TableStatsCellMobile name="name" label="Name">

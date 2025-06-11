@@ -1,7 +1,6 @@
-import Image from 'next/image';
-
 // Components
 import Arrow from '../../atoms/Arrow/Arrow';
+import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 
 // Styles
 import styles from './StratagemsLoadoutCard.module.css';
@@ -23,12 +22,10 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
       onClick={() => setCheckedStratagem({ [stratagem.name]: undefined })}
       className={styles.card}
     >
-      <StratagemsLoadoutCard.Icon type={stratagem.category.name}>
-        <Image
+      <StratagemsLoadoutCard.Icon type={stratagem.category.name} title={stratagem.name}>
+        <StratagemImage
           src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
-          alt={stratagem.name}
-          width={55}
-          height={55}
+          name={stratagem.name}
         />
       </StratagemsLoadoutCard.Icon>
       <div className={styles.info}>
@@ -57,11 +54,12 @@ export default StratagemsLoadoutCard;
  * @param {object} props - Component properties
  * @param {string} props.type - Icon type
  * @param {React.ReactNode} props.children - Child nodes
+ * @param {string} props.title - Title of the icon
  * @returns {JSX.Element} The StratagemsLoadoutCardIcon component
  */
-StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({ type, children }) {
+StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({ type, children, title }) {
   const kebabType = type.replace(/ /g, '-').toLowerCase();
   return (
-    <div className={cn([styles.icon, styles[kebabType]])}>{children}</div>
+    <div className={cn([styles.icon, styles[kebabType]])} title={title}>{children}</div>
   );
 };

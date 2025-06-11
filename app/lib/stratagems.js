@@ -17,4 +17,31 @@ const findDiffArray = (arr1, arr2, compareFn) => arr1.filter((item1) => !arr2.so
  */
 const areStratagemsEqual = (a, b) => a.name === b.name;
 
-export { findDiffArray, areStratagemsEqual };
+/**
+ * Generate the HTML code for the arrow
+ * @param {string[]} codeArray
+ * @returns {string[]}
+ */
+const generateHtmlCodeArrow = (codeArray) => {
+  const left = '←';
+  const right = '→';
+  const up = '↑';
+  const down = '↓';
+
+  return codeArray.map((item) => {
+    switch (item) {
+      case 'left':
+        return left;
+      case 'right':
+        return right;
+      case 'up':
+        return up;
+      case 'down':
+        return down;
+      default:
+        return item;
+    }
+  });
+};
+
+export { findDiffArray, areStratagemsEqual, generateHtmlCodeArrow };

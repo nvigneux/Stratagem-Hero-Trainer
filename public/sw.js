@@ -24,6 +24,7 @@ const ASSETS_TO_CACHE = [
   '/icons/close.svg',
   '/icons/history.svg',
   '/icons/settings.svg',
+  '/icons/question-mark.svg',
 
   // Sounds
   '/sounds/stratagem-code-error.mp3',
