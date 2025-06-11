@@ -1,11 +1,12 @@
-import Image from 'next/image';
-
 // Styles
 import styles from './StratagemsCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 import { generateHtmlCodeArrow } from '../../../../lib/stratagems';
+
+// Components
+import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 
 /**
  * StratagemsCard component
@@ -25,16 +26,11 @@ function StratagemsCard({
       className={cn([styles.card, active && `${styles.active} card-is-active`])}
       title={`${name} - ${generateHtmlCodeArrow(code)}`}
     >
-      <Image
+      <StratagemImage
         src={`/icons/stratagems/${category}/${name}.svg`}
-        alt={name}
-        width={55}
-        height={55}
+        name={name}
         className={styles.icon}
-        data-testid={`stratagem-icon-${name}`}
-        onError={(e) => {
-          e.target.src = '/icons/question-mark.svg';
-        }}
+        testId={`stratagem-icon-${name}`}
       />
       {children}
     </div>
