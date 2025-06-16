@@ -47,6 +47,10 @@ const CATEGORIES = [
     id: '86a708cf-8def-4244-a86a-7e7680632807',
     name: 'Masters of Ceremony',
   },
+  {
+    id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
+    name: 'Force of Law',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -417,6 +421,19 @@ const MASTERS_OF_CEREMONY = [
   },
 ];
 
+const FORCE_OF_LAW = [
+  {
+    name: 'GL-52 De-Escalator',
+    code: ['left', 'right', 'up', 'left', 'right'],
+    category_id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
+  },
+  {
+    name: '“Guard Dog” K-9',
+    code: ['down', 'up', 'left', 'up', 'right', 'left'],
+    category_id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -492,6 +509,7 @@ const STRATAGEMS = [
   ...SERVANTS_OF_FREEDOM,
   ...BORDERLINE_JUSTICE,
   ...MASTERS_OF_CEREMONY,
+  ...FORCE_OF_LAW,
   ...GENERAL_STRATEGEMS,
 ];
 
