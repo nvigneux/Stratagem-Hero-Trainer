@@ -369,7 +369,7 @@ const CHEMICAL_AGENTS = [
     category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
   },
   {
-    name: 'Guard Dog Breath',
+    name: '“Guard Dog” Breath',
     code: ['down', 'up', 'left', 'up', 'right', 'up'],
     category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
   },
