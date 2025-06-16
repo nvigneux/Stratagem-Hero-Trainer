@@ -139,6 +139,10 @@ const ASSETS_TO_CACHE = [
   '/icons/stratagems/Urban Legends/Anti-Tank Emplacement.svg',
   '/icons/stratagems/Urban Legends/Directional Shield.svg',
   '/icons/stratagems/Urban Legends/Flame Sentry.svg',
+
+  // Force of Law icons
+  '/icons/stratagems/Force of Law/GL-52 De-Escalator.svg',
+  '/icons/stratagems/Force of Law/“Guard Dog” K-9.svg',
 ];
 
 /* eslint-disable no-restricted-globals */
