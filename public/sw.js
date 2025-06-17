@@ -53,7 +53,7 @@ const ASSETS_TO_CACHE = [
   '/icons/stratagems/Bridge/Tesla Tower.svg',
 
   // Chemical Agents icons
-  '/icons/stratagems/Chemical Agents/Guard Dog Breath.svg',
+  '/icons/stratagems/Chemical Agents/“Guard Dog” Breath.svg',
   '/icons/stratagems/Chemical Agents/Sterilizer.svg',
 
   // Engineering Bay icons
