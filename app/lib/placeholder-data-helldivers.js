@@ -408,7 +408,7 @@ const SERVANTS_OF_FREEDOM = [
 const BORDERLINE_JUSTICE = [
   {
     name: 'Hover Pack',
-    code: ['down', 'up', 'up', 'left', 'right'],
+    code: ['down', 'up', 'up', 'down', 'left', 'right'],
     category_id: 'ee78a618-c92b-48e4-a514-b849a8ad0859',
   },
 ];
