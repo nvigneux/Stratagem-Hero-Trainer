@@ -51,6 +51,10 @@ const CATEGORIES = [
     id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
     name: 'Force of Law',
   },
+  {
+    id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
+    name: 'Control Group',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -434,6 +438,24 @@ const FORCE_OF_LAW = [
   },
 ];
 
+const CONTROL_GROUP = [
+  {
+    name: 'Laser Sentry',
+    code: ['down', 'up', 'right', 'down', 'up', 'right'],
+    category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
+  },
+  {
+    name: 'Warp Pack',
+    code: ['down', 'left', 'right', 'down', 'left', 'right'],
+    category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
+  },
+  {
+    name: 'E.P.O.C.H.',
+    code: ['down', 'left', 'up', 'left', 'right'],
+    category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -510,6 +532,7 @@ const STRATAGEMS = [
   ...BORDERLINE_JUSTICE,
   ...MASTERS_OF_CEREMONY,
   ...FORCE_OF_LAW,
+  ...CONTROL_GROUP,
   ...GENERAL_STRATEGEMS,
 ];
 
