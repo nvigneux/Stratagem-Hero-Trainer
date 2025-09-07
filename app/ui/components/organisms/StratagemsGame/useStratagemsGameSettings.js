@@ -3,6 +3,9 @@ import { setCookieSettings } from '../../../../lib/actions';
 
 const initialState = {
   gameSound: false,
+  trainingMode: {
+    stratagemJammer: false,
+  },
   layout: 'keyboard',
   timerDuration: 10,
   timeBonus: 1,
@@ -24,12 +27,20 @@ const settingsReducer = (state, action) => {
   switch (action.type) {
     case 'SET_GAME_SOUND':
       return { ...state, gameSound: action.payload };
+    case 'SET_TRAINING_MODE':
+      return {
+        ...state,
+        trainingMode: { ...state.trainingMode, ...action.payload },
+      };
     case 'SET_TIMER_DURATION':
       return { ...state, timerDuration: action.payload };
     case 'SET_TIME_BONUS':
       return { ...state, timeBonus: action.payload };
     case 'SET_TEMP_KEY_BINDING':
-      return { ...state, tempKeyBindings: { ...state.tempKeyBindings, ...action.payload } };
+      return {
+        ...state,
+        tempKeyBindings: { ...state.tempKeyBindings, ...action.payload },
+      };
     case 'APPLY_TEMP_KEY_BINDINGS':
       return { ...state, keyBindings: { ...state.tempKeyBindings } };
     case 'SET_LAYOUT':
@@ -49,6 +60,7 @@ const settingsReducer = (state, action) => {
  * Custom hook for managing stratagems game settings.
  * @param {object} params - Parameters.
  * @param {boolean} params.defaultGameSound - Default game sound state.
+ * @param {{stratagemJammer: boolean}} params.defaultTrainingMode - Default training mode state.
  * @param {number} params.defaultDuration - Default timer duration.
  * @param {number} params.defaultBonus - Default time bonus.
  * @param {object} params.defaultKeyBindings - Default key bindings.
@@ -58,6 +70,7 @@ const settingsReducer = (state, action) => {
  */
 const useStratagemsGameSettings = ({
   defaultGameSound = initialState.gameSound,
+  defaultTrainingMode = initialState.trainingMode,
   defaultDuration = initialState.timerDuration,
   defaultBonus = initialState.timeBonus,
   defaultKeyBindings = { ...initialState.keyBindings },
@@ -67,25 +80,13 @@ const useStratagemsGameSettings = ({
   const [state, dispatch] = useReducer(settingsReducer, {
     ...initialState,
     gameSound: defaultGameSound,
+    trainingMode: defaultTrainingMode,
     timerDuration: defaultDuration,
     timeBonus: defaultBonus,
     keyBindings: defaultKeyBindings,
     tempKeyBindings: defaultTempKeyBindings,
     layout: defaultLayout,
   });
-
-  /**
-   * Set the game sound
-   * @param {boolean} gameSound
-   */
-  const setGameSound = (gameSound) => {
-    dispatch({ type: 'SET_GAME_SOUND', payload: gameSound });
-    setCookieSettings({
-      gameSound,
-      timerDuration: state.timerDuration,
-      keyBindings: state.keyBindings,
-    });
-  };
 
   /**
    * Check if the duration is valid
@@ -95,6 +96,32 @@ const useStratagemsGameSettings = ({
   const isValidDuration = (duration) => typeof duration === 'number' && duration > 0;
 
   /**
+   * Set the game sound
+   * @param {boolean} gameSound
+   */
+  const setGameSound = (gameSound) => {
+    dispatch({ type: 'SET_GAME_SOUND', payload: gameSound });
+    const { tempKeyBindings, ...settingsToSave } = state;
+    setCookieSettings({
+      ...settingsToSave,
+      gameSound,
+    });
+  };
+
+  /**
+   * Set the training mode
+   * @param {{stratagemJammer: boolean}} trainingMode
+   */
+  const setTrainingMode = (trainingMode) => {
+    dispatch({ type: 'SET_TRAINING_MODE', payload: trainingMode });
+    const { tempKeyBindings, ...settingsToSave } = state;
+    setCookieSettings({
+      ...settingsToSave,
+      trainingMode: { ...state.trainingMode, ...trainingMode },
+    });
+  };
+
+  /**
    * Set the timer duration
    * @param {number} timerDuration
    * @returns {void}
@@ -102,10 +129,10 @@ const useStratagemsGameSettings = ({
   const setTimerDuration = (timerDuration) => {
     if (isValidDuration(timerDuration)) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
+      const { tempKeyBindings, ...settingsToSave } = state;
       setCookieSettings({
+        ...settingsToSave,
         timerDuration,
-        keyBindings: state.keyBindings,
-        gameSound: state.gameSound,
       });
     }
   };
@@ -118,6 +145,11 @@ const useStratagemsGameSettings = ({
   const setTimeBonus = (timeBonus) => {
     if (isValidDuration(timeBonus)) {
       dispatch({ type: 'SET_TIME_BONUS', payload: timeBonus });
+      const { tempKeyBindings, ...settingsToSave } = state;
+      setCookieSettings({
+        ...settingsToSave,
+        timeBonus,
+      });
     }
   };
 
@@ -136,19 +168,13 @@ const useStratagemsGameSettings = ({
    */
   const applyTempKeyBindings = () => {
     dispatch({ type: 'APPLY_TEMP_KEY_BINDINGS' });
-    setCookieSettings({
-      timerDuration: state.timerDuration,
-      keyBindings: state.tempKeyBindings,
-      gameSound: state.gameSound,
-    });
   };
 
   const setLayout = (layout) => {
     dispatch({ type: 'SET_LAYOUT', payload: layout });
+    const { tempKeyBindings, ...settingsToSave } = state;
     setCookieSettings({
-      timerDuration: state.timerDuration,
-      keyBindings: state.keyBindings,
-      gameSound: state.gameSound,
+      ...settingsToSave,
       layout,
     });
   };
@@ -158,9 +184,11 @@ const useStratagemsGameSettings = ({
     timerDuration: state.timerDuration,
     timeBonus: state.timeBonus,
     layout: state.layout,
+    trainingMode: state.trainingMode,
     setGameSound,
     setTimerDuration,
     setTimeBonus,
+    setTrainingMode,
     keyBindings: state.keyBindings,
     tempKeyBindings: state.tempKeyBindings,
     setTempKeyBinding,

@@ -41,11 +41,13 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
     cy.get('[data-testid="round-bonus"]').should('have.text', '0');
   });
 
-  it('Persists sound and timer settings after reload', () => {
+  it('Persists settings after reload', () => {
     cy.setSettings(5);
     cy.visit('http://localhost:3000/');
     cy.get('[data-testid="button-settings"]').click();
+    cy.get('[data-testid="checkbox-training-stratagem-jammer"]').should('be.checked');
     cy.get('[data-testid="timer-duration-input"]').should('have.value', '5');
+    cy.get('[data-testid="text-noise-effect"]').should('have.text', 'Jammed');
   });
 
   it('Allows selecting and displaying stratagems', () => {
@@ -95,6 +97,28 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
 
     // Check if the combination worked
     cy.get('[data-testid="score"]').should('have.text', '25');
+  });
+
+  it('Handles training mode settings', () => {
+    cy.get('[data-testid="button-settings"]').click();
+    cy.toggleCheckbox('[data-testid="checkbox-training-stratagem-jammer"', true);
+    cy.get('[data-testid="save-training-mode"]').click();
+    cy.get('[data-testid="settings-overlay"]').click();
+
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+
+    // Perform a correct combination
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'downarrow', 'uparrow', 'rightarrow'], 1);
+    cy.get('[data-testid="score"]').should('have.text', '25');
+
+    // Perform an incorrect combination
+    cy.performKeyCombination(['downarrow', 'leftarrow', 'uparrow', 'uparrow', 'rightarrow'], 1);
+    cy.get('[data-testid="score"]').should('have.text', '25');
+    cy.get('.arrow-is-active').should('not.exist');
   });
 
   it('Display round history', () => {

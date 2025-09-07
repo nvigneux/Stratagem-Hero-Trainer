@@ -1,0 +1,217 @@
+/* ---- CONFIGURABLE VARIABLES ---- */
+.noise {
+  --noise-speed: 500ms;
+  --scan-speed: 2400ms;
+  --glitch-a: 1700ms;
+  --glitch-b: 2300ms;
+  --hue: 200deg;
+  --color-bg-1: 0 255 255;
+  --color-bg-2: 255 238 0;
+
+  position: relative;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  font-size: 2.5rem;
+
+  /* Text filled by animated “static” */
+  color: transparent;
+  background:
+    /* layer 1: coarse vertical jitter */ repeating-linear-gradient(
+      0deg,
+      #fff 0 1px,
+      #bfbfbf 1px 2px,
+      #8a8a8a 2px 3px,
+      #dcdcdc 3px 4px,
+      #161616 4px 5px
+    ),
+    /* layer 2: diagonal fine grain */
+      repeating-linear-gradient(115deg, #eaeaea 0 1px, #2b2b2b 1px 2px),
+    /* layer 3: subtle tint to simulate CRT glow */
+      linear-gradient(0deg, hsl(var(--hue) 100% 60% / 12%), transparent 60%);
+  background-size: 100% 4px, 8px 8px, 100% 100%;
+  background-blend-mode: screen, soft-light, normal;
+  background-clip: text;
+
+  /* Gentle glow */
+  text-shadow: 0 0 0.3px #fff, 0 0 4px hsl(var(--hue) 90% 60% / 30%);
+  animation: jammed-noise var(--noise-speed) steps(6, end) infinite;
+}
+
+/* Scanlines overlay */
+.noise::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+
+  /* horizontal scanlines + faint vignette */
+  background: repeating-linear-gradient(
+      0deg,
+      rgb(255 255 255 / 6%) 0 2px,
+      rgb(0 0 0 / 8%) 2px 3px
+    ),
+    radial-gradient(150% 120% at 50% 0%, rgb(0 0 0 / 15%), transparent 50%),
+    radial-gradient(150% 120% at 50% 100%, rgb(0 0 0 / 18%), transparent 50%);
+  mix-blend-mode: overlay;
+  animation: jammed-scan var(--scan-speed) linear infinite;
+  border-radius: 2rem;
+}
+
+/* Glitch duplicates: red/cyan channel split with slicing */
+.noise::before,
+.noise::after {
+  /* Keep ::after for scanlines; slices use a nested shadow element instead */
+}
+
+.noise > .slice {
+  display: none; /* just in case someone injects children */
+}
+
+/* ---- KEYFRAMES ---- */
+
+@keyframes jammed-noise {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+    filter: contrast(140%) brightness(110%) saturate(110%);
+  }
+
+  50% {
+    background-position: 0 3px, -4px 5px, 0 0;
+    filter: contrast(160%) brightness(120%) saturate(120%);
+  }
+
+  100% {
+    background-position: 0 0, -8px 0, 0 0;
+    filter: contrast(150%) brightness(115%) saturate(115%);
+  }
+}
+
+@keyframes jammed-scan {
+  0% {
+    transform: translateY(-6%);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(6%);
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-6%);
+    opacity: 0.45;
+  }
+}
+
+/* Horizontal slice clipping + jitter */
+@keyframes jammed-glitch-a {
+  0% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
+  }
+
+  10% {
+    clip-path: inset(0 0 85% 0);
+    transform: translate(-1px, -0.5px);
+  }
+
+  20% {
+    clip-path: inset(80% 0 0 0);
+    transform: translate(1px, 0.5px);
+  }
+
+  30% {
+    clip-path: inset(10% 0 75% 0);
+    transform: translate(-1.5px, 0);
+  }
+
+  40% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(1.5px, 0.5px);
+  }
+
+  50% {
+    clip-path: inset(15% 0 60% 0);
+    transform: translate(-0.5px, -0.5px);
+  }
+
+  60% {
+    clip-path: inset(40% 0 40% 0);
+    transform: translate(1px, -0.5px);
+  }
+
+  70% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(-1px, 0.5px);
+  }
+
+  80% {
+    clip-path: inset(30% 0 50% 0);
+    transform: translate(1px, 0);
+  }
+
+  90% {
+    clip-path: inset(65% 0 15% 0);
+    transform: translate(-0.5px, 0.5px);
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0, 0);
+  }
+}
+
+/* A second stochastic-looking shake using filter + shadows on the main element */
+@keyframes jammed-glitch-b {
+  0% {
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 15%), -1.5px 0 rgb(var(--color-bg-2) / 30%);
+  }
+
+  20% {
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 25%), -1.5px 0 rgb(var(--color-bg-2) / 15%);
+  }
+
+  40% {
+    text-shadow: -1px 0 rgb(var(--color-bg-1) / 15%), 1px 0 rgb(var(--color-bg-2) / 15%);
+  }
+
+  60% {
+    text-shadow: 2px 0 rgb(var(--color-bg-1) / 15%), -2px 0 rgb(var(--color-bg-2) / 15%);
+  }
+
+  80% {
+    text-shadow: -0.5px 0 rgb(var(--color-bg-1) / 25%), 0.5px 0 rgb(var(--color-bg-2) / 25%);
+  }
+
+  100% {
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 15%), -1.5px 0 rgb(var(--color-bg-2) / 15%);
+  }
+}
+
+/* Run the second glitch on the base element */
+/* stylelint-disable-next-line no-duplicate-selectors */
+.noise {
+  animation: jammed-noise var(--noise-speed) steps(6, end) infinite,
+    jammed-glitch-b var(--glitch-b) steps(8, end) infinite;
+}
+
+/* Optional: make effect stronger on hover/focus */
+.noise:hover,
+.noise:focus {
+  --noise-speed: 350ms;
+  --scan-speed: 1600ms;
+
+  filter: brightness(125%) saturate(125%);
+}
+
+@media (width <= 1024px) {
+  .noise {
+    font-size: 1.9rem;
+  }
+}
+
+@media (width <= 980px) and (orientation: landscape) {
+  .noise {
+    font-size: 1.56rem;
+  }
+}
