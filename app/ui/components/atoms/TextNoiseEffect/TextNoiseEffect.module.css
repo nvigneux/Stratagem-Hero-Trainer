@@ -164,7 +164,7 @@
 /* A second stochastic-looking shake using filter + shadows on the main element */
 @keyframes jammed-glitch-b {
   0% {
-    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 60%), -1.5px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 20%), -1.5px 0 rgb(var(--color-bg-2) / 20%);
   }
 
   20% {
@@ -172,7 +172,7 @@
   }
 
   40% {
-    text-shadow: -1px 0 rgb(var(--color-bg-1) / 40%), 1px 0 rgb(var(--color-bg-2) / 60%);
+    text-shadow: -1px 0 rgb(var(--color-bg-1) / 40%), 1px 0 rgb(var(--color-bg-2) / 20%);
   }
 
   60% {
@@ -180,7 +180,7 @@
   }
 
   80% {
-    text-shadow: -0.5px 0 rgb(var(--color-bg-1) / 50%), 0.5px 0 rgb(var(--color-bg-2) / 40%);
+    text-shadow: -0.5px 0 rgb(var(--color-bg-1) / 30%), 0.5px 0 rgb(var(--color-bg-2) / 30%);
   }
 
   100% {
