@@ -20,6 +20,13 @@ function TrainingModeForm({ trainingMode, handleSubmitTrainingMode }) {
           defaultChecked={trainingMode.stratagemJammer}
         />
       </LabelInput>
+      <LabelInput htmlFor="sequentialMode" label="Sequential Mode">
+        <Checkbox
+          id="checkbox-training-sequential-mode"
+          name="sequentialMode"
+          defaultChecked={trainingMode.sequentialMode}
+        />
+      </LabelInput>
     </FormWrapper>
   );
 }
