@@ -55,6 +55,10 @@ const CATEGORIES = [
     id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
     name: 'Control Group',
   },
+  {
+    id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
+    name: 'Dust Devils',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -456,6 +460,24 @@ const CONTROL_GROUP = [
   },
 ];
 
+const DUST_DEVILS = [
+  {
+    name: 'Speargun',
+    code: ['down', 'right', 'down', 'left', 'up', 'right'],
+    category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
+  },
+  {
+    name: 'Expendable Napalm',
+    code: ['down', 'down', 'left', 'up', 'left'],
+    category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
+  },
+  {
+    name: 'Solo Silo',
+    code: ['down', 'up', 'right', 'down', 'down'],
+    category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -533,6 +555,7 @@ const STRATAGEMS = [
   ...MASTERS_OF_CEREMONY,
   ...FORCE_OF_LAW,
   ...CONTROL_GROUP,
+  ...DUST_DEVILS,
   ...GENERAL_STRATEGEMS,
 ];
 
