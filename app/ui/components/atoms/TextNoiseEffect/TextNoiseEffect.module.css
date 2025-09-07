@@ -164,27 +164,27 @@
 /* A second stochastic-looking shake using filter + shadows on the main element */
 @keyframes jammed-glitch-b {
   0% {
-    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 20%), -1.5px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 15%), -1.5px 0 rgb(var(--color-bg-2) / 30%);
   }
 
   20% {
-    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 20%), -1.5px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 25%), -1.5px 0 rgb(var(--color-bg-2) / 15%);
   }
 
   40% {
-    text-shadow: -1px 0 rgb(var(--color-bg-1) / 40%), 1px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: -1px 0 rgb(var(--color-bg-1) / 15%), 1px 0 rgb(var(--color-bg-2) / 15%);
   }
 
   60% {
-    text-shadow: 2px 0 rgb(var(--color-bg-1) / 20%), -2px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: 2px 0 rgb(var(--color-bg-1) / 15%), -2px 0 rgb(var(--color-bg-2) / 15%);
   }
 
   80% {
-    text-shadow: -0.5px 0 rgb(var(--color-bg-1) / 30%), 0.5px 0 rgb(var(--color-bg-2) / 30%);
+    text-shadow: -0.5px 0 rgb(var(--color-bg-1) / 25%), 0.5px 0 rgb(var(--color-bg-2) / 25%);
   }
 
   100% {
-    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 20%), -1.5px 0 rgb(var(--color-bg-2) / 20%);
+    text-shadow: 1.5px 0 rgb(var(--color-bg-1) / 15%), -1.5px 0 rgb(var(--color-bg-2) / 15%);
   }
 }
 
