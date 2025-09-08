@@ -454,7 +454,7 @@ const CONTROL_GROUP = [
     category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
   },
   {
-    name: 'Epoch.',
+    name: 'Epoch',
     code: ['down', 'left', 'up', 'left', 'right'],
     category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
   },
