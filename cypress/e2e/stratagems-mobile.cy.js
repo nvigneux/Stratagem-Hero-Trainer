@@ -73,11 +73,13 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.get('[data-testid="perfect-round"]').should('have.text', '100');
   });
 
-  it('Persists sound and timer settings after reload', () => {
+  it('Persists settings after reload', () => {
     cy.setSettings(5);
     cy.visit('http://localhost:3000/');
     cy.get('[data-testid="button-settings"]').click();
+    cy.get('[data-testid="checkbox-training-stratagem-jammer"]').should('be.checked');
     cy.get('[data-testid="timer-duration-input"]').should('have.value', '5');
+    cy.get('[data-testid="text-noise-effect"]').should('have.text', 'Jammed');
   });
 
   it('Validates mobile layout switching and persistence', () => {
@@ -109,12 +111,45 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.get('.card-is-active').should('exist').and('have.length', 1);
   });
 
+  it('Handles training mode settings', () => {
+    // Modify sound settings
+    cy.get('[data-testid="button-settings"]').click();
+    cy.wait(100);
+    cy.toggleCheckbox('[data-testid="checkbox-training-stratagem-jammer"', true);
+    cy.wait(100);
+    cy.get('[data-testid="save-training-mode"]').click();
+
+    // Close settings
+    cy.get('[data-testid="settings-overlay"]').click({ force: true });
+
+    // Switch to D-pad layout
+    cy.get('[data-testid="dpad-button"]').click();
+
+    // Disable all stratagems
+    cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
+
+    // Select a stratagem
+    cy.selectStratagem('Machine Gun');
+
+    // Close the side stratagems
+    cy.get('[data-testid="button-side-stratagems"]').click();
+
+    // Use D-pad controls
+    cy.performClickCombination(['dpad-down', 'dpad-left', 'dpad-down', 'dpad-up', 'dpad-right'], 6);
+
+    // Check if the round is incremented
+    cy.get('[data-testid="round-info"]').should('have.text', '2');
+    cy.get('[data-testid="round-bonus"]').should('have.text', '75');
+    cy.get('[data-testid="perfect-round"]').should('have.text', '100');
+  });
+
   it('Display round history', () => {
     // Disable all stratagems
     cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
 
     // Select a stratagem
     cy.selectStratagem('Machine Gun');
+    cy.wait(100);
 
     // Close the side stratagems
     cy.get('[data-testid="button-side-stratagems"]').click();
@@ -138,6 +173,7 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
 
     // Select a stratagem
     cy.selectStratagem('Machine Gun');
+    cy.wait(100);
 
     // Close the side stratagems
     cy.get('[data-testid="button-side-stratagems"]').click();

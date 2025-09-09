@@ -24,6 +24,7 @@ import KeyBindingsForm from '../../../../forms/KeyBindingsForm';
 import GameSoundForm from '../../../../forms/GameSoundForm';
 import TimerDurationForm from '../../../../forms/TimerDurationForm';
 import HeadingForm from '../../atoms/HeadingForm/HeadingForm';
+import TrainingModeForm from '../../../../forms/TrainingModeForm';
 import InfoMessage from '../../atoms/InfoMessage/InfoMessage';
 import TableStatsWrapper from '../../atoms/TableStatsWrapper/TableStatsWrapper';
 import TableStats, {
@@ -42,6 +43,7 @@ import StatsButton, {
 import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 import ButtonBuyMeACoffee from '../../atoms/ButtonBuyMeACoffee/ButtonBuyMeACoffee';
 import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
+import TextNoiseEffect from '../../atoms/TextNoiseEffect/TextNoiseEffect';
 
 // Hooks
 import useStratagemsSeries from '../../../../lib/hooks/useStratagemsSeries';
@@ -73,6 +75,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
   const {
     gameSound,
+    trainingMode,
+    setTrainingMode,
     setGameSound,
     timerDuration,
     timeBonus,
@@ -88,6 +92,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     defaultKeyBindings: settingsStored.keyBindings,
     defaultTempKeyBindings: settingsStored.keyBindings,
     defaultGameSound: settingsStored.gameSound,
+    defaultTrainingMode: settingsStored.trainingMode,
     defaultLayout: settingsStored.layout,
   });
 
@@ -311,6 +316,15 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   };
 
   /**
+   * Handle the submit of the training mode form
+   * @param {FormData} formData
+   */
+  const handleSubmitTrainingMode = (formData) => {
+    const stratagemJammerValue = formData.get('stratagemJammer');
+    setTrainingMode({ stratagemJammer: !!stratagemJammerValue });
+  };
+
+  /**
    * Handle the key bindings
    */
   const handleKeyBindings = () => {
@@ -498,7 +512,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
               className={isPanicMode ? styles.panicMode : ''}
             />
             <Arrow.List>
-              {series[0].code.map((direction, index) => (
+              {!trainingMode.stratagemJammer ? series[0].code.map((direction, index) => (
                 <Arrow
                   // eslint-disable-next-line react/no-array-index-key
                   key={`${series[0].name}-${direction}-${index}`}
@@ -507,7 +521,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                   error={stateSerie.error}
                   size="large"
                 />
-              ))}
+              )) : <TextNoiseEffect label="Jammed" title="Stratagem jammer activated" />}
             </Arrow.List>
           </div>
         ) : (
@@ -803,6 +817,15 @@ ${item.stratagem.name}.svg`}
       {/* SETTINGS PANEL */}
       <div className={cn([styles.settings])} data-testid="settings-panel">
         <div className={styles.settingsTop}>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Training mode" />
+            <TrainingModeForm
+              trainingMode={trainingMode}
+              handleSubmitTrainingMode={handleSubmitTrainingMode}
+            />
+          </div>
+
           <div className={styles.settingsSection}>
             <HeadingForm title="Audio" />
             <GameSoundForm

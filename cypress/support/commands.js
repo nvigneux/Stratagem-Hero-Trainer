@@ -44,9 +44,14 @@ Cypress.Commands.add('performKeyCombination', (keys, times = 1, options = {}) =>
 Cypress.Commands.add('setSettings', (timerDuration) => {
   cy.session('h2-settings', () => {
     cy.visit('http://localhost:3000/');
-    // Change game sound settings
     cy.get('[data-testid="button-settings"]').click();
     cy.wait(500);
+
+    // Change training mode settings
+    cy.toggleCheckbox('[data-testid="checkbox-training-stratagem-jammer"', true);
+    cy.get('[data-testid="save-training-mode"]').click();
+
+    // Change game sound settings
     cy.toggleCheckbox('[data-testid="checkbox-game-sound"', true);
     cy.get('[data-testid="save-game-sound"]').click();
 
