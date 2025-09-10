@@ -1,4 +1,4 @@
-.label{
+.label {
   display: flex;
   flex-flow: row nowrap;
   gap: 1rem;
@@ -9,13 +9,18 @@
   padding: 0.5rem 1rem;
 }
 
-.labelText{
+.labelText {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
   font-size: 0.95rem;
   font-weight: 500;
   text-align: left;
 }
 
-.label input{
+.label input {
   font-size: 1rem;
   text-transform: uppercase;
   font-family: var(--font-fs-sinclair);
@@ -35,4 +40,39 @@
 .label input::-webkit-outer-spin-button {
   appearance: none;
   margin: 0;
+}
+
+.titlePopover {
+  width: 250px;
+  padding: var(--spacing-16);
+  background: rgb(18 20 26 / 87%);
+  color: var(--white);
+  border-radius: 0 0 var(--radius-s);
+  backdrop-filter: blur(3px);
+  border-left: 2px solid var(--yellow);
+}
+
+.settingsTrigger {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+.settingsIcon {
+  --size-icon: 16px;
+
+  width: var(--size-icon);
+  height: var(--size-icon);
 }
