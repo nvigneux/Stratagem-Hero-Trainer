@@ -5,6 +5,7 @@ const initialState = {
   gameSound: false,
   trainingMode: {
     stratagemJammer: false,
+    sequentialMode: false,
   },
   layout: 'keyboard',
   timerDuration: 10,
@@ -60,7 +61,7 @@ const settingsReducer = (state, action) => {
  * Custom hook for managing stratagems game settings.
  * @param {object} params - Parameters.
  * @param {boolean} params.defaultGameSound - Default game sound state.
- * @param {{stratagemJammer: boolean}} params.defaultTrainingMode - Default training mode state.
+ * @param {{stratagemJammer: boolean, sequentialMode: boolean}} params.defaultTrainingMode - Default training mode state.
  * @param {number} params.defaultDuration - Default timer duration.
  * @param {number} params.defaultBonus - Default time bonus.
  * @param {object} params.defaultKeyBindings - Default key bindings.
@@ -110,7 +111,7 @@ const useStratagemsGameSettings = ({
 
   /**
    * Set the training mode
-   * @param {{stratagemJammer: boolean}} trainingMode
+   * @param {{stratagemJammer: boolean, sequentialMode: boolean}} trainingMode
    */
   const setTrainingMode = (trainingMode) => {
     dispatch({ type: 'SET_TRAINING_MODE', payload: trainingMode });
