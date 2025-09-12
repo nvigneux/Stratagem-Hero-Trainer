@@ -66,7 +66,7 @@ function StrategemsLayout({
    */
   const handleChangeCategoriesCheckbox = (category, value) => {
     stratagemsByCategories[category].forEach(
-      (stratagem) => handleChange({ [stratagem.name]: value }),
+      (stratagem, index) => handleChange({ [stratagem.name]: { value, order: index } }),
     );
   };
 
@@ -95,7 +95,7 @@ function StrategemsLayout({
             <div className={styles.sideDecoration} />
             {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
               const categoryChecked = stratagemsByCategory.every(
-                (stratagem) => checkboxes[stratagem.name],
+                (stratagem) => checkboxes[stratagem.name].value,
               );
               return (
                 <StratagemsCategories.Category key={category}>
@@ -113,14 +113,14 @@ function StrategemsLayout({
                       <Checkbox
                         key={stratagem.name}
                         id={stratagem.name}
-                        checked={checkboxes[stratagem.name]}
+                        checked={checkboxes[stratagem.name].value}
                         onChange={() => handleChangeCheckbox(stratagem.name)}
                       >
                         <StratagemsCard
                           name={stratagem.name}
                           code={stratagem.code}
                           category={stratagem.category.name}
-                          active={checkboxes[stratagem.name]}
+                          active={checkboxes[stratagem.name].value}
                         />
                       </Checkbox>
                     )}
