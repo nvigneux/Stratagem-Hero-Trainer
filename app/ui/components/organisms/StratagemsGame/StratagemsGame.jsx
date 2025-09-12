@@ -116,7 +116,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   });
 
   const filteredStratagemsChecked = useMemo(
-    () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
+    () => [...stratagems]
+      .filter((stratagem) => checkedStratagems[stratagem.name].value)
+      .sort(
+        (a, b) => (checkedStratagems[a.name]?.order || 0) - (checkedStratagems[b.name]?.order || 0),
+      ),
     [stratagems, checkedStratagems],
   );
 
@@ -823,14 +827,6 @@ ${item.stratagem.name}.svg`}
         <div className={styles.settingsTop}>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Training mode" />
-            <TrainingModeForm
-              trainingMode={trainingMode}
-              handleSubmitTrainingMode={handleSubmitTrainingMode}
-            />
-          </div>
-
-          <div className={styles.settingsSection}>
             <HeadingForm title="Audio" />
             <GameSoundForm
               gameSound={gameSound}
@@ -843,6 +839,14 @@ ${item.stratagem.name}.svg`}
             <TimerDurationForm
               timerDuration={timerDuration}
               handleSubmitTimerDuration={handleSubmitTimerDuration}
+            />
+          </div>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Training mode" />
+            <TrainingModeForm
+              trainingMode={trainingMode}
+              handleSubmitTrainingMode={handleSubmitTrainingMode}
             />
           </div>
 
