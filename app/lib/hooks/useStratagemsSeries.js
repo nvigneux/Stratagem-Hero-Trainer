@@ -90,9 +90,12 @@ function reducerStateSerie(state, action) {
  * @param {Array} props.initialState - Initial state of the stratagems.
  * @param {number} props.maxLength - Maximum length of the series.
  * @param {number} props.bestScoreStored - Best score stored.
+ * @param {{stratagemJammer: boolean, sequentialMode: boolean}} props.trainingMode - Training mode.
  * @returns {object} Series state and control functions.
  */
-function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 0 }) {
+function useStratagemsSeries({
+  initialState, maxLength = 999, bestScoreStored = 0, trainingMode,
+}) {
   const [stateSerie, dispatchStateSerie] = useReducer(
     reducerStateSerie,
     { ...initialStateSerie, bestScore: bestScoreStored },
@@ -105,7 +108,14 @@ function useStratagemsSeries({ initialState, maxLength = 999, bestScoreStored = 
    */
   const resetStratagemsArray = () => {
     if (!initialState.length) return [];
+
+    // if the sequential mode is enabled, return the initial state
+    if (trainingMode.sequentialMode) {
+      return initialState.sort((a, b) => (a?.order || 0) - (b?.order || 0));
+    }
+
     const length = maxLength + stateSerie.round - 1;
+
     return Array.from({ length }, () => [...initialState][Math.floor(
       Math.random() * initialState.length,
     )]);

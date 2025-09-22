@@ -19,9 +19,12 @@ export default async function Page() {
   const cookieStore = await cookies(); // Fetch the cookies store asynchronously
   const bestScoreStored = cookieStore.get(COOKIE_BEST_SCORE)?.value || 0;
   const settingsStored = cookieStore.get(COOKIE_SETTINGS)?.value || {};
+  const jsonSettingsStored = isJsonString(settingsStored) ? JSON.parse(settingsStored) : {};
 
   const stratagems = await fetchStratagems();
-  const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
+  const randomisedStratagems = jsonSettingsStored?.trainingMode?.sequentialMode
+    ? [...stratagems]
+    : [...stratagems].sort(() => Math.random() - 0.5);
 
   /**
    * Groups the stratagems by their category.
@@ -43,7 +46,7 @@ export default async function Page() {
       <StratagemsGame
         stratagems={randomisedStratagems}
         bestScoreStored={+bestScoreStored}
-        settingsStored={isJsonString(settingsStored) ? JSON.parse(settingsStored) : {}}
+        settingsStored={jsonSettingsStored}
       />
     </StratagemsLayout>
   );

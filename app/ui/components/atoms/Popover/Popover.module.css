@@ -1,0 +1,5 @@
+.popover-content {
+  box-sizing: border-box;
+  width: max-content;
+  z-index: 2;
+}

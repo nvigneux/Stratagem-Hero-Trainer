@@ -116,7 +116,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
   });
 
   const filteredStratagemsChecked = useMemo(
-    () => [...stratagems].filter((stratagem) => checkedStratagems[stratagem.name]),
+    () => [...stratagems]
+      .filter((stratagem) => checkedStratagems[stratagem.name].value)
+      .sort(
+        (a, b) => (checkedStratagems[a.name]?.order || 0) - (checkedStratagems[b.name]?.order || 0),
+      ),
     [stratagems, checkedStratagems],
   );
 
@@ -130,6 +134,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     initialState: filteredStratagemsChecked,
     maxLength: 6,
     bestScoreStored,
+    trainingMode,
   });
 
   const handleGameOver = () => {
@@ -321,7 +326,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    */
   const handleSubmitTrainingMode = (formData) => {
     const stratagemJammerValue = formData.get('stratagemJammer');
-    setTrainingMode({ stratagemJammer: !!stratagemJammerValue });
+    const sequentialModeValue = formData.get('sequentialMode');
+    setTrainingMode({
+      stratagemJammer: !!stratagemJammerValue,
+      sequentialMode: !!sequentialModeValue,
+    });
   };
 
   /**
@@ -389,7 +398,6 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           };
         }
 
-        // TODO faire des stats sur le meilleur temps, le pire temps, le temps moyen
         acc[name].nb += 1;
         acc[name].bestTime = Math.min(
           acc[name].bestTime || Infinity,
@@ -819,14 +827,6 @@ ${item.stratagem.name}.svg`}
         <div className={styles.settingsTop}>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Training mode" />
-            <TrainingModeForm
-              trainingMode={trainingMode}
-              handleSubmitTrainingMode={handleSubmitTrainingMode}
-            />
-          </div>
-
-          <div className={styles.settingsSection}>
             <HeadingForm title="Audio" />
             <GameSoundForm
               gameSound={gameSound}
@@ -839,6 +839,14 @@ ${item.stratagem.name}.svg`}
             <TimerDurationForm
               timerDuration={timerDuration}
               handleSubmitTimerDuration={handleSubmitTimerDuration}
+            />
+          </div>
+
+          <div className={styles.settingsSection}>
+            <HeadingForm title="Training mode" />
+            <TrainingModeForm
+              trainingMode={trainingMode}
+              handleSubmitTrainingMode={handleSubmitTrainingMode}
             />
           </div>
 
