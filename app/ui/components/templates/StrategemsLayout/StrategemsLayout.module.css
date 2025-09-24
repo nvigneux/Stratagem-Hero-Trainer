@@ -55,6 +55,7 @@
   flex-flow: column wrap;
   gap: 1.5rem;
   padding: 1.5rem 1rem 1rem 3rem;
+  min-height: 80vh;
 }
 
 .sideContainer::before {
@@ -126,6 +127,13 @@
 .checkboxAll {
   padding: 2rem 1rem 0;
   align-self: flex-end;
+}
+
+.searchStratagemsContainer {
+  display: flex;
+  padding: 0 1rem;
+  position: relative;
+  top: 0.5rem;
 }
 
 .opened {
