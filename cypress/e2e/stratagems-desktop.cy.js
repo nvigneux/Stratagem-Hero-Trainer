@@ -14,6 +14,9 @@ describe('Stratagem Trainer - Gameplay and Settings', () => {
     cy.get('[data-testid="stratagem-name"]').should('have.text', 'Traitor detected !');
     cy.get('[data-testid="round-info"]').should('have.text', '1');
 
+    // search for a stratagem
+    cy.get('[data-testid="search-stratagems"]').type('Machine Gun');
+
     // Select a stratagem
     cy.selectStratagem('Machine Gun');
 
