@@ -8,12 +8,14 @@ import styles from './StrategemsLayout.module.css';
 // Lib
 import cn from '../../../../lib/cn';
 import useCheckboxes from '../../../../lib/hooks/useCheckboxes';
+import useSearchStratagems from '../../../../lib/hooks/useSearchStratagems';
 
 // Components
 import ButtonSideStratagems from '../../atoms/ButtonSideStratagems/ButtonSideStratagems';
 import StratagemsCategories from '../../atoms/StratagemsCategories/StratagemsCategories';
 import Checkbox from '../../atoms/Checkbox/Checkbox';
 import StratagemsCard from '../../molecules/StratagemsCard/StratagemsCard';
+import Textfield from '../../atoms/Textfield/Textfield';
 
 // Provider
 import { StratagemsProvider } from './StrategemsProvider';
@@ -46,6 +48,13 @@ function StrategemsLayout({
     { initialState: stratagems, key: 'name', defaultValue: defaultCheckValue },
   );
 
+  const {
+    filteredStratagems,
+    noSearchResults,
+    searchTerm,
+    setSearchTerm,
+  } = useSearchStratagems({ stratagems: { ...stratagemsByCategories } });
+
   /**
    * Handle the change of a single checkbox
    * @param {string} name
@@ -70,6 +79,10 @@ function StrategemsLayout({
     );
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <main className={cn([styles.container,
       `${openStratagems ? `${styles.opened} container-is-opened`
@@ -91,12 +104,26 @@ function StrategemsLayout({
             label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}
             className={styles.checkboxAll}
           />
+          <div className={styles.searchStratagemsContainer}>
+            <Textfield
+              id="search-stratagems"
+              type="search"
+              placeholder="Search stratagems..."
+              className={styles.searchStratagems}
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </div>
           <div className={styles.sideContainer}>
             <div className={styles.sideDecoration} />
-            {Object.entries(stratagemsByCategories).map(([category, stratagemsByCategory]) => {
-              const categoryChecked = stratagemsByCategory.every(
+            {noSearchResults ? (
+              <div className={styles.noSearchResults}>No stratagems found</div>
+            ) : Object.entries(filteredStratagems).map(([category, stratagemsByCategory]) => {
+              const categoryChecked = stratagemsByCategories[category].every(
                 (stratagem) => checkboxes[stratagem.name].value,
               );
+              if (stratagemsByCategory.length === 0) return null;
+
               return (
                 <StratagemsCategories.Category key={category}>
 

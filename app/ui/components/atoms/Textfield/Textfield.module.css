@@ -1,0 +1,30 @@
+/* Textfield styles */
+.textfield {
+  width: 100%;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--yellow-bg);
+  font-size: 1rem;
+  background-color: rgb(68 62 62 / 37.6%);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  font-family: fsSinclair, 'fsSinclair Fallback', sans-serif;
+}
+
+.textfield:focus-visible {
+  outline: none;
+  border-color: var(--yellow);
+}
+
+.textfield::placeholder {
+  color: var(--white);
+  opacity: 0.5;
+}
+
+.textfield:hover:not(:disabled) {
+  border-color: var(--yellow);
+}
+
+@media (width <= 1024px) {
+  .textfield {
+    padding: 0.35rem 0.5rem;
+  }
+}
