@@ -2,7 +2,7 @@
 .container {
   display: flex;
   flex-flow: column wrap;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 /* CATEGORY */

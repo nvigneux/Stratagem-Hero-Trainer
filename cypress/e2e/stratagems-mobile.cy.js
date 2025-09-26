@@ -12,6 +12,9 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     // Disable all stratagems
     cy.toggleCheckbox('[data-testid="checkbox-all"]', false);
 
+    // search for a stratagem
+    cy.get('[data-testid="search-stratagems"]').type('Machine Gun');
+
     // Select a stratagem
     cy.selectStratagem('Machine Gun');
 

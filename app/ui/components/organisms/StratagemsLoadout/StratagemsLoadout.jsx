@@ -60,6 +60,7 @@ function StratagemsLoadout({ stratagems }) {
   const { decode, encode } = useEncodeStratagems();
 
   const initStratagemsArray = useCallback(() => {
+    if (!paramCodes) return [];
     const nameArray = decode(paramCodes);
     const matchedStratagems = nameArray
       .map((name) => stratagems.find((s) => s.name === name))
@@ -89,7 +90,7 @@ function StratagemsLoadout({ stratagems }) {
         .filter(Boolean);
 
       const checked = matchedStratagems.reduce((acc, stratagem) => {
-        acc[stratagem.name] = true;
+        acc[stratagem.name] = { value: true, order: 0 };
         return acc;
       }, {});
       setCheckedStratagem({ ...checked });
@@ -99,7 +100,7 @@ function StratagemsLoadout({ stratagems }) {
   // update stratagemsArray when checkedStratagems changes
   useEffect(() => {
     const checkedStratagemsData = stratagems.filter(
-      (stratagem) => !!checkedStratagems[stratagem.name],
+      (stratagem) => checkedStratagems[stratagem.name].value,
     );
     if (
       !checkedStratagemsData.length
