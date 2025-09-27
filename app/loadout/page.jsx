@@ -5,7 +5,6 @@ import { fetchStratagems } from '../lib/data';
 
 // Lib
 import { COOKIE_LOADOUT } from '../lib/constants';
-
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
 import StratagemsLoadout from '../ui/components/organisms/StratagemsLoadout/StratagemsLoadout';
@@ -45,4 +44,19 @@ export default async function Page() {
       />
     </StratagemsLayout>
   );
+}
+
+/**
+ *
+ * @param {object} root0
+ * @param {object} root0.searchParams
+ * @returns {object} Metadata
+ */
+export async function generateMetadata({ searchParams }) {
+  const { name } = await searchParams;
+
+  return {
+    title: name ? `${name} - Stratagem Loadout - Helldivers`
+      : 'Stratagem Loadout - Helldivers',
+  };
 }
