@@ -1,7 +1,8 @@
 'use client';
 
+import Head from 'next/head';
 import {
-  useCallback, useEffect, useReducer, useRef,
+  useCallback, useEffect, useReducer, useRef, useState,
 } from 'react';
 
 // Styles
@@ -12,6 +13,7 @@ import styles from './StratagemsLoadout.module.css';
 import StratagemsName from '../../atoms/StratagemsName/StratagemsName';
 import StratagemsLoadoutList from '../../molecules/StratagemsLoadoutList/StratagemsLoadoutList';
 import StratagemsLoadoutCard from '../../molecules/StratagemsLoadoutCard/StratagemsLoadoutCard';
+import Textfield from '../../atoms/Textfield/Textfield';
 
 // Provider
 import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvider';
@@ -56,8 +58,11 @@ function StratagemsLoadout({ stratagems }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const paramCodes = searchParams.get('stratagems');
+  const paramName = searchParams.get('name') || '';
 
   const { decode, encode } = useEncodeStratagems();
+  const [loadoutName, setLoadoutName] = useState(paramName);
+  const [debouncedLoadoutName, setDebouncedLoadoutName] = useState(paramName);
 
   const initStratagemsArray = useCallback(() => {
     if (!paramCodes) return [];
@@ -80,7 +85,8 @@ function StratagemsLoadout({ stratagems }) {
    */
   const ref = useRef('');
   const refChecked = useRef(false);
-  // init state with stratagems from URL
+
+  // init state with stratagems and name from URL
   useEffect(() => {
     if (paramCodes && paramCodes !== ref.current) {
       ref.current = paramCodes;
@@ -95,7 +101,22 @@ function StratagemsLoadout({ stratagems }) {
       }, {});
       setCheckedStratagem({ ...checked });
     }
+
+    // Initialize loadout name from URL parameter
+    if (paramName && paramName !== loadoutName) {
+      setLoadoutName(paramName);
+      setDebouncedLoadoutName(paramName);
+    }
   }, []);
+
+  // Debounce the loadout name input
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedLoadoutName(loadoutName);
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [loadoutName]);
 
   // update stratagemsArray when checkedStratagems changes
   useEffect(() => {
@@ -132,15 +153,34 @@ function StratagemsLoadout({ stratagems }) {
     refChecked.current = true;
   }, [checkedStratagems]);
 
-  // update URL when stratagemsArray changes
+  // update URL when stratagemsArray or debouncedLoadoutName changes
   useEffect(() => {
     const encoded = encode(stratagemsArray);
-    router.replace(`?stratagems=${encoded}`);
-  }, [stratagemsArray]);
+    const params = new URLSearchParams();
+    if (encoded) params.set('stratagems', encoded);
+    if (debouncedLoadoutName.trim()) params.set('name', debouncedLoadoutName.trim());
+
+    const queryString = params.toString();
+    router.replace(queryString ? `?${queryString}` : '');
+  }, [stratagemsArray, debouncedLoadoutName]);
 
   return (
     <div className={styles.wrapper}>
+      <Head>
+        <title>{debouncedLoadoutName.trim() || 'Stratagem Hero Trainer - Helldivers'}</title>
+      </Head>
       <div className={styles.main}>
+        <div className={styles.loadoutNameSection}>
+          <Textfield
+            id="loadout-name"
+            name="loadout-name"
+            placeholder="Enter loadout name..."
+            value={loadoutName}
+            onChange={(e) => setLoadoutName(e.target.value)}
+            className={styles.loadoutNameInput}
+            maxLength={50}
+          />
+        </div>
         {stratagemsArray?.length ? (
           <StratagemsLoadoutList stratagems={stratagemsArray}>
             {(stratagem) => (
