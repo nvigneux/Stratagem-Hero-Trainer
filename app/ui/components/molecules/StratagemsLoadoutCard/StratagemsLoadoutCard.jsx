@@ -12,17 +12,18 @@ import cn from '../../../../lib/cn';
  * StratagemsLoadoutCard component
  * @param {object} props - Component properties
  * @param {{name: string, code: string[], category: {name: string}}} props.stratagem - The stratagem object
+ * @param {string} [props.type = ''] - The type of the stratagem (optional)
  * @param {Function} props.setCheckedStratagem - Function to set checked stratagem
  * @returns {JSX.Element} The StratagemsLoadoutCard component
  */
-function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
+function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
   return (
     <button
       type="button"
       onClick={() => setCheckedStratagem({ [stratagem.name]: undefined })}
       className={styles.card}
     >
-      <StratagemsLoadoutCard.Icon type={stratagem.category.name} title={stratagem.name}>
+      <StratagemsLoadoutCard.Icon type={type || stratagem.category.name} title={stratagem.name}>
         <StratagemImage
           src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
           name={stratagem.name}
@@ -60,6 +61,11 @@ export default StratagemsLoadoutCard;
 StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({ type, children, title }) {
   const kebabType = type.replace(/ /g, '-').toLowerCase();
   return (
-    <div className={cn([styles.icon, styles[kebabType]])} title={title}>{children}</div>
+    <div
+      className={cn([styles.icon, styles.blue, styles[kebabType]])}
+      title={title}
+    >
+      {children}
+    </div>
   );
 };

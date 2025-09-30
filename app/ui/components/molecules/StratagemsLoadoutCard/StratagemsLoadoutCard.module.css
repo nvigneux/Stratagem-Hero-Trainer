@@ -41,22 +41,22 @@
   flex: 0 0 auto;
 }
 
-.patriotic-administration-center, .engineering-bay, .urban-legends, .chemical-agents {
+.blue,.patriotic-administration-center, .engineering-bay, .urban-legends, .chemical-agents {
   background: var(--blue-bg);
   border: 3px solid var(--blue);
 }
 
-.hangar, .orbital-cannons, .bridge{
+.red, .hangar, .orbital-cannons, .bridge{
   background: var(--red-bg);
   border: 3px solid var(--red);
 }
 
-.robotics-workshop {
+.green, .robotics-workshop {
   background: var(--green-bg);
   border: 3px solid var(--green);
 }
 
-.general-stratagems {
+.yellow, .general-stratagems {
   background: var(--yellow-bg);
   border: 3px solid var(--taupe);
 }
