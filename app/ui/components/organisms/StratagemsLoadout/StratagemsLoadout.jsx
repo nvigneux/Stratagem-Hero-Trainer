@@ -186,6 +186,7 @@ function StratagemsLoadout({ stratagems }) {
             {(stratagem) => (
               <StratagemsLoadoutCard
                 stratagem={stratagem}
+                type={stratagem?.color}
                 setCheckedStratagem={setCheckedStratagem}
               />
             )}
