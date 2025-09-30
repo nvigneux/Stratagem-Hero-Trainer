@@ -58,7 +58,8 @@ async function seedStratagems(client) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         code VARCHAR(255) NOT NULL,
-        category_id UUID NOT NULL
+        category_id UUID NOT NULL,
+        color VARCHAR(255) NOT NULL
       );
     `;
 
@@ -68,7 +69,7 @@ async function seedStratagems(client) {
     const insertedStratagems = await Promise.all(
       STRATAGEMS.map(
         (stratagem) => client.sql`
-          INSERT INTO stratagems (name, code, category_id)
+          INSERT INTO stratagems (name, code, category_id, color)
           VALUES (${stratagem.name}, ${JSON.stringify(stratagem.code)}, ${stratagem.category_id})
           ON CONFLICT (id) DO NOTHING;
         `,
