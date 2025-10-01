@@ -11,12 +11,11 @@ import cn from '../../../../lib/cn';
 /**
  * StratagemsLoadoutCard component
  * @param {object} props - Component properties
- * @param {{name: string, code: string[], category: {name: string}, color?: string}} props.stratagem - The stratagem object
- * @param {string} [props.type = ''] - The type of the stratagem (optional)
+ * @param {{name: string, code: string[], category: {name: string}, color: string}} props.stratagem - The stratagem object
  * @param {Function} props.setCheckedStratagem - Function to set checked stratagem
  * @returns {JSX.Element} The StratagemsLoadoutCard component
  */
-function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
+function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
   return (
     <button
       type="button"
@@ -24,9 +23,8 @@ function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
       className={styles.card}
     >
       <StratagemsLoadoutCard.Icon
-        type={type || stratagem.category.name}
+        color={stratagem.color}
         title={stratagem.name}
-        color={stratagem.theme}
       >
         <StratagemImage
           src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
@@ -57,21 +55,17 @@ export default StratagemsLoadoutCard;
 /**
  * StratagemsLoadoutCardIcon component
  * @param {object} props - Component properties
- * @param {string} props.type - Icon type
  * @param {React.ReactNode} props.children - Child nodes
  * @param {string} props.title - Title of the icon
  * @param {string} [props.color] - Theme color for the icon
  * @returns {JSX.Element} The StratagemsLoadoutCardIcon component
  */
 StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({
-  type, children, title, color,
+  children, title, color,
 }) {
-  const kebabType = type.replace(/ /g, '-').toLowerCase();
-  const colorClass = color ? styles[color] : '';
-
   return (
     <div
-      className={cn([styles.icon, colorClass, styles[kebabType]])}
+      className={cn([styles.icon, styles[color]])}
       title={title}
     >
       {children}

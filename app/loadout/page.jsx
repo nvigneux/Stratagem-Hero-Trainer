@@ -23,7 +23,7 @@ export default async function Page() {
       const svgPath = `../public/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`;
       return ({
         ...stratagem,
-        theme: getSVGThemeColor(svgPath),
+        color: getSVGThemeColor(svgPath),
       });
     }),
   );
