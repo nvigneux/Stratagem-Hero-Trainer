@@ -5,6 +5,7 @@ import { fetchStratagems } from '../lib/data';
 
 // Lib
 import { COOKIE_LOADOUT } from '../lib/constants';
+import { getSVGThemeColor } from '../lib/svg-color-analyzer';
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
 import StratagemsLoadout from '../ui/components/organisms/StratagemsLoadout/StratagemsLoadout';
@@ -17,7 +18,15 @@ export default async function Page() {
   const cookieStore = await cookies(); // Fetch the cookies store asynchronously
   const loadoutStored = cookieStore.get(COOKIE_LOADOUT)?.value || {};
 
-  const stratagems = await fetchStratagems();
+  const stratagems = await fetchStratagems().then(
+    (stratagemsData) => stratagemsData.map((stratagem) => {
+      const svgPath = `../public/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`;
+      return ({
+        ...stratagem,
+        theme: getSVGThemeColor(svgPath),
+      });
+    }),
+  );
   const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
 
   /**
