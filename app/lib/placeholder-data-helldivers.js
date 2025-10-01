@@ -66,79 +66,66 @@ const PATRIOTIC_ADMINISTRATION_CENTER = [
     name: 'Machine Gun',
     code: ['down', 'left', 'down', 'up', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Anti-Materiel Rifle',
     code: ['down', 'left', 'right', 'up', 'down'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Stalwart',
     code: ['down', 'left', 'down', 'up', 'up', 'left'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Expendable Anti-Tank',
     code: ['down', 'down', 'left', 'up', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Recoilless Rifle',
     code: ['down', 'left', 'right', 'right', 'left'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Flamethrower',
     code: ['down', 'left', 'up', 'down', 'up'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Autocannon',
     code: ['down', 'left', 'down', 'up', 'up', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Heavy Machine Gun',
     code: ['down', 'left', 'up', 'down', 'down'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Airburst Rocket Launcher',
     code: ['down', 'up', 'up', 'left', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Commando',
     code: ['down', 'left', 'up', 'down', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Railgun',
     code: ['down', 'right', 'down', 'up', 'left', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Spear',
     code: ['down', 'down', 'up', 'down', 'down'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'StA-X3 W.A.S.P. Launcher',
     code: ['down', 'down', 'up', 'down', 'right'],
     category_id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
 ];
 
@@ -147,49 +134,41 @@ const ORBITAL_CANNONS = [
     name: 'Orbital Gatling Barrage',
     code: ['right', 'down', 'left', 'up', 'up'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital Airburst Strike',
     code: ['right', 'right', 'right'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital 120MM HE Barrage',
     code: ['right', 'right', 'down', 'left', 'right', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital 380MM HE Barrage',
     code: ['right', 'down', 'up', 'up', 'left', 'down', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital Walking Barrage',
     code: ['right', 'down', 'right', 'down', 'right', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital Laser',
     code: ['right', 'down', 'up', 'right', 'down'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital Napalm Barrage',
     code: ['right', 'right', 'down', 'left', 'right', 'up'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Orbital Railcannon Strike',
     code: ['right', 'up', 'down', 'down', 'right'],
     category_id: '3958dc9e-742f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
 ];
 
@@ -198,13 +177,11 @@ const HANGER = [
     name: 'Eagle Strafing Run',
     code: ['up', 'right', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Eagle Airstrike',
     code: ['up', 'right', 'down', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Eagle Cluster Bomb',
@@ -216,43 +193,36 @@ const HANGER = [
     name: 'Eagle Napalm Airstrike',
     code: ['up', 'right', 'down', 'up'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Jump Pack',
     code: ['down', 'up', 'up', 'down', 'up'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: 'blue',
   },
   {
     name: 'Eagle Smoke Strike',
     code: ['up', 'right', 'up', 'down'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Eagle 110MM Rocket Pods',
     code: ['up', 'right', 'up', 'left'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Eagle 500KG Bomb',
     code: ['up', 'right', 'down', 'down', 'down'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Fast Recon Vehicle',
     code: ['left', 'down', 'right', 'down', 'right', 'down', 'up'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: 'blue',
   },
   {
     name: 'Eagle Rearm',
     code: ['up', 'up', 'left', 'up', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: 'yellow',
   },
 ];
 
@@ -261,49 +231,41 @@ const BRIDGE = [
     name: 'Orbital Precision Strike',
     code: ['right', 'right', 'up'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: '',
   },
   {
     name: 'Orbital Gas Strike',
     code: ['right', 'right', 'down', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: '',
   },
   {
     name: 'Orbital EMS Strike',
     code: ['right', 'right', 'left', 'down'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: '',
   },
   {
     name: 'Orbital Smoke Strike',
     code: ['right', 'right', 'down', 'up'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: '',
   },
   {
     name: 'HMG Emplacement',
     code: ['down', 'up', 'left', 'right', 'right', 'left'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: 'green',
   },
   {
     name: 'Shield Generator Relay',
     code: ['down', 'down', 'left', 'right', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: 'green',
   },
   {
     name: 'Tesla Tower',
     code: ['down', 'up', 'right', 'up', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: 'green',
   },
   {
     name: 'Grenadier Battlement',
     code: ['down', 'right', 'down', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
-    color: 'green',
   },
 ];
 
@@ -312,49 +274,41 @@ const ENGINEERING_BAY = [
     name: 'Anti-Personnel Minefield',
     code: ['down', 'left', 'up', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: 'green',
   },
   {
     name: 'Supply Pack',
     code: ['down', 'left', 'down', 'up', 'up', 'down'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Grenade Launcher',
     code: ['down', 'left', 'up', 'left', 'down'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Laser Cannon',
     code: ['down', 'left', 'down', 'up', 'left'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Incendiary Mines',
     code: ['down', 'left', 'left', 'down'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: 'green',
   },
   {
     name: '“Guard Dog” Rover',
     code: ['down', 'up', 'left', 'up', 'right', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Ballistic Shield Backpack',
     code: ['down', 'left', 'down', 'down', 'up', 'left'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Arc Thrower',
     code: ['down', 'right', 'down', 'up', 'left', 'left'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Quasar Cannon',
@@ -365,13 +319,11 @@ const ENGINEERING_BAY = [
     name: 'Shield Generator Pack',
     code: ['down', 'up', 'left', 'right', 'left', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Gas Mines',
     code: ['down', 'left', 'left', 'right'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
-    color: 'green',
   },
 ];
 
@@ -380,55 +332,46 @@ const ROBOTICS_WORKSHOP = [
     name: 'Machine Gun Sentry',
     code: ['down', 'up', 'right', 'right', 'up'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: 'Gatling Sentry',
     code: ['down', 'up', 'right', 'left'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: 'Mortar Sentry',
     code: ['down', 'up', 'right', 'right', 'down'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: '“Guard Dog”',
     code: ['down', 'up', 'left', 'up', 'right', 'down'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: 'blue',
   },
   {
     name: 'Autocannon Sentry',
     code: ['down', 'up', 'right', 'up', 'left', 'up'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: 'Rocket Sentry',
     code: ['down', 'up', 'right', 'right', 'left'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: 'EMS Mortar Sentry',
     code: ['down', 'up', 'right', 'down', 'right'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: '',
   },
   {
     name: 'Patriot Exosuit',
     code: ['left', 'down', 'right', 'up', 'left', 'down', 'down'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: 'blue',
   },
   {
     name: 'Emancipator Exosuit',
     code: ['left', 'down', 'right', 'up', 'left', 'down', 'up'],
     category_id: '76d65c26-f784-44a2-ac19-586678f7c2f2',
-    color: 'blue',
   },
 ];
 
@@ -437,13 +380,11 @@ const CHEMICAL_AGENTS = [
     name: 'Sterilizer',
     code: ['down', 'left', 'up', 'down', 'left'],
     category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
-    color: '',
   },
   {
     name: '“Guard Dog” Breath',
     code: ['down', 'up', 'left', 'up', 'right', 'up'],
     category_id: '06a89b98-cc7a-46ac-a8fb-7bbf12d5cb78',
-    color: '',
   },
 ];
 
@@ -452,19 +393,16 @@ const URBAN_LEGENDS = [
     name: 'Directional Shield',
     code: ['down', 'up', 'left', 'right', 'up', 'up'],
     category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
-    color: '',
   },
   {
     name: 'Flame Sentry',
     code: ['down', 'up', 'right', 'down', 'up', 'up'],
     category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
-    color: 'green',
   },
   {
     name: 'Anti-Tank Emplacement',
     code: ['down', 'up', 'left', 'right', 'right', 'right'],
     category_id: 'de1fb4c0-9ae8-4690-af44-90325cf11978',
-    color: 'green',
   },
 ];
 
@@ -473,7 +411,6 @@ const SERVANTS_OF_FREEDOM = [
     name: 'Hellbomb Portable',
     code: ['down', 'right', 'up', 'up', 'up'],
     category_id: 'f701e133-1fff-466c-8c84-3e99154ff778',
-    color: '',
   },
 ];
 
@@ -482,7 +419,6 @@ const BORDERLINE_JUSTICE = [
     name: 'Hover Pack',
     code: ['down', 'up', 'up', 'down', 'left', 'right'],
     category_id: 'ee78a618-c92b-48e4-a514-b849a8ad0859',
-    color: '',
   },
 ];
 
@@ -491,7 +427,6 @@ const MASTERS_OF_CEREMONY = [
     name: 'One True Flag',
     code: ['down', 'left', 'right', 'right', 'up'],
     category_id: '86a708cf-8def-4244-a86a-7e7680632807',
-    color: '',
   },
 ];
 
@@ -500,13 +435,11 @@ const FORCE_OF_LAW = [
     name: 'GL-52 De-Escalator',
     code: ['left', 'right', 'up', 'left', 'right'],
     category_id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
-    color: '',
   },
   {
     name: '“Guard Dog” K-9',
     code: ['down', 'up', 'left', 'up', 'right', 'left'],
     category_id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
-    color: '',
   },
 ];
 
@@ -515,19 +448,16 @@ const CONTROL_GROUP = [
     name: 'Laser Sentry',
     code: ['down', 'up', 'right', 'down', 'up', 'right'],
     category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
-    color: 'green',
   },
   {
     name: 'Warp Pack',
     code: ['down', 'left', 'right', 'down', 'left', 'right'],
     category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
-    color: '',
   },
   {
     name: 'Epoch',
     code: ['down', 'left', 'up', 'left', 'right'],
     category_id: '347b11f0-ef3e-49ae-af7e-f16d02a0f8eb',
-    color: '',
   },
 ];
 
@@ -536,19 +466,16 @@ const DUST_DEVILS = [
     name: 'Speargun',
     code: ['down', 'right', 'down', 'left', 'up', 'right'],
     category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
-    color: '',
   },
   {
     name: 'Expendable Napalm',
     code: ['down', 'down', 'left', 'up', 'left'],
     category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
-    color: '',
   },
   {
     name: 'Solo Silo',
     code: ['down', 'up', 'right', 'down', 'down'],
     category_id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
-    color: 'green',
   },
 ];
 
@@ -557,73 +484,61 @@ const GENERAL_STRATEGEMS = [
     name: 'Resupply',
     code: ['down', 'down', 'up', 'right'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Reinforce',
     code: ['up', 'down', 'right', 'left', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'SOS Beacon',
     code: ['up', 'down', 'right', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Hellbomb',
     code: ['down', 'up', 'left', 'down', 'up', 'right', 'down', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'SEAF Artillery',
     code: ['right', 'up', 'up', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Seismic Probe',
     code: ['up', 'up', 'left', 'right', 'down', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Prospecting Drill',
     code: ['down', 'down', 'left', 'right', 'down', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Super Earth Flag',
     code: ['down', 'up', 'down', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Orbital Illumination Flare',
     code: ['right', 'right', 'left', 'left'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Tectonic Drill',
     code: ['up', 'down', 'up', 'down', 'up', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Dark Fluid Vessel',
     code: ['up', 'left', 'right', 'down', 'up', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
   {
     name: 'Hive Breaker Drill',
     code: ['left', 'up', 'down', 'right', 'down', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
-    color: '',
   },
 ];
 
