@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 // Components
 import Arrow from '../../atoms/Arrow/Arrow';
 import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
@@ -8,7 +7,6 @@ import styles from './StratagemsLoadoutCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
-import { getSVGThemeColor } from '../../../../lib/svg-color-analyzer';
 
 /**
  * StratagemsLoadoutCard component
@@ -19,14 +17,6 @@ import { getSVGThemeColor } from '../../../../lib/svg-color-analyzer';
  * @returns {JSX.Element} The StratagemsLoadoutCard component
  */
 function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
-  const [theme, setTheme] = useState('');
-  const svgPath = `/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`;
-  useEffect(() => {
-    fetch(svgPath).then((res) => res.text()).then((svgContent) => {
-      setTheme(getSVGThemeColor(svgContent));
-    });
-  }, [svgPath]);
-
   return (
     <button
       type="button"
@@ -36,10 +26,10 @@ function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
       <StratagemsLoadoutCard.Icon
         type={type || stratagem.category.name}
         title={stratagem.name}
-        color={theme}
+        color={stratagem.theme}
       >
         <StratagemImage
-          src={svgPath}
+          src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
           name={stratagem.name}
         />
       </StratagemsLoadoutCard.Icon>
