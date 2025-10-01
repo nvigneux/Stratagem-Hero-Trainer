@@ -187,7 +187,6 @@ const HANGER = [
     name: 'Eagle Cluster Bomb',
     code: ['up', 'right', 'down', 'down', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
-    color: '',
   },
   {
     name: 'Eagle Napalm Airstrike',
