@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 // Components
 import Arrow from '../../atoms/Arrow/Arrow';
 import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
@@ -7,25 +8,38 @@ import styles from './StratagemsLoadoutCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
+import { getSVGThemeColor } from '../../../../lib/svg-color-analyzer';
 
 /**
  * StratagemsLoadoutCard component
  * @param {object} props - Component properties
- * @param {{name: string, code: string[], category: {name: string}}} props.stratagem - The stratagem object
+ * @param {{name: string, code: string[], category: {name: string}, color?: string}} props.stratagem - The stratagem object
  * @param {string} [props.type = ''] - The type of the stratagem (optional)
  * @param {Function} props.setCheckedStratagem - Function to set checked stratagem
  * @returns {JSX.Element} The StratagemsLoadoutCard component
  */
 function StratagemsLoadoutCard({ stratagem, type = '', setCheckedStratagem }) {
+  const [theme, setTheme] = useState('');
+  const svgPath = `/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`;
+  useEffect(() => {
+    fetch(svgPath).then((res) => res.text()).then((svgContent) => {
+      setTheme(getSVGThemeColor(svgContent));
+    });
+  }, [svgPath]);
+
   return (
     <button
       type="button"
       onClick={() => setCheckedStratagem({ [stratagem.name]: undefined })}
       className={styles.card}
     >
-      <StratagemsLoadoutCard.Icon type={type || stratagem.category.name} title={stratagem.name}>
+      <StratagemsLoadoutCard.Icon
+        type={type || stratagem.category.name}
+        title={stratagem.name}
+        color={theme}
+      >
         <StratagemImage
-          src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
+          src={svgPath}
           name={stratagem.name}
         />
       </StratagemsLoadoutCard.Icon>
@@ -56,13 +70,18 @@ export default StratagemsLoadoutCard;
  * @param {string} props.type - Icon type
  * @param {React.ReactNode} props.children - Child nodes
  * @param {string} props.title - Title of the icon
+ * @param {string} [props.color] - Theme color for the icon
  * @returns {JSX.Element} The StratagemsLoadoutCardIcon component
  */
-StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({ type, children, title }) {
+StratagemsLoadoutCard.Icon = function StratagemsLoadoutCardIcon({
+  type, children, title, color,
+}) {
   const kebabType = type.replace(/ /g, '-').toLowerCase();
+  const colorClass = color ? styles[color] : '';
+
   return (
     <div
-      className={cn([styles.icon, styles.blue, styles[kebabType]])}
+      className={cn([styles.icon, colorClass, styles[kebabType]])}
       title={title}
     >
       {children}
