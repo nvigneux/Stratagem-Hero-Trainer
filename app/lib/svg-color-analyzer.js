@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 /**
  * Direct mapping of hex colors found in SVG files to application themes
  */
@@ -14,7 +17,7 @@ const COLOR_HEX_TO_THEME = {
 
 /**
  * Extracts unique hex colors from SVG content
- * @param {string} svgContent - The SVG file content
+ * @param {string} svgContent - The SVG content
  * @returns {string[]} Array of unique hex colors found
  */
 const extractHexColors = (svgContent) => {
@@ -44,11 +47,12 @@ const mapColorsToTheme = (hexColors) => {
 
 /**
  * Analyzes SVG content and returns its theme color
- * @param {string} svgContent - The SVG content string
+ * @param {string} svgPath - The SVG file path
  * @returns {string} Theme color or empty string if none found
  */
-const getSVGThemeColor = (svgContent) => {
+const getSVGThemeColor = (svgPath) => {
   try {
+    const svgContent = fs.readFileSync(path.join(process.cwd(), 'public', svgPath), 'utf8');
     const hexColors = extractHexColors(svgContent);
     return mapColorsToTheme(hexColors);
   } catch (error) {
