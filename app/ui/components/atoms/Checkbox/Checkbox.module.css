@@ -17,6 +17,12 @@
   right: 0;
   height: 0;
   width: 0;
+
+  &:focus {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: var(--radius-s);
+  }
 }
 
 .checkbox-checkmark {
@@ -96,4 +102,12 @@
 
 .label-children:hover {
   opacity: 0.9;
+}
+
+.checkbox-container:has(.checkbox-input:focus) .checkbox-checkmark,
+.label-children:has(.checkbox-input:focus) > *
+ {
+  outline: 1px solid var(--yellow);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
 }
