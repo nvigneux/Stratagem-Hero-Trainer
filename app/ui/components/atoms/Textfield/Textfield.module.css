@@ -9,7 +9,7 @@
   font-family: fsSinclair, 'fsSinclair Fallback', sans-serif;
 }
 
-.textfield:focus-visible {
+.textfield:focus {
   outline: none;
   border-color: var(--yellow);
 }
