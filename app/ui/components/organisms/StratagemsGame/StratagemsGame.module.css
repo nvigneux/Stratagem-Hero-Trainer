@@ -157,6 +157,12 @@
   justify-content: center;
   transform: rotate(0deg);
   transform-origin: center;
+
+  &:focus {
+    outline: 1px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: var(--radius-s);
+  }
 }
 
 .buttonSettings svg {
