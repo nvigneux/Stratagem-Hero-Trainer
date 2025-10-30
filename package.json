@@ -23,7 +23,7 @@
     "file-loader": "^6.2.0",
     "lz-string": "^1.5.0",
     "next": "^15.1.4",
-    "next-auth": "^5.0.0-beta.13",
+    "next-auth": "^5.0.0-beta.30",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "url-loader": "^4.1.1",
