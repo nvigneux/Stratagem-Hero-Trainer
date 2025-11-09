@@ -1,0 +1,85 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "helpers:pinGitHubActionDigests"
+  ],
+
+  "timezone": "Europe/Paris",
+  "schedule": ["after 09:00 before 19:00 every weekday"],
+
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 10,
+
+  "rangeStrategy": "bump",
+  "rebaseWhen": "behind-base-branch",
+  "ignoreUnstable": true,
+  "stabilityDays": 3,
+  "internalChecksFilter": "strict",
+
+  "enabledManagers": ["npm", "github-actions"],
+
+  "dependencyDashboard": true,
+
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"],
+    "automerge": true,
+    "platformAutomerge": true
+  },
+  "osvVulnerabilityAlerts": true,
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every saturday"],
+    "automerge": true
+  },
+
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "separateMinorPatch": false,
+      "automerge": true,
+      "platformAutomerge": true,
+      "requiredStatusChecks": null
+    },
+    {
+      "description": "Automerge only devDeps minor/patch",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "Dev dependencies (minor/patch)",
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    {
+      "description": "Production dependencies — never automerge",
+      "matchDepTypes": ["dependencies"],
+      "automerge": false,
+      "separateMinorPatch": true,
+      "groupName": "Prod dependencies"
+    },
+    {
+      "description": "Major updates — require dashboard approval",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true,
+      "groupName": "Major upgrades"
+    },
+    {
+      "description": "Ignore frequent Next.js canary",
+      "matchPackageNames": ["next"],
+      "matchUpdateTypes": ["prerelease"],
+      "enabled": false
+    },
+    {
+      "description": "Slow down @types packages",
+      "matchPackagePatterns": ["^@types/"],
+      "schedule": ["every 2 weeks"],
+      "groupName": "Type definitions"
+    }
+  ],
+
+  "labels": ["deps", "renovate"]
+}
