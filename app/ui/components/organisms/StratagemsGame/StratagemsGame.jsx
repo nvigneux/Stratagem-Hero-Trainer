@@ -756,7 +756,7 @@ ${stat.stratagem.name}.svg`}
                           ) : null}
                         </TableStatsTitle>
                         <TableStatsHeader className={styles.historyGrid}>
-                          <TableStatsCell>N°</TableStatsCell>
+                          <TableStatsCell>N.</TableStatsCell>
                           <TableStatsCell>Stratagem</TableStatsCell>
                           <TableStatsCell>Time</TableStatsCell>
                           <TableStatsCell>Nb Errors</TableStatsCell>
