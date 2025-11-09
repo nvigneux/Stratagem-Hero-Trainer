@@ -16,7 +16,7 @@
   "rangeStrategy": "bump",
   "rebaseWhen": "behind-base-branch",
   "ignoreUnstable": true,
-  "stabilityDays": 3,
+  "minimumReleaseAge": "3 days",
   "internalChecksFilter": "strict",
 
   "enabledManagers": ["npm", "github-actions"],
@@ -33,7 +33,7 @@
 
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["every saturday"],
+    "schedule": ["on saturday"],
     "automerge": true
   },
 
@@ -44,7 +44,7 @@
       "separateMinorPatch": false,
       "automerge": true,
       "platformAutomerge": true,
-      "requiredStatusChecks": null
+      "ignoreTests": true
     },
     {
       "description": "Automerge only devDeps minor/patch",
@@ -75,9 +75,9 @@
     },
     {
       "description": "Slow down @types packages",
-      "matchPackagePatterns": ["^@types/"],
-      "schedule": ["every 2 weeks"],
-      "groupName": "Type definitions"
+      "schedule": ["before 3am on monday"],
+      "groupName": "Type definitions",
+      "matchPackageNames": ["/^@types//"]
     }
   ],
 
