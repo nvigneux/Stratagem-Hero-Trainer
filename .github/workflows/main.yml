@@ -22,6 +22,7 @@ jobs:
           browser: chrome
           build: npm run build
           start: npm run start
+          install-command: npm ci --legacy-peer-deps
         env:
           VITE_APP_URL: 'http://localhost:3000'
 
