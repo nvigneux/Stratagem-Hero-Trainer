@@ -19,16 +19,16 @@
     "@vercel/analytics": "^1.4.1",
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
-    "cookies-next": "^4.1.1",
+    "cookies-next": "^4.3.0",
     "file-loader": "^6.2.0",
     "lz-string": "^1.5.0",
-    "next": "^15.1.4",
-    "next-auth": "^5.0.0-beta.13",
+    "next": "^15.1.8",
+    "next-auth": "^5.0.0-beta.30",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "url-loader": "^4.1.1",
-    "use-sound": "^4.0.1",
-    "zod": "^3.22.4"
+    "use-sound": "^4.0.4",
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "cypress": "^13.17.0",
