@@ -3,7 +3,7 @@ name: Quality Assurance
 on:
   push:
     branches:
-      - 62-run-cypress-tests-in-github-actions-before-production-deploy
+      - master
 
 jobs:
   cypress-run:
