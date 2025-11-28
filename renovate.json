@@ -16,7 +16,7 @@
   "rangeStrategy": "bump",
   "rebaseWhen": "behind-base-branch",
   "ignoreUnstable": true,
-  "minimumReleaseAge": "3 days",
+  "minimumReleaseAge": "30 days",
   "internalChecksFilter": "strict",
 
   "enabledManagers": ["npm", "github-actions"],
@@ -62,10 +62,9 @@
       "groupName": "Prod dependencies"
     },
     {
-      "description": "Major updates — require dashboard approval",
+      "description": "Major updates — disabled",
       "matchUpdateTypes": ["major"],
-      "dependencyDashboardApproval": true,
-      "groupName": "Major upgrades"
+      "enabled": false
     },
     {
       "description": "Ignore frequent Next.js canary",
