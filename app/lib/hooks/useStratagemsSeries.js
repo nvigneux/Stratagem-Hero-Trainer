@@ -3,12 +3,12 @@ import { useEffect, useReducer } from 'react';
 // Actions
 import { setCookieBestScore } from '../actions';
 
-const initialStateSerie = {
+const initialSeriesState = {
   index: 0,
   error: false,
-  nbError: 0,
+  errorCount: 0,
   success: false,
-  nbSuccess: 0,
+  successCount: 0,
   round: 1,
   score: 0,
   bonusRound: 0,
@@ -25,7 +25,7 @@ const initialStateSerie = {
  * @param {object} action - Action to perform.
  * @returns {object} Updated state.
  */
-function reducerStateSerie(state, action) {
+function seriesStateReducer(state, action) {
   switch (action.type) {
     case 'index':
       return { ...state, index: action.payload };
@@ -33,14 +33,14 @@ function reducerStateSerie(state, action) {
       return {
         ...state,
         error: action.payload,
-        nbError: action.payload ? state.nbError + 1 : state.nbError,
+        errorCount: action.payload ? state.errorCount + 1 : state.errorCount,
         index: 0,
       };
     case 'success':
       return {
         ...state,
         success: action.payload,
-        nbSuccess: action.payload ? state.nbSuccess + 1 : state.nbSuccess,
+        successCount: action.payload ? state.successCount + 1 : state.successCount,
       };
     case 'round':
       return {
@@ -52,12 +52,12 @@ function reducerStateSerie(state, action) {
       return { ...state, ...action.payload };
     case 'resetScore':
       return {
-        ...initialStateSerie,
+        ...initialSeriesState,
         bestScore: state.score > state.bestScore ? state.score : state.bestScore,
       };
     case 'resetEvent':
       return {
-        ...state, error: false, success: false, nbError: 0, nbSuccess: 0,
+        ...state, error: false, success: false, errorCount: 0, successCount: 0,
       };
     case 'startTime':
       return { ...state, startTime: action.payload };
@@ -72,11 +72,11 @@ function reducerStateSerie(state, action) {
               startTime: state.startTime,
               endTime: action.payload.date,
               stratagem: action.payload.stratagem,
-              nbError: state.nbError,
+              errorCount: state.errorCount,
             },
           ],
         },
-        nbError: 0,
+        errorCount: 0,
       };
     }
     default:
@@ -96,11 +96,11 @@ function reducerStateSerie(state, action) {
 function useStratagemsSeries({
   initialState, maxLength = 999, bestScoreStored = 0, trainingMode,
 }) {
-  const [stateSerie, dispatchStateSerie] = useReducer(
-    reducerStateSerie,
-    { ...initialStateSerie, bestScore: bestScoreStored },
+  const [seriesState, dispatchSeriesState] = useReducer(
+    seriesStateReducer,
+    { ...initialSeriesState, bestScore: bestScoreStored },
   );
-  const { error, success } = stateSerie;
+  const { error, success } = seriesState;
 
   /**
    * Reset the stratagems array with random stratagems from the initial state
@@ -114,7 +114,7 @@ function useStratagemsSeries({
       return initialState.sort((a, b) => (a?.order || 0) - (b?.order || 0));
     }
 
-    const length = maxLength + stateSerie.round - 1;
+    const length = maxLength + seriesState.round - 1;
 
     return Array.from({ length }, () => [...initialState][Math.floor(
       Math.random() * initialState.length,
@@ -134,7 +134,7 @@ function useStratagemsSeries({
           return state;
       }
     },
-    initialState.slice(0, maxLength + stateSerie.round - 1),
+    initialState.slice(0, maxLength + seriesState.round - 1),
   );
 
   /**
@@ -145,11 +145,11 @@ function useStratagemsSeries({
   const handleSuccessStratagem = (bonusRestingTime) => {
     const pointToAdd = series[0].code.length * 5;
     dispatch({ type: 'removeFirst', stratagem: series[0] });
-    dispatchStateSerie({ type: 'success', payload: true });
-    dispatchStateSerie({
+    dispatchSeriesState({ type: 'success', payload: true });
+    dispatchSeriesState({
       type: 'score',
       payload: {
-        score: stateSerie.score + pointToAdd,
+        score: seriesState.score + pointToAdd,
         bonusRound: 0,
         bonusPerfectRound: 0,
         bonusRestingTime: 0,
@@ -157,13 +157,13 @@ function useStratagemsSeries({
     });
 
     if (series.length === 1) { // if the series is 1, reset the series and increase the round
-      const bonusRound = 25 * stateSerie.round + 50;
-      const bonusPerfectRound = stateSerie.nbError === 0 ? 100 : 0;
+      const bonusRound = 25 * seriesState.round + 50;
+      const bonusPerfectRound = seriesState.errorCount === 0 ? 100 : 0;
 
-      const score = stateSerie.score + bonusRound + bonusPerfectRound + bonusRestingTime;
-      const bestScore = score > stateSerie.bestScore ? score : stateSerie.bestScore;
+      const score = seriesState.score + bonusRound + bonusPerfectRound + bonusRestingTime;
+      const bestScore = score > seriesState.bestScore ? score : seriesState.bestScore;
 
-      dispatchStateSerie({
+      dispatchSeriesState({
         type: 'score',
         payload: {
           score,
@@ -174,13 +174,13 @@ function useStratagemsSeries({
         },
       });
 
-      if (score > stateSerie.bestScore) { // store the best score in the cookie
+      if (score > seriesState.bestScore) { // store the best score in the cookie
         setCookieBestScore(bestScore);
       }
 
       dispatch({ type: 'reset' });
-      dispatchStateSerie({ type: 'resetEvent' });
-      dispatchStateSerie({ type: 'round', payload: stateSerie.round + 1 });
+      dispatchSeriesState({ type: 'resetEvent' });
+      dispatchSeriesState({ type: 'round', payload: seriesState.round + 1 });
     }
   };
 
@@ -188,19 +188,19 @@ function useStratagemsSeries({
    * Reset the series
    */
   const resetSeries = () => {
-    if (stateSerie.score > stateSerie.bestScore) { // store the best score in the cookie
-      setCookieBestScore(stateSerie.score);
+    if (seriesState.score > seriesState.bestScore) { // store the best score in the cookie
+      setCookieBestScore(seriesState.score);
     }
 
     dispatch({ type: 'reset' });
-    dispatchStateSerie({ type: 'resetScore' });
+    dispatchSeriesState({ type: 'resetScore' });
   };
 
   // reset error state if is triggered
   useEffect(() => {
     if (error) {
       setTimeout(() => {
-        dispatchStateSerie({ type: 'error', payload: false });
+        dispatchSeriesState({ type: 'error', payload: false });
       }, 250);
     }
   }, [error]);
@@ -209,7 +209,7 @@ function useStratagemsSeries({
   useEffect(() => {
     if (success) {
       setTimeout(() => {
-        dispatchStateSerie({ type: 'success', payload: false });
+        dispatchSeriesState({ type: 'success', payload: false });
       }, 250);
     }
   }, [success]);
@@ -218,8 +218,8 @@ function useStratagemsSeries({
     series,
     resetSeries,
     handleSuccessStratagem,
-    stateSerie,
-    dispatchStateSerie,
+    seriesState,
+    dispatchSeriesState,
   };
 }
 

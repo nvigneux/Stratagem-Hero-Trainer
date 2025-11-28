@@ -18,13 +18,13 @@ export function useEncodeStratagems() {
       return '';
     }
 
-    const names = [...stratagems].map((s) => s.name);
+    const stratagemNames = [...stratagems].map((stratagem) => stratagem.name);
 
-    const jsonData = JSON.stringify(names);
+    const jsonData = JSON.stringify(stratagemNames);
 
-    const compressed = LZString.compressToBase64(jsonData);
+    const compressedData = LZString.compressToBase64(jsonData);
 
-    return encodeURIComponent(compressed).replace(/%20/g, '+');
+    return encodeURIComponent(compressedData).replace(/%20/g, '+');
   }
 
   /**
@@ -38,20 +38,20 @@ export function useEncodeStratagems() {
     }
 
     try {
-      const decoded = decodeURIComponent(encodedString);
+      const decodedString = decodeURIComponent(encodedString);
 
-      const jsonData = LZString.decompressFromBase64(decoded);
+      const decompressedJson = LZString.decompressFromBase64(decodedString);
 
-      return JSON.parse(jsonData) || [];
-    } catch (e) {
-      console.error('Error decoding stratagem names:', e);
+      return JSON.parse(decompressedJson) || [];
+    } catch (error) {
+      console.error('Error decoding stratagem names:', error);
       return [];
     }
   }
 
   const encode = useCallback((stratagems) => {
-    const encoded = encodeStratagemCodes(stratagems);
-    return encoded;
+    const encodedStratagems = encodeStratagemCodes(stratagems);
+    return encodedStratagems;
   }, []);
 
   const decode = useCallback((encodedString) => decodeStratagemCodes(encodedString), []);

@@ -4,15 +4,15 @@ import { useState } from 'react';
 
 /**
  * Get the highest order found in checkboxes
- * @param {{ [key: string]: { value: boolean, order: number } }} checkboxes - Checkboxes object
+ * @param {{ [key: string]: { value: boolean, order: number } }} checkboxesState - Checkboxes state object
  * @returns {number} The maximum order found
  */
-function getMaxOrderFromCheckboxes(checkboxes) {
-  const orderedCheckboxes = Math.max(0, ...Object.values(checkboxes)
+function getMaxOrderFromCheckboxes(checkboxesState) {
+  const maxOrder = Math.max(0, ...Object.values(checkboxesState)
     .map((checkbox) => checkbox.order)
     .sort((a, b) => b - a));
 
-  return orderedCheckboxes;
+  return maxOrder;
 }
 
 /**
@@ -26,24 +26,24 @@ function getMaxOrderFromCheckboxes(checkboxes) {
 function useCheckboxes({ initialState, key, defaultValue }) {
   /** @type {[{ [key: string]: { value: boolean, order: number } }, React.Dispatch<React.SetStateAction<{ [key: string]: { value: boolean, order: number } }>>]} */
   const [
-    checkboxes,
-    setCheckboxes,
+    checkboxesState,
+    setCheckboxesState,
   ] = useState(initialState.reduce((acc, item) => {
     acc[item[key]] = { value: defaultValue, order: 0 };
     return acc;
   }, {}));
 
-  const checkboxesAreChecked = Object.values(checkboxes).every((value) => value.value);
+  const allCheckboxesAreChecked = Object.values(checkboxesState).every((value) => value.value);
 
   /**
    * Handle the change of multiple checkboxes
    * @param {{[key: string]: { value: boolean, order: number }}} keyValues - Key-value pairs to update
    */
-  const handleChange = (keyValues) => {
-    const maxOrderFound = getMaxOrderFromCheckboxes(checkboxes);
-    const lastOrder = maxOrderFound + 1;
+  const handleCheckboxChange = (keyValues) => {
+    const maxOrderFound = getMaxOrderFromCheckboxes(checkboxesState);
+    const nextOrder = maxOrderFound + 1;
 
-    setCheckboxes((prevState) => ({
+    setCheckboxesState((prevState) => ({
       ...prevState,
       ...Object.keys(keyValues).reduce((
         acc,
@@ -53,7 +53,7 @@ function useCheckboxes({ initialState, key, defaultValue }) {
           ? keyValues[name]
           : {
             value: !prevState[name].value,
-            order: lastOrder,
+            order: nextOrder,
           };
         return acc;
       }, {}),
@@ -64,11 +64,11 @@ function useCheckboxes({ initialState, key, defaultValue }) {
    * Handle the change of all checkboxes
    */
   const handleChangeAll = () => {
-    setCheckboxes((prevState) => {
+    setCheckboxesState((prevState) => {
       const newState = {};
       Object.keys(prevState).forEach((keyValue) => {
         newState[keyValue] = {
-          value: !checkboxesAreChecked,
+          value: !allCheckboxesAreChecked,
           order: 0,
         };
       });
@@ -77,9 +77,9 @@ function useCheckboxes({ initialState, key, defaultValue }) {
   };
 
   return {
-    checkboxes,
-    handleChange,
-    checkboxesAreChecked,
+    checkboxes: checkboxesState,
+    handleChange: handleCheckboxChange,
+    checkboxesAreChecked: allCheckboxesAreChecked,
     handleChangeAll,
   };
 }

@@ -6,14 +6,14 @@ import { useEffect, useRef } from 'react';
  * @param {Function} handler - The function to handle the event.
  */
 const useEventListener = (eventName, handler) => {
-  const savedHandler = useRef();
+  const savedHandlerRef = useRef();
 
   useEffect(() => {
-    savedHandler.current = handler;
+    savedHandlerRef.current = handler;
   }, [handler]);
 
   useEffect(() => {
-    const eventListener = (event) => savedHandler.current(event);
+    const eventListener = (event) => savedHandlerRef.current(event);
     if (window && typeof window !== 'undefined' && window?.addEventListener) {
       window.addEventListener(eventName, eventListener);
       return () => {

@@ -1,6 +1,6 @@
 import { useReducer, useEffect, useCallback } from 'react';
 
-const initialState = {
+const initialTimerState = {
   progress: 0,
   isRunning: false,
   isFinished: false,
@@ -13,15 +13,15 @@ const timerReducer = (state, action) => {
     case 'PAUSE':
       return { ...state, isRunning: false };
     case 'FINISH': {
-      return { ...initialState, progress: action.payload, isFinished: true };
+      return { ...initialTimerState, progress: action.payload, isFinished: true };
     }
     case 'RESET':
-      return { ...initialState, progress: action.payload };
+      return { ...initialTimerState, progress: action.payload };
     case 'TICK': {
       const newProgress = Math.max(state.progress - action.payload.elapsedSeconds, 0);
       if (newProgress === 0) {
-        action.payload.handleIsOver();
-        return { ...initialState, progress: action.payload.initialProgress, isFinished: true };
+        action.payload.handleTimerComplete();
+        return { ...initialTimerState, progress: action.payload.initialProgress, isFinished: true };
       }
       if (state.isRunning) {
         return { ...state, progress: newProgress };
@@ -32,7 +32,7 @@ const timerReducer = (state, action) => {
     case 'ADD_TIME':
       return { ...state, progress: Math.min(state.progress + action.payload, action.total) };
     case 'RESTART':
-      return { ...initialState, isRunning: true };
+      return { ...initialTimerState, isRunning: true };
     default:
       return state;
   }
@@ -42,12 +42,12 @@ const timerReducer = (state, action) => {
  * Custom hook for managing a timer.
  * @param {number} initialProgress - Initial progress value.
  * @param {number} total - Total time value.
- * @param {Function} handleIsOver - Callback function when the timer is over.
+ * @param {Function} handleTimerComplete - Callback function when the timer is over.
  * @returns {object} Timer state and control functions.
  */
-const useTimer = (initialProgress, total, handleIsOver) => {
-  const [state, dispatch] = useReducer(timerReducer, {
-    ...initialState,
+const useTimer = (initialProgress, total, handleTimerComplete) => {
+  const [timerState, dispatch] = useReducer(timerReducer, {
+    ...initialTimerState,
     progress: initialProgress,
   });
 
@@ -56,23 +56,23 @@ const useTimer = (initialProgress, total, handleIsOver) => {
     let lastTickTime = performance.now();
 
     const tick = () => {
-      const now = performance.now();
-      const elapsedMilliseconds = now - lastTickTime;
-      lastTickTime = now;
+      const currentTime = performance.now();
+      const elapsedMilliseconds = currentTime - lastTickTime;
+      lastTickTime = currentTime;
       const elapsedSeconds = elapsedMilliseconds / 1000;
-      dispatch({ type: 'TICK', payload: { elapsedSeconds, initialProgress, handleIsOver } });
+      dispatch({ type: 'TICK', payload: { elapsedSeconds, initialProgress, handleTimerComplete } });
 
-      if (state.progress > 0) {
+      if (timerState.progress > 0) {
         animationFrameId = requestAnimationFrame(tick);
       }
     };
 
-    if (state.isRunning) {
+    if (timerState.isRunning) {
       animationFrameId = requestAnimationFrame(tick);
     }
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [state.isRunning]); // Only depend on state.isRunning
+  }, [timerState.isRunning]); // Only depend on timerState.isRunning
 
   const startTimer = useCallback(() => dispatch({ type: 'START' }), []);
   const pauseTimer = useCallback(() => dispatch({ type: 'PAUSE' }), []);
@@ -91,8 +91,8 @@ const useTimer = (initialProgress, total, handleIsOver) => {
   }, [initialProgress, resetTimer]);
 
   return {
-    progress: state.progress,
-    isRunning: state.isRunning,
+    progress: timerState.progress,
+    isRunning: timerState.isRunning,
     startTimer,
     pauseTimer,
     resetTimer,

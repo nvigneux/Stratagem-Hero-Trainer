@@ -20,7 +20,7 @@ import {
  */
 const useGamepad = (eventPressedButton) => {
   const [gamepadConnected, setGamepadConnected] = useState({});
-  const requestRef = useRef();
+  const animationFrameRef = useRef();
   const pressedButtonsRef = useRef(new Set());
 
   const updateGamepadStatus = useCallback(() => {
@@ -48,34 +48,34 @@ const useGamepad = (eventPressedButton) => {
 
     pressedButtonsRef.current = pressedButtons;
 
-    requestRef.current = requestAnimationFrame(updateGamepadStatus);
+    animationFrameRef.current = requestAnimationFrame(updateGamepadStatus);
   }, [eventPressedButton]);
 
   useEffect(() => {
-    requestRef.current = requestAnimationFrame(updateGamepadStatus);
+    animationFrameRef.current = requestAnimationFrame(updateGamepadStatus);
 
-    return () => cancelAnimationFrame(requestRef.current);
+    return () => cancelAnimationFrame(animationFrameRef.current);
   }, [updateGamepadStatus]);
 
   /**
    * Event listener for gamepad connections and disconnections.
    */
   useEffect(() => {
-    const connectHandler = (e) => {
-      setGamepadConnected(e.gamepad);
-      console.log(`Gamepad connected at index ${e.gamepad.index}: ${e.gamepad.id}.`);
+    const handleGamepadConnect = (event) => {
+      setGamepadConnected(event.gamepad);
+      console.log(`Gamepad connected at index ${event.gamepad.index}: ${event.gamepad.id}.`);
     };
-    const disconnectHandler = (e) => {
+    const handleGamepadDisconnect = (event) => {
       setGamepadConnected({});
-      console.log(`Gamepad disconnected from index ${e.gamepad.index}: ${e.gamepad.id}.`);
+      console.log(`Gamepad disconnected from index ${event.gamepad.index}: ${event.gamepad.id}.`);
     };
 
-    window.addEventListener('gamepadconnected', connectHandler);
-    window.addEventListener('gamepaddisconnected', disconnectHandler);
+    window.addEventListener('gamepadconnected', handleGamepadConnect);
+    window.addEventListener('gamepaddisconnected', handleGamepadDisconnect);
 
     return () => {
-      window.removeEventListener('gamepadconnected', connectHandler);
-      window.removeEventListener('gamepaddisconnected', disconnectHandler);
+      window.removeEventListener('gamepadconnected', handleGamepadConnect);
+      window.removeEventListener('gamepaddisconnected', handleGamepadDisconnect);
     };
   }, []);
 

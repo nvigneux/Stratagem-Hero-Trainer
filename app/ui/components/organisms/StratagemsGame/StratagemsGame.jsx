@@ -128,8 +128,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     series,
     resetSeries,
     handleSuccessStratagem,
-    stateSerie,
-    dispatchStateSerie,
+    seriesState,
+    dispatchSeriesState,
   } = useStratagemsSeries({
     initialState: filteredStratagemsChecked,
     maxLength: 6,
@@ -150,7 +150,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     handleGameOver,
   );
 
-  const [statsPanel, seOpenPanel] = useReducer(
+  const [statsPanel, setStatsPanel] = useReducer(
     (state, action) => {
       switch (action.type) {
         case 'open':
@@ -175,9 +175,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       type === 'close'
       || (statsPanel.type === 'open' && panel === statsPanel.panel)
     ) {
-      seOpenPanel({ type: 'close', panel: statsPanel.panel });
+      setStatsPanel({ type: 'close', panel: statsPanel.panel });
       setTimeout(() => {
-        seOpenPanel({ type: 'close', panel: '' });
+        setStatsPanel({ type: 'close', panel: '' });
       }, 500);
       return;
     }
@@ -186,7 +186,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       || statsPanel.type === 'close'
       || panel !== statsPanel.panel
     ) {
-      seOpenPanel({ type: 'open', panel });
+      setStatsPanel({ type: 'open', panel });
     }
   };
 
@@ -200,7 +200,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     }
     if (refCheckStratagems.current !== checkedStratagemsString) {
       refCheckStratagems.current = checkedStratagemsString;
-      dispatchStateSerie({ type: 'resetScore' });
+      dispatchSeriesState({ type: 'resetScore' });
       resetSeries();
       resetTimer();
       handleStatsPanel('', 'close');
@@ -214,32 +214,32 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
    * @param {string} direction The direction to check.
    */
   const checkActiveSerieCode = (direction) => {
-    const serieDirection = series[0].code[stateSerie.index];
+    const serieDirection = series[0].code[seriesState.index];
     if (direction === serieDirection) {
       if (!isRunning) startTimer();
       const playSound = Math.random() < 0.75 ? playPress2 : playPress1;
       playSound();
-      dispatchStateSerie({ type: 'index', payload: stateSerie.index + 1 });
+      dispatchSeriesState({ type: 'index', payload: seriesState.index + 1 });
 
-      if (stateSerie.index === 0 && stateSerie.nbError === 0) {
-        dispatchStateSerie({ type: 'startTime', payload: Date.now() });
+      if (seriesState.index === 0 && seriesState.errorCount === 0) {
+        dispatchSeriesState({ type: 'startTime', payload: Date.now() });
       }
     } else {
-      dispatchStateSerie({ type: 'error', payload: true });
+      dispatchSeriesState({ type: 'error', payload: true });
       playError();
       return;
     }
 
-    if (stateSerie.index === series[0].code.length - 1) {
+    if (seriesState.index === series[0].code.length - 1) {
       if (series.length === 1) {
         resetTimer();
         playNewRound();
-        dispatchStateSerie({
+        dispatchSeriesState({
           type: 'endTime',
           payload: { date: Date.now(), stratagem: series[0] },
         });
       } else {
-        addTime(timeBonus + 0.01 * stateSerie.round);
+        addTime(timeBonus + 0.01 * seriesState.round);
       }
 
       setTimeout(() => {
@@ -247,12 +247,12 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         handleSuccessStratagem(percentOfProgress);
         if (series.length !== 1) {
           playFinish();
-          dispatchStateSerie({
+          dispatchSeriesState({
             type: 'endTime',
             payload: { date: Date.now(), stratagem: series[0] },
           });
         }
-        dispatchStateSerie({ type: 'index', payload: 0 });
+        dispatchSeriesState({ type: 'index', payload: 0 });
       }, 175);
     }
   };
@@ -383,8 +383,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     order: 'desc',
   });
   // History transformation to get each stratagem stats
-  const stats = useMemo(
-    () => Object.values(stateSerie.history)
+  const stratagemStats = useMemo(
+    () => Object.values(seriesState.history)
       .flat()
       .reduce((acc, item) => {
         const { name } = item.stratagem;
@@ -408,11 +408,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           item.endTime - item.startTime,
         );
         acc[name].averageTime = (acc[name].average || 0) + (item.endTime - item.startTime);
-        acc[name].error += item.nbError;
+        acc[name].error += item.errorCount;
 
         return acc;
       }, {}),
-    [stateSerie.history],
+    [seriesState.history],
   );
 
   const isPanicMode = useMemo(() => {
@@ -457,7 +457,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 
         <div className={styles.roundScoreContainer}>
           <RoundInfo
-            roundNb={stateSerie.round}
+            roundNb={seriesState.round}
             className={isPanicMode ? styles.panicModeColor : ''}
             historyButton={(
               <button
@@ -466,7 +466,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                 className={styles.buttonHistory}
                 aria-label="Round history"
                 disabled={
-                  openSettings || isRunning || stateSerie.round - 1 === 0
+                  openSettings || isRunning || seriesState.round - 1 === 0
                 }
               >
                 <Picto icon="history" />
@@ -475,16 +475,16 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           >
             <RoundInfoButton
               onClick={() => handleStatsPanel('history')}
-              disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+              disabled={openSettings || isRunning || seriesState.round - 1 === 0}
             />
           </RoundInfo>
           <ScoreInfo
-            score={stateSerie.score}
-            bonusRound={stateSerie.bonusRound}
-            bonusRestingTime={stateSerie.bonusRestingTime}
-            bonusPerfectRound={stateSerie.bonusPerfectRound}
-            bestScore={stateSerie.bestScore}
-            displayBonus={!isRunning && stateSerie.score > 0}
+            score={seriesState.score}
+            bonusRound={seriesState.bonusRound}
+            bonusRestingTime={seriesState.bonusRestingTime}
+            bonusPerfectRound={seriesState.bonusPerfectRound}
+            bestScore={seriesState.bestScore}
+            displayBonus={!isRunning && seriesState.score > 0}
             className={isPanicMode ? styles.panicModeColor : ''}
           />
         </div>
@@ -502,7 +502,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                     code={stratagem.code}
                     category={stratagem.category.name}
                     active={index === 0}
-                    success={stateSerie.success}
+                    success={seriesState.success}
                     className={isPanicMode ? styles.panicModeBorder : ''}
                   />
                 );
@@ -525,8 +525,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                   // eslint-disable-next-line react/no-array-index-key
                   key={`${series[0].name}-${direction}-${index}`}
                   direction={direction}
-                  active={index + 1 <= stateSerie.index}
-                  error={stateSerie.error}
+                  active={index + 1 <= seriesState.index}
+                  error={seriesState.error}
                   size="large"
                 />
               )) : <TextNoiseEffect label="Jammed" title="Stratagem jammer activated" />}
@@ -559,9 +559,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ])}
       >
         <StatsButton
-          disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+          disabled={openSettings || isRunning || seriesState.round - 1 === 0}
           active={statsPanel.panel === 'history'}
-          small={stateSerie.round - 1 || 0}
+          small={seriesState.round - 1 || 0}
           onClick={() => handleStatsPanel('history')}
           testId="stats-button-history"
         >
@@ -572,9 +572,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           />
         </StatsButton>
         <StatsButton
-          disabled={openSettings || isRunning || stateSerie.round - 1 === 0}
+          disabled={openSettings || isRunning || seriesState.round - 1 === 0}
           active={statsPanel.panel === 'stats'}
-          small={Object.keys(stats)?.length}
+          small={Object.keys(stratagemStats)?.length}
           onClick={() => handleStatsPanel('stats')}
           testId="stats-button-stats"
         >
@@ -588,7 +588,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           disabled={
             openSettings
             || isRunning
-            || stateSerie.round - 1 === 0
+            || seriesState.round - 1 === 0
             || statsPanel.type === 'close'
           }
         >
@@ -608,7 +608,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
         ])}
       >
         {statsPanel.panel === 'stats' ? (
-          Object.keys(stats)?.length ? (
+          Object.keys(stratagemStats)?.length ? (
             <TableStatsWrapper title="Stats">
               <TableStats>
                 <div className={styles.overflowTable}>
@@ -651,7 +651,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                     </TableStatsCell>
                   </TableStatsHeader>
                   <TableStatsBody>
-                    {Object.values(stats)
+                    {Object.values(stratagemStats)
                       .sort((a, b) => {
                         if (filterStatsKey.order === 'asc') {
                           return a[filterStatsKey.key] - b[filterStatsKey.key];
@@ -727,13 +727,13 @@ ${stat.stratagem.name}.svg`}
           ) : null
         ) : null}
         {statsPanel.panel === 'history' ? (
-          Object.keys(stateSerie.history)?.length ? (
+          Object.keys(seriesState.history)?.length ? (
             <TableStatsWrapper title="History">
               <TableStats>
-                {Object.keys(stateSerie.history)
+                {Object.keys(seriesState.history)
                   .reverse()
                   .map((round) => {
-                    if (!stateSerie.history[round]?.length) return null;
+                    if (!seriesState.history[round]?.length) return null;
                     return (
                       <div className={styles.overflowTable} key={round}>
                         <TableStatsTitle>
@@ -742,9 +742,9 @@ ${stat.stratagem.name}.svg`}
                               <div data-testid="round-history-title">{`Round ${round}`}</div>
                               <span>
                                 {`${
-                                  stateSerie.history[round]
+                                  seriesState.history[round]
                                     ? (
-                                      stateSerie.history[round].reduce(
+                                      seriesState.history[round].reduce(
                                         (acc, item) => acc + item.endTime - item.startTime,
                                         0,
                                       ) / 1000
@@ -762,7 +762,7 @@ ${stat.stratagem.name}.svg`}
                           <TableStatsCell>Nb Errors</TableStatsCell>
                         </TableStatsHeader>
                         <TableStatsBody>
-                          {stateSerie.history[round].map((item, index) => (
+                          {seriesState.history[round].map((item, index) => (
                             <TableStatsRow
                               key={`${round} - ${item.startTime} - ${item.stratagem.name}`}
                               className={styles.historyGrid}
@@ -788,7 +788,7 @@ ${item.stratagem.name}.svg`}
                                   / 1000
                                 ).toFixed(2)} sec`}
                               </TableStatsCell>
-                              <TableStatsCell name="error">{`${item.nbError}`}</TableStatsCell>
+                              <TableStatsCell name="error">{`${item.errorCount}`}</TableStatsCell>
 
                               {/* Mobile */}
                               <TableStatsCellMobile name="img">
@@ -808,7 +808,7 @@ ${item.stratagem.name}.svg`}
                                 ).toFixed(2)} sec`}
                               </TableStatsCellMobile>
                               <TableStatsCellMobile name="error" label="Error">
-                                {`${item.nbError}`}
+                                {`${item.errorCount}`}
                               </TableStatsCellMobile>
                             </TableStatsRow>
                           ))}

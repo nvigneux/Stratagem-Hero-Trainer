@@ -19,17 +19,17 @@ const areStratagemsEqual = (a, b) => a.name === b.name;
 
 /**
  * Generate the HTML code for the arrow
- * @param {string[]} codeArray
- * @returns {string[]}
+ * @param {string[]} directionCodes - Array of direction codes (e.g., 'left', 'right', 'up', 'down')
+ * @returns {string[]} Array of arrow symbols
  */
-const generateHtmlCodeArrow = (codeArray) => {
+const generateHtmlCodeArrow = (directionCodes) => {
   const left = '←';
   const right = '→';
   const up = '↑';
   const down = '↓';
 
-  return codeArray.map((item) => {
-    switch (item) {
+  return directionCodes.map((direction) => {
+    switch (direction) {
       case 'left':
         return left;
       case 'right':
@@ -39,7 +39,7 @@ const generateHtmlCodeArrow = (codeArray) => {
       case 'down':
         return down;
       default:
-        return item;
+        return direction;
     }
   });
 };
