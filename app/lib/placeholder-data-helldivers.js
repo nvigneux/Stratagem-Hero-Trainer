@@ -59,6 +59,10 @@ const CATEGORIES = [
     id: '1fbf16b0-2726-4188-9f9d-11cd31224168',
     name: 'Dust Devils',
   },
+  {
+    id: '77fda1c3-b8c9-4d13-a1ba-4f6e036b65f1',
+    name: 'Python Commandos',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -478,6 +482,24 @@ const DUST_DEVILS = [
   },
 ];
 
+const PYTHON_COMMANDOS = [
+  {
+    name: 'Maxigun',
+    code: ['down', 'left', 'right', 'down', 'up', 'up'],
+    category_id: '77fda1c3-b8c9-4d13-a1ba-4f6e036b65f1',
+  },
+  {
+    name: 'Defoliation Tool',
+    code: ['down', 'left', 'right', 'right', 'down'],
+    category_id: '77fda1c3-b8c9-4d13-a1ba-4f6e036b65f1',
+  },
+  {
+    name: 'Guard Dog Hot Dog',
+    code: ['down', 'up', 'left', 'up', 'left', 'left'],
+    category_id: '77fda1c3-b8c9-4d13-a1ba-4f6e036b65f1',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -539,6 +561,11 @@ const GENERAL_STRATEGEMS = [
     code: ['left', 'up', 'down', 'right', 'down', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
+  {
+    name: 'Cargo Container',
+    code: ['up', 'up', 'down', 'down', 'right', 'down'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
 ];
 
 const STRATAGEMS = [
@@ -556,6 +583,7 @@ const STRATAGEMS = [
   ...FORCE_OF_LAW,
   ...CONTROL_GROUP,
   ...DUST_DEVILS,
+  ...PYTHON_COMMANDOS,
   ...GENERAL_STRATEGEMS,
 ];
 
