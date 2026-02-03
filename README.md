@@ -38,8 +38,8 @@ Stratagem Hero Trainer is an advanced web application designed to enhance strate
 
 When adding new stratagems with their icons to the app:
 
-1. **Add the stratagem data** to the appropriate data files
-2. **Add the icon files** to the `public/icons/stratagems/` directory
+1. **Add the icon files** to the `public/icons/stratagems/` directory
+2. **Add the stratagem data** to the appropriate data files `app/lib/placeholder-data-helldivers`
 3. **Important**: Update the service worker cache in `public/sw.js` to include the new icon files for offline functionality
 
 The service worker caches all stratagem icons to ensure the app works offline. Failing to add new icons to the cache manifest will result in missing images when users are offline.
