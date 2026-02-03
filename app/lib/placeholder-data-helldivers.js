@@ -63,6 +63,10 @@ const CATEGORIES = [
     id: '77fda1c3-b8c9-4d13-a1ba-4f6e036b65f1',
     name: 'Python Commandos',
   },
+  {
+    id: '8877a3a0-668a-4495-9606-e35a6d719cb4',
+    name: 'Redacted Regiment',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -500,6 +504,14 @@ const PYTHON_COMMANDOS = [
   },
 ];
 
+const REDACTED_REGIMENT = [
+  {
+    name: 'C4 Pack',
+    code: ['down', 'right', 'up', 'up', 'right', 'up'],
+    category_id: '8877a3a0-668a-4495-9606-e35a6d719cb4',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -566,6 +578,11 @@ const GENERAL_STRATEGEMS = [
     code: ['up', 'up', 'down', 'down', 'right', 'down'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
+  {
+    name: 'Call In Super Destroyer',
+    code: ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
 ];
 
 const STRATAGEMS = [
@@ -584,6 +601,7 @@ const STRATAGEMS = [
   ...CONTROL_GROUP,
   ...DUST_DEVILS,
   ...PYTHON_COMMANDOS,
+  ...REDACTED_REGIMENT,
   ...GENERAL_STRATEGEMS,
 ];
 
