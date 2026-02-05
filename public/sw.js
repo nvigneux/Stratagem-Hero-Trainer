@@ -143,6 +143,15 @@ const ASSETS_TO_CACHE = [
   // Force of Law icons
   '/icons/stratagems/Force of Law/GL-52 De-Escalator.svg',
   '/icons/stratagems/Force of Law/“Guard Dog” K-9.svg',
+
+  // Redacted Regiment icons
+  '/icons/stratagems/Redacted Regiment/C4 Pack.svg',
+
+  // Siege Breakers icons
+  '/icons/stratagems/Siege Breakers/Bastion MK XVI.svg',
+  '/icons/stratagems/Siege Breakers/CQC-20.svg',
+  '/icons/stratagems/Siege Breakers/EAT-411.svg',
+  '/icons/stratagems/Siege Breakers/GL-28.svg',
 ];
 
 /* eslint-disable no-restricted-globals */
