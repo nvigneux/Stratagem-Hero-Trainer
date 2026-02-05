@@ -519,7 +519,7 @@ const REDACTED_REGIMENT = [
 const SIEGE_BREAKERS = [
   {
     name: 'Bastion MK XVI',
-    code: ['left', 'down', 'right', 'down', 'right', 'down', 'up', 'down', 'up'],
+    code: ['left', 'down', 'right', 'down', 'left', 'down', 'up', 'down', 'up'],
     category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
   },
   {
@@ -529,7 +529,7 @@ const SIEGE_BREAKERS = [
   },
   {
     name: 'EAT-411',
-    code: ['down', 'down', 'left', 'up', 'left'],
+    code: ['down', 'down', 'left', 'up', 'down'],
     category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
   },
   {
