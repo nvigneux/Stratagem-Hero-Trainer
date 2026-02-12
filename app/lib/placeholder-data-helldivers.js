@@ -444,7 +444,7 @@ const MASTERS_OF_CEREMONY = [
 const FORCE_OF_LAW = [
   {
     name: 'GL-52 De-Escalator',
-    code: ['left', 'right', 'up', 'left', 'right'],
+    code: ['down', 'right', 'up', 'left', 'right'],
     category_id: 'aa878f90-85b0-4ea6-b7ef-3097bc0effd8',
   },
   {
