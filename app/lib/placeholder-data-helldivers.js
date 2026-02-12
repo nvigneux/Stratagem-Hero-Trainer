@@ -67,6 +67,10 @@ const CATEGORIES = [
     id: '8877a3a0-668a-4495-9606-e35a6d719cb4',
     name: 'Redacted Regiment',
   },
+  {
+    id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
+    name: 'Siege Breakers',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -512,6 +516,29 @@ const REDACTED_REGIMENT = [
   },
 ];
 
+const SIEGE_BREAKERS = [
+  {
+    name: 'Bastion MK XVI',
+    code: ['left', 'down', 'right', 'down', 'left', 'down', 'up', 'down', 'up'],
+    category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
+  },
+  {
+    name: 'CQC-20',
+    code: ['down', 'left', 'right', 'left', 'up'],
+    category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
+  },
+  {
+    name: 'EAT-411',
+    code: ['down', 'down', 'left', 'up', 'down'],
+    category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
+  },
+  {
+    name: 'GL-28',
+    code: ['down', 'left', 'up', 'left', 'up', 'up'],
+    category_id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -602,6 +629,7 @@ const STRATAGEMS = [
   ...DUST_DEVILS,
   ...PYTHON_COMMANDOS,
   ...REDACTED_REGIMENT,
+  ...SIEGE_BREAKERS,
   ...GENERAL_STRATEGEMS,
 ];
 
