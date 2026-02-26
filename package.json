@@ -35,7 +35,7 @@
     "dotenv": "^16.6.1",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "15.5.9",
+    "eslint-config-next": "15.5.10",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^50.8.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
