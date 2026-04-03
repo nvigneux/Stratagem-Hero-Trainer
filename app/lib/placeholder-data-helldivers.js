@@ -71,6 +71,10 @@ const CATEGORIES = [
     id: 'd4f10c99-fe1b-4357-a927-343f216dc4c0',
     name: 'Siege Breakers',
   },
+  {
+    id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
+    name: 'Entrenched Division',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -539,6 +543,19 @@ const SIEGE_BREAKERS = [
   },
 ];
 
+const ENTRENCHED_DIVISION = [
+  {
+    name: 'Gas Mortar Sentry',
+    code: ['down', 'up', 'right', 'down', 'left'],
+    category_id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
+  },
+  {
+    name: 'Cremator',
+    code: ['down', 'down', 'right', 'down', 'up', 'up'],
+    category_id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -630,6 +647,7 @@ const STRATAGEMS = [
   ...PYTHON_COMMANDOS,
   ...REDACTED_REGIMENT,
   ...SIEGE_BREAKERS,
+  ...ENTRENCHED_DIVISION,
   ...GENERAL_STRATEGEMS,
 ];
 
