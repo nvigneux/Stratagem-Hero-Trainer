@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 // Components
 import { Picto } from '../Picto/Picto';
 
@@ -9,6 +11,8 @@ import styles from './ButtonBuyMeACoffee.module.css';
  * @returns {JSX.Element} The ButtonBuyMeACoffee component
  */
 function ButtonBuyMeACoffee() {
+  const t = useTranslations('ButtonBuyMeACoffee');
+
   return (
     <a
       href="https://www.buymeacoffee.com/nvigneux?source=stratagem-hero"
@@ -17,7 +21,7 @@ function ButtonBuyMeACoffee() {
       className={styles.button}
     >
       <Picto icon="coffee" />
-      <div>Buy me a Coffee</div>
+      <div>{t('label')}</div>
     </a>
   );
 }

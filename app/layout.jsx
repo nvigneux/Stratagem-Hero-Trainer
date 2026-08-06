@@ -1,6 +1,9 @@
 import localFont from 'next/font/local';
 // eslint-disable-next-line import/no-unresolved
 import { Analytics } from '@vercel/analytics/next';
+import { NextIntlClientProvider } from 'next-intl';
+// eslint-disable-next-line import/no-unresolved
+import { getMessages, getLocale, getTranslations } from 'next-intl/server';
 
 import './globals.css';
 
@@ -23,23 +26,34 @@ const fsSinclair = localFont({
   variable: '--font-fs-sinclair',
 });
 
-export const metadata = {
-  title: 'Stratagem Hero Trainer - Helldivers',
-  // eslint-disable-next-line max-len
-  description: 'Turning Average Joes into Stratagem Superstars, Because Even Bugs Fear a Well-Placed Stratagem!',
-};
+/**
+ * Generates metadata for the root layout.
+ * @returns {Promise<{title: string, description: string}>} Metadata object
+ */
+export async function generateMetadata() {
+  const t = await getTranslations('Metadata');
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 /**
  * RootLayout component
  * @param {object} props - Component properties
  * @param {React.ReactNode} props.children - Child nodes
- * @returns {JSX.Element} The RootLayout component
+ * @returns {Promise<JSX.Element>} The RootLayout component
  */
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const messages = await getMessages();
+  const locale = await getLocale();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={`${fsSinclair.className} ${fsSinclair.variable}`}>
-        {children}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
         <Analytics />
       </body>
     </html>

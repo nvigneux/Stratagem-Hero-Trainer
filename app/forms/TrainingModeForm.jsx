@@ -1,3 +1,6 @@
+// next-intl
+import { useTranslations } from 'next-intl';
+
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
 import FormWrapper from '../ui/components/molecules/Form/Form';
@@ -11,12 +14,13 @@ import Checkbox from '../ui/components/atoms/Checkbox/Checkbox';
  * @returns {JSX.Element} The TrainingModeForm component
  */
 function TrainingModeForm({ trainingMode, handleSubmitTrainingMode }) {
+  const t = useTranslations('TrainingModeForm');
   return (
     <FormWrapper name="save-training-mode" action={handleSubmitTrainingMode}>
       <LabelInput
         htmlFor="stratagemJammer"
-        label="Stratagem jammer"
-        title="Automaton jamming disables visual hints. Type the sequence from memory."
+        label={t('stratagemJammer')}
+        title={t('stratagemJammerTitle')}
       >
         <Checkbox
           id="checkbox-training-stratagem-jammer"
@@ -26,8 +30,8 @@ function TrainingModeForm({ trainingMode, handleSubmitTrainingMode }) {
       </LabelInput>
       <LabelInput
         htmlFor="sequentialMode"
-        label="Sequential Mode"
-        title="Play chosen stratagems in order; start small, add more each loop"
+        label={t('sequentialMode')}
+        title={t('sequentialModeTitle')}
       >
         <Checkbox
           id="checkbox-training-sequential-mode"
