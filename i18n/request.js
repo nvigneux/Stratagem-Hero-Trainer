@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import { getRequestConfig } from 'next-intl/server';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { readdirSync } from 'node:fs';
 import { join, basename, extname } from 'node:path';
 
@@ -42,6 +42,16 @@ function pickLocale(header) {
 }
 
 export default getRequestConfig(async () => {
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get('NEXT_LOCALE')?.value;
+
+  if (cookieLocale && SUPPORTED_LOCALES.includes(cookieLocale)) {
+    return {
+      locale: cookieLocale,
+      messages: (await import(`../messages/${cookieLocale}.json`)).default,
+    };
+  }
+
   const headersList = await headers();
   const acceptLanguage = headersList.get('Accept-Language') || DEFAULT_LOCALE;
   const locale = pickLocale(acceptLanguage);
