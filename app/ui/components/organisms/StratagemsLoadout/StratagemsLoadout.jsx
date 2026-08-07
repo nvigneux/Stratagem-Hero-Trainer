@@ -5,8 +5,10 @@ import {
   useCallback, useEffect, useReducer, useRef, useState,
 } from 'react';
 
-// Styles
+import { useTranslations } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
+
+// Styles
 import styles from './StratagemsLoadout.module.css';
 
 // Components
@@ -55,6 +57,7 @@ function stratagemsReducer(state, action) {
  * @returns {JSX.Element} The StratagemsLoadout component
  */
 function StratagemsLoadout({ stratagems }) {
+  const t = useTranslations('StratagemsLoadout');
   const router = useRouter();
   const searchParams = useSearchParams();
   const paramCodes = searchParams.get('stratagems');
@@ -167,14 +170,14 @@ function StratagemsLoadout({ stratagems }) {
   return (
     <div className={styles.wrapper}>
       <Head>
-        <title>{debouncedLoadoutName.trim() || 'Stratagem Hero Trainer - Helldivers'}</title>
+        <title>{debouncedLoadoutName.trim() || t('defaultTitle')}</title>
       </Head>
       <div className={styles.main}>
         <div className={styles.loadoutNameSection}>
           <Textfield
             id="loadout-name"
             name="loadout-name"
-            placeholder="Enter loadout name..."
+            placeholder={t('placeholder')}
             value={loadoutName}
             onChange={(e) => setLoadoutName(e.target.value)}
             className={styles.loadoutNameInput}
@@ -192,7 +195,7 @@ function StratagemsLoadout({ stratagems }) {
           </StratagemsLoadoutList>
         ) : (
           <div className={styles.empty}>
-            <StratagemsName name="Select some stratagems !" />
+            <StratagemsName name={t('selectStratagems')} />
           </div>
         )}
       </div>

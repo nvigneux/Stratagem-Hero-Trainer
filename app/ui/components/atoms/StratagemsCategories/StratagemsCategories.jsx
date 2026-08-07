@@ -1,5 +1,10 @@
+import { useTranslations } from 'next-intl';
+
 // Styles
 import styles from './StratagemsCategories.module.css';
+
+// Lib
+import { tCategory } from '../../../../lib/translate';
 
 /**
  * StratagemsCategories component
@@ -30,14 +35,15 @@ StratagemsCategories.Category = function StratagemsCategoriesCategory({ children
 /**
  * StratagemsCategoriesHead component
  * @param {object} props - Component properties
- * @param {string} props.category - The category name
+ * @param {string} props.category - The English category name
  * @param {React.ReactNode} props.children - Child nodes
  * @returns {JSX.Element} The StratagemsCategoriesHead component
  */
 StratagemsCategories.Head = function StratagemsCategoriesHead({ category, children }) {
+  const t = useTranslations('GameData');
   return (
     <div className={styles.head}>
-      <h3 className={styles.title}>{category}</h3>
+      <h3 className={styles.title}>{tCategory(t, category)}</h3>
       <div className={styles.action}>
         {children}
       </div>

@@ -1,3 +1,6 @@
+// next-intl
+import { useTranslations } from 'next-intl';
+
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
 import FormWrapper from '../ui/components/molecules/Form/Form';
@@ -15,9 +18,10 @@ function KeyBindingsForm({
   handleKeyBindings,
   handleSetTempKeyBindings,
 }) {
+  const t = useTranslations('KeyBindingsForm');
   return (
     <FormWrapper name="save-key-bindings" action={handleKeyBindings}>
-      <LabelInput htmlFor="up" label="Key Up">
+      <LabelInput htmlFor="up" label={t('keyUp')}>
         <input
           id="up"
           data-testid="key-up"
@@ -29,7 +33,7 @@ function KeyBindingsForm({
           required
         />
       </LabelInput>
-      <LabelInput htmlFor="down" label="Key Down">
+      <LabelInput htmlFor="down" label={t('keyDown')}>
         <input
           id="down"
           data-testid="key-down"
@@ -41,7 +45,7 @@ function KeyBindingsForm({
           required
         />
       </LabelInput>
-      <LabelInput htmlFor="left" label="Key Left">
+      <LabelInput htmlFor="left" label={t('keyLeft')}>
         <input
           id="left"
           data-testid="key-left"
@@ -53,7 +57,7 @@ function KeyBindingsForm({
           required
         />
       </LabelInput>
-      <LabelInput htmlFor="right" label="Key Right">
+      <LabelInput htmlFor="right" label={t('keyRight')}>
         <input
           id="right"
           data-testid="key-right"

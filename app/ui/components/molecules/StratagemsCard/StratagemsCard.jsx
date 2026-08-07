@@ -1,9 +1,12 @@
+import { useTranslations } from 'next-intl';
+
 // Styles
 import styles from './StratagemsCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
 import { generateHtmlCodeArrow } from '../../../../lib/stratagems';
+import { tStratagem } from '../../../../lib/translate';
 
 // Components
 import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
@@ -11,9 +14,9 @@ import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 /**
  * StratagemsCard component
  * @param {object} props - Component properties
- * @param {string} props.name - The name of the stratagem
+ * @param {string} props.name - The English name of the stratagem
  * @param {Array<string>} props.code - The code of the stratagem
- * @param {string} props.category - The category of the stratagem
+ * @param {string} props.category - The English category of the stratagem
  * @param {boolean} [props.active=false] - Whether the stratagem is active
  * @param {React.ReactNode} [props.children=null] - Child nodes
  * @returns {JSX.Element} The StratagemsCard component
@@ -21,10 +24,11 @@ import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
 function StratagemsCard({
   name, code, category, active = false, children = null,
 }) {
+  const t = useTranslations('GameData');
   return (
     <div
       className={cn([styles.card, active && `${styles.active} card-is-active`])}
-      title={`${name} - ${generateHtmlCodeArrow(code)}`}
+      title={`${tStratagem(t, name)} - ${generateHtmlCodeArrow(code)}`}
     >
       <StratagemImage
         src={`/icons/stratagems/${category}/${name}.svg`}

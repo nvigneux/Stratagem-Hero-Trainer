@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 // Styles
 import styles from './StrategemsLayout.module.css';
@@ -35,6 +36,7 @@ function StrategemsLayout({
   defaultCheckValue = true,
   children,
 }) {
+  const t = useTranslations('StrategemsLayout');
   const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
   const [openStratagems, setOpenStratagems] = useState(false);
 
@@ -101,14 +103,14 @@ function StrategemsLayout({
             id="checkbox-all"
             checked={checkboxesAreChecked}
             onChange={handleChangeAllCheckbox}
-            label={checkboxesAreChecked ? 'Deselect all' : 'Select all'}
+            label={checkboxesAreChecked ? t('deselectAll') : t('selectAll')}
             className={styles.checkboxAll}
           />
           <div className={styles.searchStratagemsContainer}>
             <Textfield
               id="search-stratagems"
               type="search"
-              placeholder="Search stratagems..."
+              placeholder={t('searchPlaceholder')}
               className={styles.searchStratagems}
               value={searchTerm}
               onChange={handleSearch}
@@ -117,7 +119,7 @@ function StrategemsLayout({
           <div className={styles.sideContainer}>
             <div className={styles.sideDecoration} />
             {noSearchResults ? (
-              <div className={styles.noSearchResults}>No stratagems found</div>
+              <div className={styles.noSearchResults}>{t('noStratagemsFound')}</div>
             ) : Object.entries(filteredStratagems).map(([category, stratagemsByCategory]) => {
               const categoryChecked = stratagemsByCategories[category].every(
                 (stratagem) => checkboxes[stratagem.name].value,

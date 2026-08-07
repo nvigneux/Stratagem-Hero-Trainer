@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 // Components
 import Arrow from '../../atoms/Arrow/Arrow';
 import StratagemImage from '../../atoms/StratagemImage/StratagemImage';
@@ -7,15 +9,18 @@ import styles from './StratagemsLoadoutCard.module.css';
 
 // Lib
 import cn from '../../../../lib/cn';
+import { tStratagem } from '../../../../lib/translate';
 
 /**
  * StratagemsLoadoutCard component
  * @param {object} props - Component properties
- * @param {{name: string, code: string[], category: {name: string}, color: string}} props.stratagem - The stratagem object
+ * @param {{name: string, code: string[], category: {name: string}, color: string}} props.stratagem - The stratagem object (names are English)
  * @param {Function} props.setCheckedStratagem - Function to set checked stratagem
  * @returns {JSX.Element} The StratagemsLoadoutCard component
  */
 function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
+  const t = useTranslations('GameData');
+  const displayName = tStratagem(t, stratagem.name);
   return (
     <button
       type="button"
@@ -24,7 +29,7 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
     >
       <StratagemsLoadoutCard.Icon
         color={stratagem.color}
-        title={stratagem.name}
+        title={displayName}
       >
         <StratagemImage
           src={`/icons/stratagems/${stratagem.category.name}/${stratagem.name}.svg`}
@@ -32,7 +37,7 @@ function StratagemsLoadoutCard({ stratagem, setCheckedStratagem }) {
         />
       </StratagemsLoadoutCard.Icon>
       <div className={styles.info}>
-        <div className={styles.name}>{stratagem.name}</div>
+        <div className={styles.name}>{displayName}</div>
         <div className={styles.code}>
           {stratagem.code.map((item, index) => (
             <Arrow

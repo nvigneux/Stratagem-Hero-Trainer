@@ -1,4 +1,6 @@
 import { cookies } from 'next/headers';
+// eslint-disable-next-line import/no-unresolved
+import { getTranslations } from 'next-intl/server';
 
 // Data
 import { fetchStratagems } from '../lib/data';
@@ -6,6 +8,7 @@ import { fetchStratagems } from '../lib/data';
 // Lib
 import { COOKIE_LOADOUT } from '../lib/constants';
 import { getSVGThemeColor } from '../lib/svg-color-analyzer';
+import { tStratagem, tCategory } from '../lib/translate';
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
 import StratagemsLoadout from '../ui/components/organisms/StratagemsLoadout/StratagemsLoadout';
@@ -27,14 +30,25 @@ export default async function Page() {
       });
     }),
   );
-  const randomisedStratagems = [...stratagems].sort(() => Math.random() - 0.5);
+  const t = await getTranslations('GameData');
+
+  const stratagemsWithDisplay = stratagems.map((s) => ({
+    ...s,
+    displayName: tStratagem(t, s.name),
+    category: {
+      ...s.category,
+      displayName: tCategory(t, s.category.name),
+    },
+  }));
+
+  const randomisedStratagems = [...stratagemsWithDisplay].sort(() => Math.random() - 0.5);
 
   /**
    * Groups the stratagems by their category.
    * @param {Array} stratagems - List of stratagems
    * @returns {object} Stratagems grouped by categories
    */
-  const stratagemsByCategories = stratagems.reduce((acc, stratagem) => {
+  const stratagemsByCategories = stratagemsWithDisplay.reduce((acc, stratagem) => {
     const categoryName = stratagem.category.name;
     if (!acc[categoryName]) { acc[categoryName] = []; }
     acc[categoryName] = acc[categoryName].concat(stratagem);
@@ -48,7 +62,7 @@ export default async function Page() {
       defaultCheckValue={false}
     >
       <StratagemsLoadout
-        stratagems={stratagems}
+        stratagems={stratagemsWithDisplay}
         loadoutStored={loadoutStored}
       />
     </StratagemsLayout>
@@ -63,9 +77,10 @@ export default async function Page() {
  */
 export async function generateMetadata({ searchParams }) {
   const { name } = await searchParams;
+  const t = await getTranslations('Metadata');
 
   return {
-    title: name ? `${name} - Stratagem Loadout - Helldivers`
-      : 'Stratagem Loadout - Helldivers',
+    title: name ? `${name}${t('loadoutTitleSuffix')}`
+      : t('loadoutTitleFallback'),
   };
 }
