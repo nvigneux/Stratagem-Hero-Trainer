@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 // Styles
 import styles from './RoundInfo.module.css';
 
@@ -37,17 +39,18 @@ function RoundInfo({ roundNb, children, className }) {
  * @returns {JSX.Element} The RoundInfoButton component
  */
 export function RoundInfoButton({ onClick, disabled }) {
+  const t = useTranslations('RoundInfoButton');
   return (
     <button
       type="button"
       onClick={onClick}
       className={styles.historyButton}
-      aria-label="Show history"
-      title="Round History & Stats"
+      aria-label={t('showHistory')}
+      title={t('roundHistoryStats')}
       disabled={disabled}
       data-testid="round-history"
     >
-      <div className={styles.label}>Round</div>
+      <div className={styles.label}>{t('round')}</div>
       <div className={styles.historyIcon}>
         <Picto icon="history" />
       </div>

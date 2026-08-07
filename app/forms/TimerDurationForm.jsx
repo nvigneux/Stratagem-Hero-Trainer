@@ -1,3 +1,6 @@
+// next-intl
+import { useTranslations } from 'next-intl';
+
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
 import FormWrapper from '../ui/components/molecules/Form/Form';
@@ -10,9 +13,10 @@ import FormWrapper from '../ui/components/molecules/Form/Form';
  * @returns {JSX.Element} The TimerDurationForm component
  */
 function TimerDurationForm({ timerDuration, handleSubmitTimerDuration }) {
+  const t = useTranslations('TimerDurationForm');
   return (
     <FormWrapper name="save-timer-duration" action={handleSubmitTimerDuration}>
-      <LabelInput htmlFor="timerDuration" label="Timer duration (sec)">
+      <LabelInput htmlFor="timerDuration" label={t('label')}>
         <input
           data-testid="timer-duration-input"
           name="timerDuration"

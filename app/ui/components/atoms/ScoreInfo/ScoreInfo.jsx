@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 // Styles
 import styles from './ScoreInfo.module.css';
 
@@ -19,11 +21,12 @@ import cn from '../../../../lib/cn';
 function ScoreInfo({
   score, bonusRound, bonusRestingTime, bonusPerfectRound, bestScore, displayBonus, className,
 }) {
+  const t = useTranslations('ScoreInfo');
   return (
     <div className={styles.container}>
       <div className={cn([styles.scoreDetails, displayBonus && styles.displayBonus])}>
         <div className={styles.bonus}>
-          <span>Round Bonus</span>
+          <span>{t('roundBonus')}</span>
           <span
             data-testid="round-bonus"
             className={styles.bonusValue}
@@ -32,7 +35,7 @@ function ScoreInfo({
           </span>
         </div>
         <div className={styles.bonus}>
-          <span>Time Bonus</span>
+          <span>{t('timeBonus')}</span>
           <span
             data-testid="time-bonus"
             className={styles.bonusValue}
@@ -41,7 +44,7 @@ function ScoreInfo({
           </span>
         </div>
         <div className={styles.bonus}>
-          <span>Perfect Round</span>
+          <span>{t('perfectRound')}</span>
           <span
             data-testid="perfect-round"
             className={styles.bonusValue}
@@ -56,10 +59,10 @@ function ScoreInfo({
       >
         {score}
       </div>
-      <div className={styles.label}>Score</div>
+      <div className={styles.label}>{t('score')}</div>
       {bestScore > 0 ? (
         <div className={styles.bestScore}>
-          <span>{'Record : '}</span>
+          <span>{t('record')}</span>
           <span className={cn([styles.bestScoreNb, className])}>{bestScore}</span>
         </div>
       ) : null}

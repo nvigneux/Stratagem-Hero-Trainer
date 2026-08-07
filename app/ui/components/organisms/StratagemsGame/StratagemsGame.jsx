@@ -2,6 +2,7 @@
 
 'use client';
 
+import { useTranslations } from 'next-intl';
 import {
   useEffect, useMemo, useReducer, useRef, useState,
 } from 'react';
@@ -57,6 +58,7 @@ import { useStratagems } from '../../templates/StrategemsLayout/StrategemsProvid
 
 // Lib
 import cn from '../../../../lib/cn';
+import { tStratagem } from '../../../../lib/translate';
 
 // Constants
 import { CONTACT_LINK } from '../../../../lib/constants';
@@ -70,6 +72,8 @@ import { CONTACT_LINK } from '../../../../lib/constants';
  * @returns {JSX.Element} The StratagemsGame component.
  */
 function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
+  const t = useTranslations('StratagemsGame');
+  const tGame = useTranslations('GameData');
   const [openSettings, setOpenSettings] = useState(false);
   const { checkedStratagems = {} } = useStratagems();
 
@@ -438,9 +442,9 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           onClick={() => setOpenSettings(!openSettings)}
           className={styles.buttonSettings}
           data-testid="button-settings"
-          aria-label="Settings"
+          aria-label={t('settings')}
         >
-          <span className={styles.buttonLabelDesktop}>Settings</span>
+          <span className={styles.buttonLabelDesktop}>{t('settings')}</span>
           <Picto icon="settings" />
         </button>
 
@@ -452,7 +456,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
             openSettings ? styles.openedSettings : styles.closedSettings,
           ])}
           data-testid="settings-overlay"
-          aria-label="Close settings"
+          aria-label={t('closeSettings')}
         />
 
         <div className={styles.roundScoreContainer}>
@@ -464,7 +468,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                 type="button"
                 onClick={() => handleStatsPanel('history')}
                 className={styles.buttonHistory}
-                aria-label="Round history"
+                aria-label={t('historyTitle')}
                 disabled={
                   openSettings || isRunning || stateSerie.round - 1 === 0
                 }
@@ -529,11 +533,11 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
                   error={stateSerie.error}
                   size="large"
                 />
-              )) : <TextNoiseEffect label="Jammed" title="Stratagem jammer activated" />}
+              )) : <TextNoiseEffect label={t('jammed')} title={t('jammedTitle')} />}
             </Arrow.List>
           </div>
         ) : (
-          <StratagemsName name="Traitor detected !" className="traitor" />
+          <StratagemsName name={t('traitorDetected')} className="traitor" />
         )}
 
         {series?.length ? (
@@ -566,8 +570,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           testId="stats-button-history"
         >
           <StatsButtonLabel
-            mobile="History"
-            desktop="Round history"
+            mobile={t('historyTitle')}
+            desktop={t('historyLabel')}
             testId="stats-button-history-label"
           />
         </StatsButton>
@@ -579,8 +583,8 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
           testId="stats-button-stats"
         >
           <StatsButtonLabel
-            mobile="Stats"
-            desktop="Stratagem stats"
+            mobile={t('statsTitle')}
+            desktop={t('statsLabel')}
             testId="stats-button-stats-label"
           />
         </StatsButton>
@@ -609,45 +613,45 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
       >
         {statsPanel.panel === 'stats' ? (
           Object.keys(stats)?.length ? (
-            <TableStatsWrapper title="Stats">
+            <TableStatsWrapper title={t('statsTitle')}>
               <TableStats>
                 <div className={styles.overflowTable}>
                   <TableStatsHeader className={styles.statsGrid}>
-                    <TableStatsCell>Stratagem</TableStatsCell>
+                    <TableStatsCell>{t('stratagem')}</TableStatsCell>
                     <TableStatsCell
                       onClick={(order) => setFilterStatsKey({ key: 'nb', order })}
                       order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'nb'}
                     >
-                      Count
+                      {t('count')}
                     </TableStatsCell>
                     <TableStatsCell
                       onClick={(order) => setFilterStatsKey({ key: 'averageTime', order })}
                       order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'averageTime'}
                     >
-                      Average
+                      {t('average')}
                     </TableStatsCell>
                     <TableStatsCell
                       onClick={(order) => setFilterStatsKey({ key: 'bestTime', order })}
                       order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'bestTime'}
                     >
-                      Best
+                      {t('best')}
                     </TableStatsCell>
                     <TableStatsCell
                       onClick={(order) => setFilterStatsKey({ key: 'worstTime', order })}
                       order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'worstTime'}
                     >
-                      Worst
+                      {t('worst')}
                     </TableStatsCell>
                     <TableStatsCell
                       onClick={(order) => setFilterStatsKey({ key: 'error', order })}
                       order={filterStatsKey.order === 'asc' ? 'desc' : 'asc'}
                       isActiveFilter={filterStatsKey.key === 'error'}
                     >
-                      Errors
+                      {t('errors')}
                     </TableStatsCell>
                   </TableStatsHeader>
                   <TableStatsBody>
@@ -674,7 +678,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
 ${stat.stratagem.name}.svg`}
                                   name={stat.stratagem.name}
                                 />
-                                {` ${stat.stratagem.name}`}
+                                {tStratagem(tGame, stat.stratagem.name)}
                               </>
                             </TableStatsCell>
                             <TableStatsCell name="nb">
@@ -699,22 +703,22 @@ ${stat.stratagem.name}.svg`}
                                 name={stat.stratagem.name}
                               />
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="name" label="Name">
-                              {`${stat.stratagem.name}`}
+                            <TableStatsCellMobile name="name" label={t('name')}>
+                              {tStratagem(tGame, stat.stratagem.name)}
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="nb" label="Nb">
+                            <TableStatsCellMobile name="nb" label={t('nb')}>
                               {`${stat.nb}`}
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="averageTime" label="Average">
+                            <TableStatsCellMobile name="averageTime" label={t('average')}>
                               {`${(stat.averageTime / 1000).toFixed(3)} sec`}
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="bestTime" label="Best">
+                            <TableStatsCellMobile name="bestTime" label={t('best')}>
                               {`${(stat.bestTime / 1000).toFixed(2)} sec`}
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="worstTime" label="Worst">
+                            <TableStatsCellMobile name="worstTime" label={t('worst')}>
                               {`${(stat.worstTime / 1000).toFixed(2)} sec`}
                             </TableStatsCellMobile>
-                            <TableStatsCellMobile name="error" label="Error">
+                            <TableStatsCellMobile name="error" label={t('error')}>
                               {`${stat.error}`}
                             </TableStatsCellMobile>
                           </TableStatsRow>
@@ -728,7 +732,7 @@ ${stat.stratagem.name}.svg`}
         ) : null}
         {statsPanel.panel === 'history' ? (
           Object.keys(stateSerie.history)?.length ? (
-            <TableStatsWrapper title="History">
+            <TableStatsWrapper title={t('historyTitle')}>
               <TableStats>
                 {Object.keys(stateSerie.history)
                   .reverse()
@@ -739,7 +743,9 @@ ${stat.stratagem.name}.svg`}
                         <TableStatsTitle>
                           {round ? (
                             <>
-                              <div data-testid="round-history-title">{`Round ${round}`}</div>
+                              <div data-testid="round-history-title">
+                                {t('roundN', { n: round })}
+                              </div>
                               <span>
                                 {`${
                                   stateSerie.history[round]
@@ -756,10 +762,10 @@ ${stat.stratagem.name}.svg`}
                           ) : null}
                         </TableStatsTitle>
                         <TableStatsHeader className={styles.historyGrid}>
-                          <TableStatsCell>N.</TableStatsCell>
-                          <TableStatsCell>Stratagem</TableStatsCell>
-                          <TableStatsCell>Time</TableStatsCell>
-                          <TableStatsCell>Nb Errors</TableStatsCell>
+                          <TableStatsCell>{t('n')}</TableStatsCell>
+                          <TableStatsCell>{t('stratagem')}</TableStatsCell>
+                          <TableStatsCell>{t('time')}</TableStatsCell>
+                          <TableStatsCell>{t('nbErrors')}</TableStatsCell>
                         </TableStatsHeader>
                         <TableStatsBody>
                           {stateSerie.history[round].map((item, index) => (
@@ -779,7 +785,7 @@ ${stat.stratagem.name}.svg`}
 ${item.stratagem.name}.svg`}
                                     name={item.stratagem.name}
                                   />
-                                  {` ${item.stratagem.name}`}
+                                  {tStratagem(tGame, item.stratagem.name)}
                                 </>
                               </TableStatsCell>
                               <TableStatsCell name="time">
@@ -798,16 +804,16 @@ ${item.stratagem.name}.svg`}
                                   name={item.stratagem.name}
                                 />
                               </TableStatsCellMobile>
-                              <TableStatsCellMobile name="name" label="Name">
-                                {`${item.stratagem.name}`}
+                              <TableStatsCellMobile name="name" label={t('name')}>
+                                {tStratagem(tGame, item.stratagem.name)}
                               </TableStatsCellMobile>
-                              <TableStatsCellMobile name="time" label="Time">
+                              <TableStatsCellMobile name="time" label={t('time')}>
                                 {`${(
                                   (item.endTime - item.startTime)
                                   / 1000
                                 ).toFixed(2)} sec`}
                               </TableStatsCellMobile>
-                              <TableStatsCellMobile name="error" label="Error">
+                              <TableStatsCellMobile name="error" label={t('error')}>
                                 {`${item.nbError}`}
                               </TableStatsCellMobile>
                             </TableStatsRow>
@@ -827,7 +833,7 @@ ${item.stratagem.name}.svg`}
         <div className={styles.settingsTop}>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Audio" />
+            <HeadingForm title={t('audio')} />
             <GameSoundForm
               gameSound={gameSound}
               handleSubmitGameSound={handleSubmitGameSound}
@@ -835,7 +841,7 @@ ${item.stratagem.name}.svg`}
           </div>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Timer" />
+            <HeadingForm title={t('timer')} />
             <TimerDurationForm
               timerDuration={timerDuration}
               handleSubmitTimerDuration={handleSubmitTimerDuration}
@@ -843,7 +849,7 @@ ${item.stratagem.name}.svg`}
           </div>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Training mode" />
+            <HeadingForm title={t('trainingMode')} />
             <TrainingModeForm
               trainingMode={trainingMode}
               handleSubmitTrainingMode={handleSubmitTrainingMode}
@@ -851,7 +857,7 @@ ${item.stratagem.name}.svg`}
           </div>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Key bindings" />
+            <HeadingForm title={t('keyBindings')} />
             <KeyBindingsForm
               tempKeyBindings={tempKeyBindings}
               handleKeyBindings={handleKeyBindings}
@@ -860,25 +866,25 @@ ${item.stratagem.name}.svg`}
           </div>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Gamepad" />
+            <HeadingForm title={t('gamepad')} />
             <InfoMessage>
-              {gamepadConnected?.id || 'You can also play with a gamepad !'}
+              {gamepadConnected?.id || t('gamepadInfo')}
             </InfoMessage>
           </div>
         </div>
 
         <div className={styles.settingsBottom}>
           <div className={styles.settingsSection}>
-            <HeadingForm title="Contact me" />
+            <HeadingForm title={t('contactMe')} />
             <InfoMessage>
               <Link href={CONTACT_LINK} target="_blank">
-                If you have any feedback or suggestion, feel free to contact me !
+                {t('feedbackLink')}
               </Link>
             </InfoMessage>
           </div>
 
           <div className={styles.settingsSection}>
-            <HeadingForm title="Support me" />
+            <HeadingForm title={t('supportMe')} />
             <ButtonBuyMeACoffee />
           </div>
         </div>
