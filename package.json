@@ -14,7 +14,7 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.27.19",
+    "@floating-ui/react": "^0.27.20",
     "@svgr/webpack": "^8.1.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/postgres": "^0.10.0",
@@ -22,10 +22,10 @@
     "cookies-next": "^4.3.0",
     "file-loader": "^6.2.0",
     "lz-string": "^1.5.0",
-    "next": "^15.5.19",
-    "next-auth": "^5.0.0-beta.31",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "next": "^15.5.23",
+    "next-auth": "^5.0.0-beta.32",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "url-loader": "^4.1.1",
     "use-sound": "^4.0.4",
     "zod": "^3.25.76"
