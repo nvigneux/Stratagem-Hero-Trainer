@@ -43,6 +43,7 @@ Cypress.Commands.add('performKeyCombination', (keys, times = 1, options = {}) =>
 // set settings cookies by visiting the page and change input timerDuration
 Cypress.Commands.add('setSettings', (timerDuration) => {
   cy.session('h2-settings', () => {
+    cy.setCookie('NEXT_LOCALE', 'en');
     cy.visit('http://localhost:3000/');
     cy.get('[data-testid="button-settings"]').click();
     cy.wait(500);

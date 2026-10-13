@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 
+import { useTranslations } from 'next-intl';
+
 // Styles
 import styles from './ButtonSideStratagems.module.css';
 // Lib
@@ -20,12 +22,14 @@ const svgPaths = {
  * @returns {JSX.Element} The ButtonSideStratagems component
  */
 function ButtonSideStratagems({ isOpened, onClick, testId }) {
+  const t = useTranslations('ButtonSideStratagems');
+
   return (
     <button
       type="button"
       onClick={onClick}
       className={cn([styles.button, styles.burger, isOpened ? styles.cross : ''])}
-      aria-label="Open side stratagems"
+      aria-label={t('ariaLabel')}
       data-testid={testId}
     >
       <svg width="100" height="100" viewBox="0 0 100 100">

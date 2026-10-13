@@ -1,4 +1,5 @@
 import Form from 'next/form';
+import { useTranslations } from 'next-intl';
 
 // Styles
 import styles from './Form.module.css';
@@ -15,6 +16,7 @@ import Button from '../../atoms/Button/Button';
  * @returns {JSX.Element} The Form component
  */
 function FormWrapper({ name, action, children }) {
+  const t = useTranslations('Form');
   return (
     <Form
       className={styles.form}
@@ -26,7 +28,7 @@ function FormWrapper({ name, action, children }) {
         type="submit"
         className={styles.button}
       >
-        Apply
+        {t('apply')}
       </Button>
     </Form>
   );
