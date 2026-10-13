@@ -1,4 +1,6 @@
 import { cookies } from 'next/headers';
+// eslint-disable-next-line import/no-unresolved
+import { getTranslations } from 'next-intl/server';
 
 // Data
 import { fetchStratagems } from '../lib/data';
@@ -6,6 +8,7 @@ import { fetchStratagems } from '../lib/data';
 // Lib
 import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../lib/constants';
 import { isJsonString } from '../lib/utils';
+import { tStratagem, tCategory } from '../lib/translate';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
@@ -22,16 +25,27 @@ export default async function Page() {
   const jsonSettingsStored = isJsonString(settingsStored) ? JSON.parse(settingsStored) : {};
 
   const stratagems = await fetchStratagems();
+  const t = await getTranslations('GameData');
+
+  const stratagemsWithDisplay = stratagems.map((s) => ({
+    ...s,
+    displayName: tStratagem(t, s.name),
+    category: {
+      ...s.category,
+      displayName: tCategory(t, s.category.name),
+    },
+  }));
+
   const randomisedStratagems = jsonSettingsStored?.trainingMode?.sequentialMode
-    ? [...stratagems]
-    : [...stratagems].sort(() => Math.random() - 0.5);
+    ? [...stratagemsWithDisplay]
+    : [...stratagemsWithDisplay].sort(() => Math.random() - 0.5);
 
   /**
    * Groups the stratagems by their category.
    * @param {Array} stratagems - List of stratagems
    * @returns {object} Stratagems grouped by categories
    */
-  const stratagemsByCategories = stratagems.reduce((acc, stratagem) => {
+  const stratagemsByCategories = stratagemsWithDisplay.reduce((acc, stratagem) => {
     const categoryName = stratagem.category.name;
     if (!acc[categoryName]) { acc[categoryName] = []; }
     acc[categoryName] = acc[categoryName].concat(stratagem);
@@ -40,7 +54,7 @@ export default async function Page() {
 
   return (
     <StratagemsLayout
-      stratagems={stratagems}
+      stratagems={stratagemsWithDisplay}
       stratagemsByCategories={stratagemsByCategories}
     >
       <StratagemsGame

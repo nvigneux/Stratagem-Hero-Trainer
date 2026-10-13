@@ -1,3 +1,6 @@
+// next-intl
+import { useTranslations } from 'next-intl';
+
 // Components
 import LabelInput from '../ui/components/atoms/LabelInput/LabelInput';
 import FormWrapper from '../ui/components/molecules/Form/Form';
@@ -11,9 +14,10 @@ import Checkbox from '../ui/components/atoms/Checkbox/Checkbox';
  * @returns {JSX.Element} The GameSoundForm component
  */
 function GameSoundForm({ gameSound, handleSubmitGameSound }) {
+  const t = useTranslations('GameSoundForm');
   return (
     <FormWrapper name="save-game-sound" action={handleSubmitGameSound}>
-      <LabelInput htmlFor="gameSound" label="Game sound">
+      <LabelInput htmlFor="gameSound" label={t('label')}>
         <Checkbox id="checkbox-game-sound" name="gameSound" defaultChecked={gameSound} />
       </LabelInput>
     </FormWrapper>

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 // Components
 import { Picto } from '../../atoms/Picto/Picto';
 import StratagemsKeyboardMobile from '../StratagemsKeyboardMobile/StratagemsKeyboardMobile';
@@ -17,6 +19,8 @@ import styles from './MobileControls.module.css';
  * @returns {JSX.Element} The MobileControls component
  */
 function MobileControls({ layout, setLayout }) {
+  const t = useTranslations('MobileControls');
+
   return (
     <div className={styles.container} data-testid="mobile-controls">
       <div className={styles.controlsSelector}>
@@ -26,7 +30,7 @@ function MobileControls({ layout, setLayout }) {
             className={cn([styles.selectorButton, styles.keyboardButton])}
             data-testid="keyboard-button"
             onClick={() => setLayout('keyboard')}
-            aria-label="Switch to keyboard controls"
+            aria-label={t('switchToKeyboard')}
           >
             <Picto icon="keypad" className={styles.selectorIcon} />
           </button>
@@ -37,7 +41,7 @@ function MobileControls({ layout, setLayout }) {
             className={cn([styles.selectorButton, styles.dpadButton])}
             data-testid="dpad-button"
             onClick={() => setLayout('dpad')}
-            aria-label="Switch to D-pad controls"
+            aria-label={t('switchToDpad')}
           >
             <Picto icon="dpad" className={styles.selectorIcon} />
           </button>

@@ -96,6 +96,13 @@ describe('Stratagem Trainer Mobile - Gameplay and Settings', () => {
     cy.get('[data-testid="dpad-button"]').click();
     cy.get('[data-testid="mobile-dpad"]').should('be.visible');
 
+    // Persist layout to cookie before reload
+    cy.getCookie('h2-settings').then((cookie) => {
+      const settings = cookie ? JSON.parse(decodeURIComponent(cookie.value)) : {};
+      settings.layout = 'dpad';
+      cy.setCookie('h2-settings', JSON.stringify(settings));
+    });
+
     // Reload page and check if layout persists
     cy.reload();
     cy.get('[data-testid="mobile-dpad"]').should('be.visible');

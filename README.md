@@ -40,6 +40,7 @@ When adding new stratagems with their icons to the app:
 
 1. **Add the icon files** to the `public/icons/stratagems/` directory
 2. **Add the stratagem data** to the appropriate data files `app/lib/placeholder-data-helldivers`
-3. **Important**: Update the service worker cache in `public/sw.js` to include the new icon files for offline functionality
+3. **Add translations** for the stratagem and its category name to each `messages/<locale>.json` file under `GameData.stratagems` and `GameData.categories` (use the English name as the key)
+4. **Important**: Update the service worker cache in `public/sw.js` to include the new icon files for offline functionality
 
 The service worker caches all stratagem icons to ensure the app works offline. Failing to add new icons to the cache manifest will result in missing images when users are offline.
