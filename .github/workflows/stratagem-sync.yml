@@ -1,0 +1,104 @@
+name: Synchronize stratagem icons
+on:
+  repository_dispatch:
+    types: [stratagem-icons-updated]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: stratagem-sync
+  cancel-in-progress: false
+jobs:
+  synchronize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create short-lived bot token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.SYNC_APP_ID }}
+          private-key: ${{ secrets.SYNC_APP_PRIVATE_KEY }}
+          owner: nvigneux
+          repositories: Stratagem-Hero-Trainer
+          permission-contents: write
+          permission-pull-requests: write
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: master
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resume persistent branch and preserve reviewer commits
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'stratagem-sync[bot]'
+          git config user.email 'stratagem-sync[bot]@users.noreply.github.com'
+          branch=codex/stratagem-sync
+          git fetch origin master
+          if git ls-remote --exit-code --heads origin "$branch"; then
+            git fetch origin "$branch"
+            git switch -C "$branch" FETCH_HEAD
+            git merge origin/master --no-edit
+          else
+            git switch -c "$branch" origin/master
+          fi
+      - name: Checkout trusted icon source (ignore dispatch payload)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: nvigneux/Helldivers-2-Stratagems-icons-svg
+          ref: master
+          path: _icon-source
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Synchronize and validate
+        run: |
+          python3 scripts/stratagem_sync/sync.py --source _icon-source
+          python3 -m unittest discover -s tests/sync -v
+          node --test tests/sync/*.test.cjs
+          python3 scripts/stratagem_sync/sync.py --check
+      - name: Commit and open or update review PR
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add app/lib/sync public/icons/stratagems public/sw.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Synchronize upstream stratagem icons and review proposals'
+          fi
+          # No force push: concurrent manual edits cause failure instead of data loss.
+          git push origin HEAD:codex/stratagem-sync
+          if git diff --quiet origin/master...HEAD; then exit 0; fi
+          number=$(gh pr list --head codex/stratagem-sync --base master --state open --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            # Preserve the human-edited PR description; new evidence is committed in the catalogue.
+            echo "Updated existing PR #$number"
+          else
+            number=$(gh pr create --base master --head codex/stratagem-sync \
+              --title 'Sync stratagem icons: review new codes' \
+              --body-file /tmp/stratagem-sync-report.md)
+            number=${number##*/}
+          fi
+          # Only replace our marked report comment, preserving the description and human comments.
+          comment=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$number/comments" \
+            --jq '.[] | select(.body | startswith("<!-- stratagem-sync-report -->")) | .id' | head -n 1)
+          python3 -c 'import json; from pathlib import Path; Path("/tmp/stratagem-comment.json").write_text(json.dumps({"body": "<!-- stratagem-sync-report -->\n" + Path("/tmp/stratagem-sync-report.md").read_text()}))'
+          if [ -n "$comment" ]; then
+            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment" --input /tmp/stratagem-comment.json
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$number/comments" --input /tmp/stratagem-comment.json
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stratagem-review-report
+          path: /tmp/stratagem-sync-report.md

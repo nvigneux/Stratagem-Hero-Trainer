@@ -1,0 +1,61 @@
+name: Stratagem validation
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted, dismissed]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  approval:
+    name: Stratagem owner approval
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify explicit approval of activated codes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATAGEM_APPROVER: ${{ vars.STRATAGEM_APPROVER }}
+        run: python3 scripts/stratagem_sync/approval.py
+  validate:
+    name: Stratagem tests and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --legacy-peer-deps
+      - run: python3 -m unittest discover -s tests/sync -v
+      - run: node --test tests/sync/*.test.cjs
+      - run: python3 scripts/stratagem_sync/sync.py --check
+      - run: npm run lint
+      - run: npm run build
+      - name: Browser regression and offline checks
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          start: npm run start
+          wait-on: http://localhost:3000
+          browser: chrome
+      - name: Real browser offline reload
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run start -- --port 3001 > /tmp/stratagem-offline-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:3001/ > /dev/null; then break; fi
+            sleep 1
+          done
+          TEST_URL=http://localhost:3001 node scripts/stratagem_sync/offline-browser.cjs
