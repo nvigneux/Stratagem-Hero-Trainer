@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import StratagemsGame from './organisms/StratagemsGame/StratagemsGame';
-import { readLocal } from '../../lib/local-game-storage';
-import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../../lib/constants';
+import StratagemsGame from './StratagemsGame';
+import { readLocal } from '../../../../lib/local-game-storage';
+import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../../../../lib/constants';
 
 /**
  * Restore browser-owned preferences before mounting the game.
@@ -13,7 +13,7 @@ import { COOKIE_BEST_SCORE, COOKIE_SETTINGS } from '../../lib/constants';
  * @param {number} props.bestScoreStored - Legacy record.
  * @returns {JSX.Element} Trainer.
  */
-export default function OfflineGame({ stratagems, settingsStored, bestScoreStored }) {
+export default function StratagemsGameClient({ stratagems, settingsStored, bestScoreStored }) {
   const [saved, setSaved] = useState(null);
   useEffect(() => {
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {

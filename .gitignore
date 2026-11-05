@@ -37,3 +37,8 @@ certificates
 
 # Generated after the production build
 /public/offline-assets.js
+
+# Cypress output
+/cypress/screenshots/
+/cypress/videos/
+/cypress/downloads/
