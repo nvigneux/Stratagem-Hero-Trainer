@@ -75,6 +75,10 @@ const CATEGORIES = [
     id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
     name: 'Entrenched Division',
   },
+  {
+    id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
+    name: 'Castellan’s Creed',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -556,6 +560,14 @@ const ENTRENCHED_DIVISION = [
   },
 ];
 
+const CASTELLANS_CREED = [
+  {
+    name: '40-K Meltagun',
+    code: ['down', 'left', 'up', 'left', 'left', 'down'],
+    category_id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -648,6 +660,7 @@ const STRATAGEMS = [
   ...REDACTED_REGIMENT,
   ...SIEGE_BREAKERS,
   ...ENTRENCHED_DIVISION,
+  ...CASTELLANS_CREED,
   ...GENERAL_STRATEGEMS,
 ];
 
