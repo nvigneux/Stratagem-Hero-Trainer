@@ -1,138 +1,51 @@
-# Automated stratagem synchronization
+# New stratagem icon PRs
 
-Keep creating, organizing and pushing SVGs to the source repository as usual. A source
-master SVG push requests a Trainer sync; the Trainer also supports manual runs and a daily
-05:17 UTC fallback. Schedules may be delayed by GitHub. All changes arrive in a review PR;
-nothing is automatically merged.
+The automation only copies new SVGs and opens a PR. It never edits the game catalogue,
+looks up codes, or merges anything. There is no extra catalogue, approval system, GitHub
+App, LLM API key, or synchronization database.
 
-See [the audit and technical plan](stratagem-sync-audit.md) for the existing architecture.
+## Setup
 
-## Install
+1. Merge the Trainer workflow first, then the source notification workflow.
+2. In the Trainer's Settings → Actions → General, enable **Allow GitHub Actions to create
+   and approve pull requests**. The workflow uses the built-in `GITHUB_TOKEN` with Contents
+   and Pull requests write permissions; it never submits an approval.
+3. In the icon repository, add Actions secret `TRAINER_DISPATCH_TOKEN`: a fine-grained PAT
+   restricted to Stratagem-Hero-Trainer with **Contents: read/write** (required by GitHub's
+   repository_dispatch endpoint). Set an expiration and rotate it before expiry.
+4. Run **Propose new stratagem icons** manually once after installation.
 
-1. Publish the implementation branches for both repositories and merge them manually.
-   `repository_dispatch` and scheduled workflows must exist on the default branch
-   (`master`). For an initial branch test use workflow_dispatch with the implementation
-   branch selected, after the workflow has been registered on the default branch.
-2. Create a GitHub App for synchronization. Give it repository **Contents: read/write**
-   and **Pull requests: read/write** only; install it only on Stratagem-Hero-Trainer.
-   In the Trainer's Actions variables set `SYNC_APP_ID` to its App ID. In Actions secrets
-   set `SYNC_APP_PRIVATE_KEY` to its generated PEM private key. The workflow mints a
-   short-lived installation token. The PR author is the bot so you can approve the PR
-   yourself; do not replace this with your own PAT, since authors cannot approve their PRs.
-3. Create a fine-grained PAT restricted to the Trainer with **Contents: read/write**
-   (GitHub's permission requirement for repository_dispatch) and an expiration. Store it
-   as `TRAINER_DISPATCH_TOKEN` in the **source** repository's Actions secrets. It needs
-   no workflow, administration, issues or account-wide permissions. A GitHub App token
-   produced in the source workflow can replace this PAT if desired.
-4. In Trainer branch protection/rulesets for master, require PRs and the checks
-   **Stratagem owner approval** and **Stratagem tests and build**. Disable bypasses for
-   routine merges and dismiss stale reviews. No repository setting is changed by these files.
-   Approval defaults to `nvigneux`; optionally set Actions variable `STRATAGEM_APPROVER`
-   to the specific maintainer login who may verify codes.
-5. Run **Synchronize stratagem icons** manually. Inspect the bot PR and the downloadable
-   `stratagem-review-report` artifact. Check the first real Actions run before relying on
-   the dispatch chain. Rotate credentials before expiration; never commit them.
+SVG changes on source master trigger the workflow. A daily 05:17 UTC run and the manual
+trigger provide fallback. Dispatch payloads are ignored; icons always come from source master.
+If GitHub asks for permission to run checks on a bot-created PR, approve the workflow runs.
+You may make **Tests and build** a required master branch check.
 
-The workflows' built-in token has only read permissions. The bot's write token is limited
-to the synchronization job. PR validation has no write token or repository secrets and
-uses `pull_request`, never privileged `pull_request_target` execution.
+## Your workflow
 
-GitHub references: [dispatch event](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#repository_dispatch),
-[dispatch token permissions](https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event),
-[workflow triggering and bot tokens](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow#triggering-a-workflow-from-a-workflow).
+Keep creating and pushing icons as usual. The bot PR contains new SVGs in their original
+department/Warbond folders, icon previews, and a ready-to-use Codex prompt.
 
-## Review a proposal
+Ask Codex to complete that PR. It researches codes, adds the few necessary lines directly
+to `app/lib/placeholder-data-helldivers.js`, reuses or adds categories, and updates the
+existing service-worker asset list/version. Codes and source URLs are reviewed in the PR;
+uncertain entries stay out of the game catalogue. You review and merge manually.
 
-The PR description contains the initial icon/name/group, readable arrow sequence and source
-URLs. A marked bot comment contains the latest report after additional upstream changes;
-manual PR text and comments remain untouched. Full evidence is committed in
-`app/lib/sync/catalog.json`: each source has a URL, result status and any discovered code.
+While an icon PR is open, synchronization waits instead of changing your work. New upstream
+icons are picked up by the next daily/manual run after that PR is merged or closed.
+Repeated runs do not create duplicate PRs or overwrite existing icons. Punctuation and
+Guard Dog quote differences are ignored, and Gas Mine maps to existing Gas Mines.
+Modified or deleted upstream icons are left alone. Experimental folders are skipped.
 
-For each new entry:
+## Local check
 
-1. Compare the proposed sequence against the game or the linked sources. Conflicts leave
-   `code: []`; unavailable sources are explicitly recorded. Source agreement is evidence,
-   never automatic verification.
-2. Edit `code` in the PR using lowercase direction words, correct any metadata, and set
-   `verification` to `verified`. Add a source URL/evidence entry for your manual correction.
-   To release it to gameplay, also set `enabled: true` and `experimental: false` only when
-   appropriate. Unknown/experimental entries remain disabled by default.
-3. Commit the correction, regenerate the worker using the command below, and push. The
-   owner-approval check fails until the designated maintainer **approves the exact current
-   head commit** using GitHub's Approve review. A later correction or new sync commit
-   requires approval again. A comment or the bot's source agreement cannot verify a code.
-4. Wait for validation/build/Cypress and merge manually. You may merge an unverified,
-   disabled proposal to retain its icon without making it playable.
-
-The runtime loader excludes every synchronized row unless its code is valid, verification
-is `verified`, enabled is exactly true, and experimental is exactly false. Existing legacy
-rows retain their established behavior; the automation never rewrites their codes.
-
-## Local development and validation
-
-Requires Python 3.10+ and Node 26 (no Python dependencies):
+Requires Python 3.10+; no Python dependencies:
 
 ```sh
-npm ci --legacy-peer-deps
-python3 scripts/stratagem_sync/sync.py --source ../helldivers-2-stratagems-icons-svg
-python3 scripts/stratagem_sync/cache.py
-python3 scripts/stratagem_sync/sync.py --check
-python3 -m unittest discover -s tests/sync -v
-node --test tests/sync/*.test.cjs
-npm run lint
-npm run build
-# In a second terminal, after npm run start:
-npx cypress run --browser chrome
-node scripts/stratagem_sync/offline-browser.cjs
+python3 -m unittest discover -s tests -v
+python3 scripts/sync-icons.py --source ../helldivers-2-stratagems-icons-svg \
+  --branch local-preview --report /tmp/icon-pr.md
 ```
 
-`--offline` skips external lookups and retains pending proposals; use it for deterministic
-local replay. The report defaults to `/tmp/stratagem-sync-report.md`. Check mode validates
-all SVGs and proposals, and rejects an outdated worker without leaving file changes.
-Regenerate the worker after changing app code, catalogue data, dependencies or assets.
-CI runs validation/build and browser tests before PR merge. The standalone Chrome offline test
-waits for worker installation, disconnects its network, reloads and checks hydration and
-SVG availability. Set `CHROME_BIN` if Chrome is not on the default path. Cypress tests
-isolate worker registration so their injected proxy HTML is never cached; the independent
-Chrome test runs without that proxy.
-Worker unit tests also verify real asset paths, cached icons, navigation fallback and
-origin cache isolation. Offline functionality requires one successful online installation.
-
-## Maintenance and recovery
-
-- `catalog.json` is review-owned: name, group, code, category, enablement, experimental and
-  verification edits survive later syncs. `proposed_code` tracks the previous automatic
-  suggestion; edit `code`, not that ownership field. Pending evidence is refreshed on
-  online runs. A code changed by a reviewer is preserved, even while unverified.
-- `state.json` tracks immutable UUID identities, source paths, source SHA-256 hashes,
-  target paths, missing flags and the upstream Git revision. Do not regenerate IDs.
-  Ordinary Git renames preserve UUIDs and Trainer display paths. Unique hash/name
-  matches provide fallback; ambiguous identities stop synchronization for review.
-- Manual icon edits also survive later syncs. If both the source and the local icon
-  change, the local SVG is retained and an icon conflict is reported until reconciled.
-- Removed upstream files are marked missing and reported on every run. Icons and game
-  records remain. Removal from gameplay is a separate reviewed change.
-- A rename and total icon rewrite that Git cannot recognize requires moving the old
-  state entry to the new source path before retrying. Keep its UUID and target. For
-  unrelated duplicate names, correct the naming or establish an explicit reviewed mapping.
-- The six department names are in `DEPARTMENTS` in `sync.py`. All other ordinary groups
-  are Warbonds; review this classification for new folders. Category UUIDs are reused or
-  deterministically generated. Display folders follow Trainer conventions.
-- Name normalization removes punctuation/quotes and model prefixes containing digits,
-  with a small explicit alias map. It does not accept arbitrary fuzzy matches. Update
-  `sources.py` with a fixture test if a source changes its markup/schema. Current sources:
-  [wiki](https://helldivers.wiki.gg/wiki/Stratagems) and
-  [generator](https://github.com/k33bs/Helldivers-2-Stratagem-JSON-Generator).
-- HTTP failures do not manufacture codes. Pending records report missing/unavailable
-  evidence and stay disabled. Retry manually or use the daily fallback.
-- One concurrency group serializes syncs. Runs resume `codex/stratagem-sync` and merge
-  master without rebasing/force-pushing. A simultaneous reviewer push fails safely;
-  rerun to incorporate it. Resolve merge conflicts manually on that branch, then rerun.
-  Keep that branch while its PR is open; after merge it may be deleted normally.
-- The worker version hashes app/public content plus dependency/config inputs. Installation
-  uses fresh HTTP responses and precaches page JS/CSS; a failed precache rejects the new
-  installation, retaining the old worker. Only Trainer-owned old caches are deleted.
-- If checks fail because the cache is stale after a manual correction, regenerate it and
-  push before approving. Never approve before the final commit.
-
-No secrets, subscriptions, paid dependencies or per-sync LLM calls are needed.
+The script validates new SVGs before copying. Run it on a working branch; it adds files
+under `public/icons/stratagems` and writes the proposed PR description to the report path.
+Normal application checks remain `npm run lint` and `npm run build`, using Node.js 26.

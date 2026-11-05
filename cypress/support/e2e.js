@@ -15,13 +15,3 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands';
-
-// Service workers cache Cypress-instrumented HTML and interfere with its proxy.
-// The independent Chrome test covers real worker installation and offline reloads.
-// eslint-disable-next-line no-undef
-Cypress.on('window:before:load', (win) => {
-  const { serviceWorker } = win.navigator;
-  if (serviceWorker) {
-    serviceWorker.register = () => Promise.resolve();
-  }
-});

@@ -3,7 +3,6 @@ import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/next';
 
 import './globals.css';
-import ServiceWorker from './ui/components/ServiceWorker';
 
 const fsSinclair = localFont({
   src: [
@@ -42,7 +41,6 @@ export default function RootLayout({ children }) {
       <body className={`${fsSinclair.className} ${fsSinclair.variable}`}>
         {children}
         <Analytics />
-        <ServiceWorker />
       </body>
     </html>
   );

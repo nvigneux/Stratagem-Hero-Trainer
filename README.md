@@ -44,8 +44,7 @@ When adding new stratagems with their icons to the app:
 
 The service worker caches all stratagem icons to ensure the app works offline. Failing to add new icons to the cache manifest will result in missing images when users are offline.
 
-## Automated icon synchronization
+## New icon PRs
 
-New SVGs are synchronized through a bot review PR. Codes remain disabled until explicitly
-verified and approved. See [setup and maintenance](docs/stratagem-sync.md) and the
-[repository audit](docs/stratagem-sync-audit.md).
+New source SVGs open an icons-only PR. Ask Codex to add the corresponding entries to the
+existing catalogue, then review and merge manually. See [setup](docs/stratagem-sync.md).

@@ -2,7 +2,6 @@ import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 
 import { STRATAGEMS, CATEGORIES } from './placeholder-data-helldivers';
-import { extendCatalog } from './sync/catalog.cjs';
 
 const ITEMS_PER_PAGE = 6;
 
@@ -11,9 +10,8 @@ const ITEMS_PER_PAGE = 6;
  * @returns {Promise<Array>} The stratagems.
  */
 export async function fetchStratagems() {
-  const catalog = extendCatalog(STRATAGEMS, CATEGORIES);
-  return catalog.stratagems.reduce((acc, stratagem) => {
-    const category = catalog.categories.find((c) => c.id === stratagem.category_id);
+  return STRATAGEMS.reduce((acc, stratagem) => {
+    const category = CATEGORIES.find((c) => c.id === stratagem.category_id);
     acc.push({
       ...stratagem,
       category,

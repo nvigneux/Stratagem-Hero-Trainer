@@ -1,4 +1,4 @@
-name: Synchronize stratagem icons
+name: Propose new stratagem icons
 on:
   repository_dispatch:
     types: [stratagem-icons-updated]
@@ -8,97 +8,51 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: stratagem-sync
+  group: stratagem-icons
   cancel-in-progress: false
 jobs:
-  synchronize:
+  propose:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
-      - name: Create short-lived bot token
-        id: app-token
-        uses: actions/create-github-app-token@v2
-        with:
-          app-id: ${{ vars.SYNC_APP_ID }}
-          private-key: ${{ secrets.SYNC_APP_PRIVATE_KEY }}
-          owner: nvigneux
-          repositories: Stratagem-Hero-Trainer
-          permission-contents: write
-          permission-pull-requests: write
+      - name: Leave an existing icon PR for review
+        id: pending
+        run: |
+          count=$(gh pr list --state open --limit 1000 --json headRefName --jq '[.[] | select(.headRefName | startswith("automation/stratagem-icons-"))] | length')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          if [ "$count" -gt 0 ]; then echo 'An icon PR is already open; new icons will wait for the next sync.'; fi
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        if: steps.pending.outputs.count == '0'
         with:
           ref: master
-          fetch-depth: 0
-          token: ${{ steps.app-token.outputs.token }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '26'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Resume persistent branch and preserve reviewer commits
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name 'stratagem-sync[bot]'
-          git config user.email 'stratagem-sync[bot]@users.noreply.github.com'
-          branch=codex/stratagem-sync
-          git fetch origin master
-          if git ls-remote --exit-code --heads origin "$branch"; then
-            git fetch origin "$branch"
-            git switch -C "$branch" FETCH_HEAD
-            git merge origin/master --no-edit
-          else
-            git switch -c "$branch" origin/master
-          fi
-      - name: Checkout trusted icon source (ignore dispatch payload)
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        if: steps.pending.outputs.count == '0'
         with:
           repository: nvigneux/Helldivers-2-Stratagems-icons-svg
           ref: master
           path: _icon-source
-          fetch-depth: 0
           persist-credentials: false
-      - name: Synchronize and validate
-        run: |
-          python3 scripts/stratagem_sync/sync.py --source _icon-source
-          python3 -m unittest discover -s tests/sync -v
-          node --test tests/sync/*.test.cjs
-          python3 scripts/stratagem_sync/sync.py --check
-      - name: Commit and open or update review PR
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+      - uses: actions/setup-python@v5
+        if: steps.pending.outputs.count == '0'
+        with:
+          python-version: '3.12'
+      - name: Copy missing SVGs and open a PR
+        if: steps.pending.outputs.count == '0'
         shell: bash
         run: |
           set -euo pipefail
-          git add app/lib/sync public/icons/stratagems public/sw.js
-          if ! git diff --cached --quiet; then
-            git commit -m 'Synchronize upstream stratagem icons and review proposals'
-          fi
-          # No force push: concurrent manual edits cause failure instead of data loss.
-          git push origin HEAD:codex/stratagem-sync
-          if git diff --quiet origin/master...HEAD; then exit 0; fi
-          number=$(gh pr list --head codex/stratagem-sync --base master --state open --json number --jq '.[0].number // empty')
-          if [ -n "$number" ]; then
-            # Preserve the human-edited PR description; new evidence is committed in the catalogue.
-            echo "Updated existing PR #$number"
-          else
-            number=$(gh pr create --base master --head codex/stratagem-sync \
-              --title 'Sync stratagem icons: review new codes' \
-              --body-file /tmp/stratagem-sync-report.md)
-            number=${number##*/}
-          fi
-          # Only replace our marked report comment, preserving the description and human comments.
-          comment=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$number/comments" \
-            --jq '.[] | select(.body | startswith("<!-- stratagem-sync-report -->")) | .id' | head -n 1)
-          python3 -c 'import json; from pathlib import Path; Path("/tmp/stratagem-comment.json").write_text(json.dumps({"body": "<!-- stratagem-sync-report -->\n" + Path("/tmp/stratagem-sync-report.md").read_text()}))'
-          if [ -n "$comment" ]; then
-            gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment" --input /tmp/stratagem-comment.json
-          else
-            gh api --method POST "repos/$GITHUB_REPOSITORY/issues/$number/comments" --input /tmp/stratagem-comment.json
-          fi
-      - uses: actions/upload-artifact@v4
-        with:
-          name: stratagem-review-report
-          path: /tmp/stratagem-sync-report.md
+          branch="automation/stratagem-icons-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          python3 scripts/sync-icons.py --source _icon-source --branch "$branch" --report "$RUNNER_TEMP/icon-pr.md"
+          git add public/icons/stratagems
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git commit -m 'Add new upstream stratagem icons'
+          git push origin "$branch"
+          gh pr create --base master --head "$branch" --title 'Add new stratagem icons' --body-file "$RUNNER_TEMP/icon-pr.md"
