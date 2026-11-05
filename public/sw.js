@@ -1,8 +1,10 @@
-const CACHE_NAME = 'stratagem-hero-cache-fec1b638bab7f86e';
+const CACHE_NAME = 'stratagem-hero-cache-100795f07938f2a4';
 
 const ASSETS_TO_CACHE = [
   '/',
   '/loadout',
+  '/manifest.json',
+  '/favicon.ico',
   '/assets/android-chrome-192x192.png',
   '/assets/android-chrome-512x512.png',
   '/assets/bmec_logo.svg',

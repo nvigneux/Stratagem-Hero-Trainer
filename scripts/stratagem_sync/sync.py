@@ -71,10 +71,11 @@ def cache_assets(root):
     sw = root / 'public/sw.js'
     text = sw.read_text()
     # Include every real public asset (no stale manually maintained filenames).
-    assets = ['/', '/loadout'] + ['/' + p.relative_to(root / 'public').as_posix()
+    assets = ['/', '/loadout', '/manifest.json', '/favicon.ico'] + ['/' + p.relative_to(root / 'public').as_posix()
         for p in sorted((root / 'public').rglob('*')) if p.is_file()
         and p.name != 'sw.js' and not p.name.startswith('.')]
     digest = hashlib.sha256()
+    digest.update(json.dumps(assets, ensure_ascii=False).encode())
     worker_logic = re.sub(r'const CACHE_NAME = .*?const ASSETS_TO_CACHE = \[.*?\];', '', text, count=1, flags=re.S)
     digest.update(worker_logic.encode())
     for path in sorted(list((root / 'app').rglob('*')) + list((root / 'public').rglob('*'))):

@@ -106,6 +106,7 @@ async function main() {
     assert.equal(await evaluate('navigator.onLine'), false);
     assert.equal(await evaluate(`fetch('/icons/stratagems/Bridge/HMG%20Emplacement.svg')
       .then(async response => response.ok && (await response.text()).includes('<svg'))`), true);
+    assert.equal(await evaluate("fetch('/manifest.json').then(response => response.ok)"), true);
     console.log('PASS: Chrome reloaded and hydrated the game offline; SVG available offline.');
   } finally {
     socket.close();

@@ -14,7 +14,8 @@ test('Worker precaches real assets, serves icons offline, and isolates cache cle
       urls.forEach((request) => {
         assert.equal(request.cache, 'reload');
         const { url } = request;
-        if (url !== '/' && url !== '/loadout' && !url.startsWith('/_next/')) {
+        if (url !== '/' && url !== '/loadout' && url !== '/manifest.json' && url !== '/favicon.ico'
+          && !url.startsWith('/_next/')) {
           assert.ok(fs.existsSync(path.join(__dirname, '../../public', url)), url);
         }
         stored.set(url, { cached: url, text: async () => '<script src="/_next/static/chunks/chunk.js"></script> static/chunks/app/game.js' });
