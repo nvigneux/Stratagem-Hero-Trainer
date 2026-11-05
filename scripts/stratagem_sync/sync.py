@@ -210,11 +210,22 @@ def synchronize(source, root=ROOT, online=True):
                     'source_path': relative, 'verification': 'unverified', 'enabled': False,
                     'experimental': kind == 'experimental', 'proposed_code': found['code'], **found})
                 target = f'public/icons/stratagems/{group}/{name}.svg'
-            entry = {'id': identity, 'target': target, 'sha256': None}
+            existing_icon = safe_file(root, target)
+            initial_hash = hashlib.sha256(existing_icon.read_bytes()).hexdigest() if existing_icon.exists() else None
+            entry = {'id': identity, 'target': target, 'sha256': initial_hash}
         action = 'renamed' if old_path and old_path != relative else 'added' if entry['sha256'] is None else 'modified' if entry['sha256'] != digest else None
         target = safe_file(root, entry['target'])
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(data)
+        previous_digest = entry['sha256']
+        current_digest = hashlib.sha256(target.read_bytes()).hexdigest() if target.exists() else None
+        if current_digest is None or previous_digest is None or current_digest == previous_digest:
+            target.write_bytes(data)
+        elif current_digest != digest and (digest != previous_digest or entry.get('icon_conflict')):
+            entry['icon_conflict'] = True
+        if hashlib.sha256(target.read_bytes()).hexdigest() == digest:
+            entry.pop('icon_conflict', None)
+        if entry.get('icon_conflict'):
+            report.append(f'- icon conflict: `{relative}` changed upstream and locally; retained local SVG')
         entry.update(sha256=digest, missing=False)
         if old_path and old_path != relative:
             del entries[old_path]
@@ -226,7 +237,9 @@ def synchronize(source, root=ROOT, online=True):
                 # A reviewer may change display name/category; keep UI's path convention working.
                 display = safe_file(root, f"public/icons/stratagems/{row['group']}/{row['name']}.svg")
                 display.parent.mkdir(parents=True, exist_ok=True)
-                display.write_bytes(data)
+                if display != target:
+                    if not display.exists():
+                        display.write_bytes(target.read_bytes())
                 entry['target'] = display.relative_to(root).as_posix()
         if action:
             report.append(f'- {action}: `{relative}` → `{entry["target"]}`')

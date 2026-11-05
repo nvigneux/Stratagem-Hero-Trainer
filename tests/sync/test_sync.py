@@ -115,6 +115,19 @@ class SyncTest(unittest.TestCase):
         self.assertEqual(self.snapshot()['app/lib/placeholder-data-helldivers.js'],
                          first['app/lib/placeholder-data-helldivers.js'])
 
+    def test_manual_icon_correction_survives_upstream_update(self):
+        self.run_sync()
+        icon = self.root / 'public/icons/stratagems/New Warbond/New Thing.svg'
+        manual = SVG.replace(b'M0 0', b'M8 8')
+        icon.write_bytes(manual)
+        self.run_sync()
+        self.assertEqual(icon.read_bytes(), manual)
+        self.put('New Warbond/New Thing.svg', SVG.replace(b'M0 0', b'M9 9'))
+        self.commit()
+        self.assertIn('icon conflict', self.run_sync())
+        self.assertEqual(icon.read_bytes(), manual)
+        self.assertIn('icon conflict', self.run_sync())
+
     def test_evidence_refresh_preserves_manual_pending_code(self):
         self.run_sync()
         rows = json.loads((self.root / CATALOG).read_text())

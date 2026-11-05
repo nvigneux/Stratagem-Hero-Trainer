@@ -108,6 +108,8 @@ origin cache isolation. Offline functionality requires one successful online ins
   target paths, missing flags and the upstream Git revision. Do not regenerate IDs.
   Ordinary Git renames preserve UUIDs and Trainer display paths. Unique hash/name
   matches provide fallback; ambiguous identities stop synchronization for review.
+- Manual icon edits also survive later syncs. If both the source and the local icon
+  change, the local SVG is retained and an icon conflict is reported until reconciled.
 - Removed upstream files are marked missing and reported on every run. Icons and game
   records remain. Removal from gameplay is a separate reviewed change.
 - A rename and total icon rewrite that Git cannot recognize requires moving the old
