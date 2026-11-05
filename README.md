@@ -40,6 +40,18 @@ When adding new stratagems with their icons to the app:
 
 1. **Add the icon files** to the `public/icons/stratagems/` directory
 2. **Add the stratagem data** to the appropriate data files `app/lib/placeholder-data-helldivers`
-3. **Important**: Update the service worker cache in `public/sw.js` to include the new icon files for offline functionality
+3. Run `npm run build`: the offline manifest automatically includes public assets and all compiled chunks.
 
-The service worker caches all stratagem icons to ensure the app works offline. Failing to add new icons to the cache manifest will result in missing images when users are offline.
+### Offline trainer
+
+After a first online visit and completed service-worker installation, `/` can be reopened
+without a connection. Icons, sounds and scripts are precached; settings (including applied
+key bindings) and the best score are saved in localStorage. Existing cookies are migrated
+when local settings are absent. Loadout offline support is outside this scope.
+
+Test a production build with `npm run build` and `npm start`, then run
+`npm run test:offline` (requires Google Chrome; use `CHROME_BIN` to override its path,
+`TEST_URL` to override `http://localhost:3000`). The test disables the network and HTTP
+cache, reloads, plays a complete round and verifies settings after another reload.
+Development mode does not register the worker. Clearing site data removes offline resources
+and saved preferences. New builds activate after existing app tabs close.

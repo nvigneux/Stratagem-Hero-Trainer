@@ -1,7 +1,8 @@
 import { useEffect, useReducer } from 'react';
 
 // Actions
-import { setCookieBestScore } from '../actions';
+import { saveLocal } from '../local-game-storage';
+import { COOKIE_BEST_SCORE } from '../constants';
 
 const initialStateSerie = {
   index: 0,
@@ -174,8 +175,8 @@ function useStratagemsSeries({
         },
       });
 
-      if (score > stateSerie.bestScore) { // store the best score in the cookie
-        setCookieBestScore(bestScore);
+      if (score > stateSerie.bestScore) { // store the best score locally
+        saveLocal(COOKIE_BEST_SCORE, bestScore);
       }
 
       dispatch({ type: 'reset' });
@@ -188,8 +189,8 @@ function useStratagemsSeries({
    * Reset the series
    */
   const resetSeries = () => {
-    if (stateSerie.score > stateSerie.bestScore) { // store the best score in the cookie
-      setCookieBestScore(stateSerie.score);
+    if (stateSerie.score > stateSerie.bestScore) { // store the best score locally
+      saveLocal(COOKIE_BEST_SCORE, stateSerie.score);
     }
 
     dispatch({ type: 'reset' });

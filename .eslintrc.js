@@ -9,7 +9,9 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:@next/next/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'jsconfig.json', 'next.config.js'],
+  ignorePatterns: [
+    'dist', '.eslintrc.cjs', 'jsconfig.json', 'next.config.js', 'public/offline-assets.js',
+  ],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',

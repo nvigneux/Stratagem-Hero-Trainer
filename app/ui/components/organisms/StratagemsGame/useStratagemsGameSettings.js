@@ -1,5 +1,6 @@
-import { useReducer } from 'react';
-import { setCookieSettings } from '../../../../lib/actions';
+import { useEffect, useReducer } from 'react';
+import { saveLocal } from '../../../../lib/local-game-storage';
+import { COOKIE_SETTINGS } from '../../../../lib/constants';
 
 const initialState = {
   gameSound: false,
@@ -89,6 +90,11 @@ const useStratagemsGameSettings = ({
     layout: defaultLayout,
   });
 
+  useEffect(() => {
+    const { tempKeyBindings, ...settings } = state;
+    saveLocal(COOKIE_SETTINGS, settings);
+  }, [state]);
+
   /**
    * Check if the duration is valid
    * @param {number} duration
@@ -102,11 +108,6 @@ const useStratagemsGameSettings = ({
    */
   const setGameSound = (gameSound) => {
     dispatch({ type: 'SET_GAME_SOUND', payload: gameSound });
-    const { tempKeyBindings, ...settingsToSave } = state;
-    setCookieSettings({
-      ...settingsToSave,
-      gameSound,
-    });
   };
 
   /**
@@ -115,11 +116,6 @@ const useStratagemsGameSettings = ({
    */
   const setTrainingMode = (trainingMode) => {
     dispatch({ type: 'SET_TRAINING_MODE', payload: trainingMode });
-    const { tempKeyBindings, ...settingsToSave } = state;
-    setCookieSettings({
-      ...settingsToSave,
-      trainingMode: { ...state.trainingMode, ...trainingMode },
-    });
   };
 
   /**
@@ -130,11 +126,6 @@ const useStratagemsGameSettings = ({
   const setTimerDuration = (timerDuration) => {
     if (isValidDuration(timerDuration)) {
       dispatch({ type: 'SET_TIMER_DURATION', payload: timerDuration });
-      const { tempKeyBindings, ...settingsToSave } = state;
-      setCookieSettings({
-        ...settingsToSave,
-        timerDuration,
-      });
     }
   };
 
@@ -146,11 +137,6 @@ const useStratagemsGameSettings = ({
   const setTimeBonus = (timeBonus) => {
     if (isValidDuration(timeBonus)) {
       dispatch({ type: 'SET_TIME_BONUS', payload: timeBonus });
-      const { tempKeyBindings, ...settingsToSave } = state;
-      setCookieSettings({
-        ...settingsToSave,
-        timeBonus,
-      });
     }
   };
 
@@ -173,11 +159,6 @@ const useStratagemsGameSettings = ({
 
   const setLayout = (layout) => {
     dispatch({ type: 'SET_LAYOUT', payload: layout });
-    const { tempKeyBindings, ...settingsToSave } = state;
-    setCookieSettings({
-      ...settingsToSave,
-      layout,
-    });
   };
 
   return {

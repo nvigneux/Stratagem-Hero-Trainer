@@ -89,6 +89,7 @@ function StratagemsGame({ stratagems, bestScoreStored, settingsStored }) {
     setLayout,
   } = useStratagemsGameSettings({
     defaultDuration: settingsStored.timerDuration,
+    defaultBonus: settingsStored.timeBonus,
     defaultKeyBindings: settingsStored.keyBindings,
     defaultTempKeyBindings: settingsStored.keyBindings,
     defaultGameSound: settingsStored.gameSound,

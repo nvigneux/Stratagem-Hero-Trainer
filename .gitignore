@@ -34,3 +34,6 @@ npm-debug.log*
 next-env.d.ts
 
 certificates
+
+# Generated after the production build
+/public/offline-assets.js
