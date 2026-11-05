@@ -9,7 +9,7 @@ import { isJsonString } from '../lib/utils';
 
 // Components
 import StratagemsLayout from '../ui/components/templates/StrategemsLayout/StrategemsLayout';
-import StratagemsGame from '../ui/components/organisms/StratagemsGame/StratagemsGame';
+import StratagemsGameClient from '../ui/components/organisms/StratagemsGame/StratagemsGameClient';
 
 /**
  * Page component
@@ -43,7 +43,7 @@ export default async function Page() {
       stratagems={stratagems}
       stratagemsByCategories={stratagemsByCategories}
     >
-      <StratagemsGame
+      <StratagemsGameClient
         stratagems={randomisedStratagems}
         bestScoreStored={+bestScoreStored}
         settingsStored={jsonSettingsStored}

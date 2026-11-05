@@ -11,7 +11,9 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:style": "npx stylelint \"**/*.css\"",
     "seed": "node -r dotenv/config ./scripts/seed.js",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "postbuild": "node scripts/generate-offline-assets.js",
+    "cy:offline": "cypress run --browser chrome --spec cypress/e2e/stratagems-offline.cy.js"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.19",
