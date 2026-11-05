@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stratagem-hero-cache-100795f07938f2a4';
+const CACHE_NAME = 'stratagem-hero-cache-83a5db8bb0e3b3a7';
 
 const ASSETS_TO_CACHE = [
   '/',

@@ -12,6 +12,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: npm
+
       - name: Install Dependencies
         run: npm install
 
@@ -32,6 +38,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: npm
+
       - name: Install Dependencies
         run: npm install
 
@@ -44,6 +56,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
 
       - name: Install Vercel CLI
         run: npm install -g vercel@canary

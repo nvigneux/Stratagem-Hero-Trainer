@@ -70,7 +70,7 @@ rows retain their established behavior; the automation never rewrites their code
 
 ## Local development and validation
 
-Requires Python 3.10+ and Node 22 (no Python dependencies):
+Requires Python 3.10+ and Node 26 (no Python dependencies):
 
 ```sh
 npm ci --legacy-peer-deps
