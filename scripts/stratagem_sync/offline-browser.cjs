@@ -115,5 +115,12 @@ async function main() {
 
 main().catch((error) => { console.error(error); process.exitCode = 1; }).finally(() => {
   browser.kill();
-  browser.on('exit', () => rmSync(profile, { recursive: true, force: true }));
+  browser.on('close', () => {
+    // Chrome's child processes may finish writing shortly after the parent exits.
+    try {
+      rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+    } catch (error) {
+      console.warn(`Temporary browser profile retained (${error.code}): ${profile}`);
+    }
+  });
 });
