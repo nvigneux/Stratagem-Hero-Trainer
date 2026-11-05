@@ -82,7 +82,20 @@ async function main() {
     });
     // Disable HTTP cache while allowing the worker to handle a normal reload.
     await call('Network.setCacheDisabled', { cacheDisabled: true });
+    const reloaded = new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(Error('Offline reload did not finish')), 30000);
+      const onLoad = ({ data }) => {
+        const event = JSON.parse(data);
+        if (event.method === 'Page.loadEventFired' && event.sessionId === sessionId) {
+          clearTimeout(timer);
+          socket.removeEventListener('message', onLoad);
+          resolve();
+        }
+      };
+      socket.addEventListener('message', onLoad);
+    });
     await call('Page.reload');
+    await reloaded;
     try {
       await waitFor('Boolean(document.querySelector(".container-is-opened"))');
     } catch (error) {
