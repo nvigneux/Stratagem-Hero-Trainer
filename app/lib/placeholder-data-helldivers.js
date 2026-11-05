@@ -239,6 +239,16 @@ const HANGER = [
     code: ['up', 'up', 'left', 'up', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
+  {
+    name: 'Supply FRV',
+    code: ['left', 'down', 'left', 'left', 'down', 'up', 'right'],
+    category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+  },
+  {
+    name: 'Eagle Gas Strike',
+    code: ['up', 'right', 'left', 'right'],
+    category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+  },
 ];
 
 const BRIDGE = [
@@ -280,6 +290,11 @@ const BRIDGE = [
   {
     name: 'Grenadier Battlement',
     code: ['down', 'right', 'down', 'left', 'right'],
+    category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
+  },
+  {
+    name: 'TD-110 Maelstrom',
+    code: ['left', 'down', 'right', 'down', 'left', 'down', 'up', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
 ];
@@ -338,6 +353,11 @@ const ENGINEERING_BAY = [
   {
     name: 'Gas Mines',
     code: ['down', 'left', 'left', 'right'],
+    category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
+  },
+  {
+    name: 'Anti-Tank Mines',
+    code: ['down', 'left', 'up', 'up'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
 ];
@@ -625,6 +645,11 @@ const GENERAL_STRATEGEMS = [
   {
     name: 'Call In Super Destroyer',
     code: ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
+  {
+    name: 'Upload Data',
+    code: ['left', 'right', 'up', 'up', 'up'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
 ];
