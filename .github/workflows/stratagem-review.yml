@@ -40,13 +40,18 @@ jobs:
       - run: python3 scripts/stratagem_sync/sync.py --check
       - run: npm run lint
       - run: npm run build
-      - name: Browser regression and offline checks
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          start: npm run start
-          wait-on: http://localhost:3000
-          browser: chrome
+      - name: Browser gameplay regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run start > /tmp/stratagem-cypress-server.log 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://localhost:3000/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npx cypress run --browser chrome
       - name: Real browser offline reload
         shell: bash
         run: |
