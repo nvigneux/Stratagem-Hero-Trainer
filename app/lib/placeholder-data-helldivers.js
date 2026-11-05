@@ -75,6 +75,10 @@ const CATEGORIES = [
     id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
     name: 'Entrenched Division',
   },
+  {
+    id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+    name: 'Scope of Authority',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -556,6 +560,19 @@ const ENTRENCHED_DIVISION = [
   },
 ];
 
+const SCOPE_OF_AUTHORITY = [
+  {
+    name: 'LAS-44 Nova',
+    code: ['down', 'left', 'right', 'down', 'down'],
+    category_id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+  },
+  {
+    name: 'AMW-20 Apex',
+    code: ['down', 'left', 'left', 'up', 'down', 'left'],
+    category_id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -648,6 +665,7 @@ const STRATAGEMS = [
   ...REDACTED_REGIMENT,
   ...SIEGE_BREAKERS,
   ...ENTRENCHED_DIVISION,
+  ...SCOPE_OF_AUTHORITY,
   ...GENERAL_STRATEGEMS,
 ];
 
