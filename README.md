@@ -43,8 +43,3 @@ When adding new stratagems with their icons to the app:
 3. **Important**: Update the service worker cache in `public/sw.js` to include the new icon files for offline functionality
 
 The service worker caches all stratagem icons to ensure the app works offline. Failing to add new icons to the cache manifest will result in missing images when users are offline.
-
-## New icon PRs
-
-New source SVGs open an icons-only PR. Ask Codex to add the corresponding entries to the
-existing catalogue, then review and merge manually. See [setup](docs/stratagem-sync.md).
