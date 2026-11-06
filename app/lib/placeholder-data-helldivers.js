@@ -76,9 +76,13 @@ const CATEGORIES = [
     name: 'Entrenched Division',
   },
   {
+    id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+    name: 'Exo Experts',
+  },
+  {
     id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
     name: 'Castellan’s Creed',
-  },
+  }
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -243,6 +247,16 @@ const HANGER = [
     code: ['up', 'up', 'left', 'up', 'right'],
     category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
   },
+  {
+    name: 'Supply FRV',
+    code: ['left', 'down', 'left', 'left', 'down', 'up', 'right'],
+    category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+  },
+  {
+    name: 'Eagle Gas Strike',
+    code: ['up', 'right', 'left', 'right'],
+    category_id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+  },
 ];
 
 const BRIDGE = [
@@ -284,6 +298,11 @@ const BRIDGE = [
   {
     name: 'Grenadier Battlement',
     code: ['down', 'right', 'down', 'left', 'right'],
+    category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
+  },
+  {
+    name: 'TD-110 Maelstrom',
+    code: ['left', 'down', 'right', 'down', 'left', 'down', 'up', 'left', 'right'],
     category_id: '50ca3e18-62cd-11ee-8c99-0242ac120002',
   },
 ];
@@ -342,6 +361,11 @@ const ENGINEERING_BAY = [
   {
     name: 'Gas Mines',
     code: ['down', 'left', 'left', 'right'],
+    category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
+  },
+  {
+    name: 'Anti-Tank Mines',
+    code: ['down', 'left', 'up', 'up'],
     category_id: '3958dc9e-787f-4377-85e9-fec4b6a6442a',
   },
 ];
@@ -560,6 +584,24 @@ const ENTRENCHED_DIVISION = [
   },
 ];
 
+const EXO_EXPERTS = [
+  {
+    name: 'Lumberer Exosuit',
+    code: ['left', 'down', 'right', 'up', 'right', 'left', 'up'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+  {
+    name: 'Breakthrough Exosuit',
+    code: ['left', 'down', 'right', 'left', 'right', 'down', 'up'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+  {
+    name: 'Bullet Storm',
+    code: ['down', 'left', 'down', 'right', 'up', 'left'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+];
+
 const CASTELLANS_CREED = [
   {
     name: '40-K Meltagun',
@@ -639,6 +681,11 @@ const GENERAL_STRATEGEMS = [
     code: ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right'],
     category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
   },
+  {
+    name: 'Upload Data',
+    code: ['left', 'right', 'up', 'up', 'up'],
+    category_id: 'd6e15727-9fe1-4961-8c5b-ea44a9bd81aa',
+  },
 ];
 
 const STRATAGEMS = [
@@ -660,6 +707,7 @@ const STRATAGEMS = [
   ...REDACTED_REGIMENT,
   ...SIEGE_BREAKERS,
   ...ENTRENCHED_DIVISION,
+  ...EXO_EXPERTS,
   ...CASTELLANS_CREED,
   ...GENERAL_STRATEGEMS,
 ];
