@@ -75,6 +75,10 @@ const CATEGORIES = [
     id: 'a63978b8-a411-4b06-bce7-abc2ffef418c',
     name: 'Entrenched Division',
   },
+  {
+    id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+    name: 'Exo Experts',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -576,6 +580,24 @@ const ENTRENCHED_DIVISION = [
   },
 ];
 
+const EXO_EXPERTS = [
+  {
+    name: 'Lumberer Exosuit',
+    code: ['left', 'down', 'right', 'up', 'right', 'left', 'up'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+  {
+    name: 'Breakthrough Exosuit',
+    code: ['left', 'down', 'right', 'left', 'right', 'down', 'up'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+  {
+    name: 'Bullet Storm',
+    code: ['down', 'left', 'down', 'right', 'up', 'left'],
+    category_id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -673,6 +695,7 @@ const STRATAGEMS = [
   ...REDACTED_REGIMENT,
   ...SIEGE_BREAKERS,
   ...ENTRENCHED_DIVISION,
+  ...EXO_EXPERTS,
   ...GENERAL_STRATEGEMS,
 ];
 
