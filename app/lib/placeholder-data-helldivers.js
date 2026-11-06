@@ -79,6 +79,10 @@ const CATEGORIES = [
     id: 'cae87739-140f-46dd-9699-6ce8ecdf6ae5',
     name: 'Exo Experts',
   },
+  {
+    id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
+    name: 'Castellan’s Creed',
+  }
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -598,6 +602,14 @@ const EXO_EXPERTS = [
   },
 ];
 
+const CASTELLANS_CREED = [
+  {
+    name: '40-K Meltagun',
+    code: ['down', 'left', 'up', 'left', 'left', 'down'],
+    category_id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -696,6 +708,7 @@ const STRATAGEMS = [
   ...SIEGE_BREAKERS,
   ...ENTRENCHED_DIVISION,
   ...EXO_EXPERTS,
+  ...CASTELLANS_CREED,
   ...GENERAL_STRATEGEMS,
 ];
 
