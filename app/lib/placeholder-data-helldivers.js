@@ -82,7 +82,11 @@ const CATEGORIES = [
   {
     id: '07f2cfaf-46ce-4d1f-830e-73e90a267cfb',
     name: 'Castellan’s Creed',
-  }
+  },
+  {
+    id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+    name: 'Scope of Authority',
+  },
 ];
 
 const PATRIOTIC_ADMINISTRATION_CENTER = [
@@ -610,6 +614,19 @@ const CASTELLANS_CREED = [
   },
 ];
 
+const SCOPE_OF_AUTHORITY = [
+  {
+    name: 'LAS-44 Nova',
+    code: ['down', 'left', 'right', 'down', 'down'],
+    category_id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+  },
+  {
+    name: 'AMW-20 Apex',
+    code: ['down', 'left', 'left', 'up', 'down', 'left'],
+    category_id: 'd8e438a5-f2ed-40da-9230-4fc3079bf11c',
+  },
+];
+
 const GENERAL_STRATEGEMS = [
   {
     name: 'Resupply',
@@ -709,6 +726,7 @@ const STRATAGEMS = [
   ...ENTRENCHED_DIVISION,
   ...EXO_EXPERTS,
   ...CASTELLANS_CREED,
+  ...SCOPE_OF_AUTHORITY,
   ...GENERAL_STRATEGEMS,
 ];
 
